@@ -1,0 +1,35 @@
+/* -*- mode: css; coding: utf-8 -*- */
+
+/*
+  Oscar Aceña, copyright (C) 2009
+  This is Free Software, under terms of GNU GPL v3
+*/
+
+body                        { background-color: #00112b;
+			      margin: 0px 50px 15px 50px;
+			      text-align: center;
+			      font-size: 17px;
+			      font-family: "Trebuchet MS", "Helvetica",
+			                   "Verdana", sans-serif;
+			      color: #fff; }
+
+a:link                      { color: #fff;
+			      text-decoration: none;}
+a:visited                   { color: #aaa;
+			      text-decoration: none;}
+a:hover                     { color: #fff;
+			      text-decoration: underline; }
+
+td#menu                     { padding: 0px 15px 0px 0px; }
+
+table#menu                  { margin-top:  -10px;
+			      margin-left: auto;
+			      margin-right: auto;
+			      text-align: center;
+			      font-weight: bold;
+			      font-size: 20px;
+			      color: #fff; }
+
+div#body                    { padding: 20px;
+			      border: 1px solid #fff;
+			    }

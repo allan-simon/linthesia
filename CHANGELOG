@@ -1,0 +1,6 @@
+-*- coding: utf-8 -*-
+
+0.4-1: - Added support for internal keyboard (using PC keyboard)
+
+0.3-2: - Initial working release
+       - Fork from Synthesia code
