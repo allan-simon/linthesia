@@ -3,7 +3,7 @@
 GRAPHDIR?=../graphics
 
 CXX = g++
-CXXFLAGS =  -I . -I libmidi -Wall -Wextra -ansi -g
+CXXFLAGS =  -I . -I libmidi -Wall -Wextra -ansi -g -std=c++11
 CXXFLAGS += `pkg-config --cflags gtkmm-2.4 gconfmm-2.6 gtkglextmm-1.2 alsa` -DGRAPHDIR="\"$(GRAPHDIR)\""
 LDLIBS = `pkg-config --libs gtkmm-2.4 gconfmm-2.6 gtkglextmm-1.2 alsa`
 TARGET = linthesia
