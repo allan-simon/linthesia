@@ -187,13 +187,15 @@ void GameStateManager::MouseMove(int x, int y) {
 }
 
 void GameStateManager::SetInitialState(GameState *first_state) {
+    if (m_current_state) {
+        throw GameStateError(
+            "Cannot set an initial state because "
+            "GameStateManager already has a state!"
+        );
+    }
 
-  if (m_current_state)
-    throw GameStateError("Cannot set an initial state because GameStateManager"
-                         " already has a state!");
-
-  first_state->SetManager(this);
-  m_current_state = first_state;
+    first_state->SetManager(this);
+    m_current_state = first_state;
 }
 
 void GameStateManager::ChangeState(GameState *new_state) {
@@ -268,7 +270,7 @@ void GameStateManager::Update(bool skip_this_update) {
   m_mouse.released = MouseButtons();
 }
 
-void GameStateManager::Draw(Renderer &renderer) {
+void GameStateManager::Draw(Renderer& renderer) {
 
   if (!m_current_state)
     return;
