@@ -46,11 +46,28 @@ namespace Compatible {
   }
 
   int GetDisplayWidth() {
-    return Gdk::Screen::get_default()->get_width();
+    Glib::RefPtr< Gdk::Screen > screen = Gdk::Screen::get_default();
+    Gdk::Rectangle monitorRect;
+    
+    screen->get_monitor_geometry(
+        screen->get_primary_monitor(),
+        monitorRect
+    );
+    return monitorRect.get_width();
+    //return Gdk::Screen::get_default()->get_width();
   }
 
   int GetDisplayHeight() {
-    return Gdk::Screen::get_default()->get_height();
+    Glib::RefPtr< Gdk::Screen > screen = Gdk::Screen::get_default();
+    Gdk::Rectangle monitorRect;
+    
+    screen->get_monitor_geometry(
+        screen->get_primary_monitor(),
+        monitorRect
+    );
+    return monitorRect.get_height();
+  
+    //return Gdk::Screen::get_default()->get_height();
   }
 
   void GracefulShutdown() {
