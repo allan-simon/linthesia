@@ -8,45 +8,6 @@
 typedef std::map<int,sigc::connection> ConnectMap;
 ConnectMap pressed;
 
-
-
-// FIXME: use user settings to do this mapping
-int keyToNote(GdkEventKey* event) {
-  const unsigned short oct = 4;
-
-  switch(event->keyval) {
-  /* no key for C :( */
-  case GDK_masculine:  return 12*oct + 1;      /* C# */
-  case GDK_Tab:        return 12*oct + 2;      /* D  */
-  case GDK_1:          return 12*oct + 3;      /* D# */
-  case GDK_q:          return 12*oct + 4;      /* E  */
-  case GDK_w:          return 12*oct + 5;      /* F  */
-  case GDK_3:          return 12*oct + 6;      /* F# */
-  case GDK_e:          return 12*oct + 7;      /* G  */
-  case GDK_4:          return 12*oct + 8;      /* G# */
-  case GDK_r:          return 12*oct + 9;      /* A  */
-  case GDK_5:          return 12*oct + 10;     /* A# */
-  case GDK_t:          return 12*oct + 11;     /* B  */
-
-  case GDK_y:          return 12*(oct+1) + 0;  /* C  */
-  case GDK_7:          return 12*(oct+1) + 1;  /* C# */
-  case GDK_u:          return 12*(oct+1) + 2;  /* D  */
-  case GDK_8:          return 12*(oct+1) + 3;  /* D# */
-  case GDK_i:          return 12*(oct+1) + 4;  /* E  */
-  case GDK_o:          return 12*(oct+1) + 5;  /* F  */
-  case GDK_0:          return 12*(oct+1) + 6;  /* F# */
-  case GDK_p:          return 12*(oct+1) + 7;  /* G  */
-  case GDK_apostrophe: return 12*(oct+1) + 8;  /* G# */
-  case GDK_dead_grave: return 12*(oct+1) + 9;  /* A  */
-  case GDK_exclamdown: return 12*(oct+1) + 10; /* A# */
-  case GDK_plus:       return 12*(oct+1) + 11; /* B  */
-  }
-
-  return -1;
-}
-
-
-
 bool __sendNoteOff(int note) {
 
   ConnectMap::iterator it = pressed.find(note);
@@ -57,6 +18,79 @@ bool __sendNoteOff(int note) {
   pressed.erase(it);
 
   return true;
+}
+
+// FIXME: use user settings to do this mapping
+int keyToNote(GdkEventKey* event) {
+    const unsigned short oct = 4;
+
+    switch(event->keyval) {
+    /* no key for C :( */
+    case GDK_masculine:  return 12*oct + 1;      /* C# */
+    case GDK_Tab:        return 12*oct + 2;      /* D  */
+    case GDK_1:          return 12*oct + 3;      /* D# */
+    case GDK_q:          return 12*oct + 4;      /* E  */
+    case GDK_w:          return 12*oct + 5;      /* F  */
+    case GDK_3:          return 12*oct + 6;      /* F# */
+    case GDK_e:          return 12*oct + 7;      /* G  */
+    case GDK_4:          return 12*oct + 8;      /* G# */
+    case GDK_r:          return 12*oct + 9;      /* A  */
+    case GDK_5:          return 12*oct + 10;     /* A# */
+    case GDK_t:          return 12*oct + 11;     /* B  */
+
+    case GDK_y:          return 12*(oct+1) + 0;  /* C  */
+    case GDK_7:          return 12*(oct+1) + 1;  /* C# */
+    case GDK_u:          return 12*(oct+1) + 2;  /* D  */
+    case GDK_8:          return 12*(oct+1) + 3;  /* D# */
+    case GDK_i:          return 12*(oct+1) + 4;  /* E  */
+    case GDK_o:          return 12*(oct+1) + 5;  /* F  */
+    case GDK_0:          return 12*(oct+1) + 6;  /* F# */
+    case GDK_p:          return 12*(oct+1) + 7;  /* G  */
+    case GDK_apostrophe: return 12*(oct+1) + 8;  /* G# */
+    case GDK_dead_grave: return 12*(oct+1) + 9;  /* A  */
+    case GDK_exclamdown: return 12*(oct+1) + 10; /* A# */
+    case GDK_plus:       return 12*(oct+1) + 11; /* B  */
+    }
+
+    return -1;
+}
+
+
+/**
+ *
+ */
+bool DrawingArea::on_motion_notify(GdkEventMotion* event) {
+
+    state_manager->MouseMove(event->x, event->y);
+    return true;
+}
+
+/**
+ *
+ */
+bool DrawingArea::on_button_press(GdkEventButton* event) {
+
+    MouseButton b;
+
+    // left and right click allowed
+    if (event->button == 1)
+        b = MouseLeft;
+    else if (event->button == 3)
+        b = MouseRight;
+
+    // ignore other buttons
+    else
+        return false;
+
+    // press or release?
+    if (event->type == GDK_BUTTON_PRESS)
+        state_manager->MousePress(b);
+    else if (event->type == GDK_BUTTON_RELEASE)
+        state_manager->MouseRelease(b);
+    else
+        return false;
+
+    return true;
 }
 
 
@@ -120,30 +154,9 @@ DrawingArea::DrawingArea(
 
 }
 
-/**
- *
- */
-DrawingArea::~DrawingArea() {
-    windowState->deactivate();
-    delete windowState;
 
-}
 
-bool DrawingArea::GameLoop() {
 
-    if (windowState->is_not_active()) {
-        return true;
-    }
-
-    state_manager->Update(windowState->just_activated());
-    Renderer rend(
-        get_gl_context(),
-        get_pango_context()
-    );
-    state_manager->Draw(rend);
-
-    return true;
-}
 
 
 bool DrawingArea::on_key_release(GdkEventKey* event) {
@@ -166,27 +179,7 @@ bool DrawingArea::on_key_release(GdkEventKey* event) {
   return false;
 }
 
-bool DrawingArea::on_expose_event(GdkEventExpose* event) {
 
-  Glib::RefPtr<Gdk::GL::Window> glwindow = get_gl_window();
-  if (!glwindow->gl_begin(get_gl_context()))
-    return false;
-
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glCallList(1);
-
-  Renderer rend(get_gl_context(), get_pango_context());
-  state_manager->Draw(rend);
-
-  // swap buffers.
-  if (glwindow->is_double_buffered())
-     glwindow->swap_buffers();
-  else
-     glFlush();
-
-  glwindow->gl_end();
-  return true;
-}
 
 
 
@@ -217,81 +210,66 @@ bool DrawingArea::on_configure_event(GdkEventConfigure* event) {
   return true;
 }
 
-
+/**
+ *
+ */
 bool DrawingArea::on_key_press(GdkEventKey* event) {
 
-  // if is a note...
-  int note = keyToNote(event);
-  if (note >= 0) {
+    // if is a note...
+    int note = keyToNote(event);
+    if (note >= 0) {
 
-    // if first press, send Note-On
-    ConnectMap::iterator it = pressed.find(note);
-    if (it == pressed.end())
-      sendNote(note, true);
+        // if first press, send Note-On
+        ConnectMap::iterator it = pressed.find(note);
+        if (it == pressed.end()) {
+            sendNote(note, true );
 
-    // otherwise, cancel emission of Note-off
-    else
-      it->second.disconnect();
+        // otherwise, cancel emission of Note-off
+        } else {
+            it->second.disconnect();
+        }
+        return true;
+    }
+
+    switch (event->keyval) {
+        case GDK_Up:         state_manager->KeyPress(KeyUp);     break;
+        case GDK_Down:       state_manager->KeyPress(KeyDown);   break;
+        case GDK_Left:       state_manager->KeyPress(KeyLeft);   break;
+        case GDK_Right:      state_manager->KeyPress(KeyRight);  break;
+        case GDK_space:      state_manager->KeyPress(KeySpace);  break;
+        case GDK_Return:     state_manager->KeyPress(KeyEnter);  break;
+        case GDK_Escape:     state_manager->KeyPress(KeyEscape); break;
+
+        // show FPS
+        case GDK_F6:         state_manager->KeyPress(KeyF6);     break;
+
+        // increase/decrease octave
+        case GDK_greater:    state_manager->KeyPress(KeyGreater); break;
+        case GDK_less:       state_manager->KeyPress(KeyLess);    break;
+
+        default:
+            return false;
+    }
 
     return true;
-  }
-
-  switch (event->keyval) {
-  case GDK_Up:       state_manager->KeyPress(KeyUp);      break;
-  case GDK_Down:     state_manager->KeyPress(KeyDown);    break;
-  case GDK_Left:     state_manager->KeyPress(KeyLeft);    break;
-  case GDK_Right:    state_manager->KeyPress(KeyRight);   break;
-  case GDK_space:    state_manager->KeyPress(KeySpace);   break;
-  case GDK_Return:   state_manager->KeyPress(KeyEnter);   break;
-  case GDK_Escape:   state_manager->KeyPress(KeyEscape);  break;
-
-  // show FPS
-  case GDK_F6:       state_manager->KeyPress(KeyF6);      break;
-
-  // show key names
-  case GDK_F7:       state_manager->KeyPress(KeyF7);      break;
-
-  // increase/decrease octave
-  case GDK_greater:  state_manager->KeyPress(KeyGreater); break;
-  case GDK_less:     state_manager->KeyPress(KeyLess);    break;
-
-  default:
-    return false;
-  }
-
-  return true;
 }
 
 
-bool DrawingArea::on_button_press(GdkEventButton* event) {
 
-  MouseButton b;
+/**
+ *
+ */
+bool DrawingArea::GameLoop() {
 
-  // left and right click allowed
-  if (event->button == 1)
-    b = MouseLeft;
-  else if (event->button == 3)
-    b = MouseRight;
+    if (windowState->is_not_active()) {
+        return true;
+    }
 
-  // ignore other buttons
-  else
-    return false;
+    state_manager->Update(windowState->just_activated());
+    Renderer rend(get_gl_context(), get_pango_context());
+    state_manager->Draw(rend);
 
-  // press or release?
-  if (event->type == GDK_BUTTON_PRESS)
-    state_manager->MousePress(b);
-  else if (event->type == GDK_BUTTON_RELEASE)
-    state_manager->MouseRelease(b);
-  else
-    return false;
-
-  return true;
-}
-
-bool DrawingArea::on_motion_notify(GdkEventMotion* event) {
-
-  state_manager->MouseMove(event->x, event->y);
-  return true;
+    return true;
 }
 
 /**
@@ -303,4 +281,33 @@ void DrawingArea::init_state_manager(
     state_manager->SetInitialState(new TitleState(state));
 }
 
+bool DrawingArea::on_expose_event(GdkEventExpose* event) {
 
+    Glib::RefPtr<Gdk::GL::Window> glwindow = get_gl_window();
+    if (!glwindow->gl_begin(get_gl_context()))
+        return false;
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glCallList(1);
+
+    Renderer rend(get_gl_context(), get_pango_context());
+    state_manager->Draw(rend);
+
+    // swap buffers.
+    if (glwindow->is_double_buffered())
+         glwindow->swap_buffers();
+    else
+         glFlush();
+
+    glwindow->gl_end();
+    return true;
+}
+
+/**
+ *
+ */
+DrawingArea::~DrawingArea() {
+    windowState->deactivate();
+    delete windowState;
+
+}
