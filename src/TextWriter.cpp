@@ -14,17 +14,206 @@
 
 #include <map>
 
+#define FLOAT2X(f)      ((int) ( (f) * (65536)))
+#define f2vt(f)     FLOAT2X(f)
+
 using namespace std;
 
-TextWriter::TextWriter(int in_x, int in_y, Renderer &in_renderer,
-                       bool in_centered, int in_size, string fontname) :
+
+inline cairo_t* create_cairo_context (
+    int width,
+    int height,
+    int channels,
+    cairo_surface_t** surf,
+    unsigned char** buffer
+) {
+    cairo_t* cr;
+
+    /* create cairo-surface/context to act as OpenGL-texture source */
+    *buffer = (unsigned char*)calloc (channels * width * height, sizeof (unsigned char));
+    if (!*buffer) {
+        printf ("create_cairo_context() - Couldn't allocate surface-buffer\n");
+        return NULL;
+    }
+
+    *surf = cairo_image_surface_create_for_data (
+        *buffer,
+        CAIRO_FORMAT_ARGB32,
+        width,
+        height,
+        channels * width
+    );
+    if (cairo_surface_status (*surf) != CAIRO_STATUS_SUCCESS) {
+        free (*buffer);
+        printf ("create_cairo_context() - Couldn't create surface\n");
+        return NULL;
+    }
+
+    cr = cairo_create (*surf);
+    if (cairo_status (cr) != CAIRO_STATUS_SUCCESS) {
+        free (*buffer);
+        printf ("create_cairo_context() - Couldn't create context\n");
+        return NULL;
+    }
+
+    return cr;
+}
+
+
+inline int draw_text(
+    int x,
+    int y,
+    int width,
+    int height,
+    const char *string,
+    const Color &textColor
+) {
+    cairo_surface_t* surface = NULL;
+    cairo_t* cr;
+    unsigned char* surfData;
+    GLuint textureId;
+
+    /* create cairo-surface/context to act as OpenGL-texture source */
+    cr = create_cairo_context (
+        width,
+        height,
+        4,
+        &surface,
+        &surfData
+    );
+
+    /* clear background */
+    cairo_set_operator(cr, CAIRO_OPERATOR_OVER);
+    cairo_set_source_rgba(
+        cr,
+        0,
+        0,
+        0,
+        0
+    );
+    cairo_paint (cr);
+
+    cairo_move_to(
+        cr,
+        x,
+        y
+    );
+
+    // TODO replace this by a parameter
+    cairo_set_font_size(cr, 12);
+    cairo_select_font_face(
+        cr,
+        "sans",
+        CAIRO_FONT_SLANT_NORMAL,
+        CAIRO_FONT_WEIGHT_NORMAL
+    );
+    cairo_set_source_rgba(
+        cr,
+        textColor.r,
+        textColor.g,
+        textColor.b,
+        textColor.a
+    );
+    cairo_show_text(cr, string);
+
+    glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(
+        GL_TEXTURE_2D,
+        0,
+        GL_RGBA,
+        width,
+        height,
+        0,
+        GL_RGBA,
+        GL_UNSIGNED_BYTE,
+        surfData
+    );
+    //TestEGLError("glTexImage2D");
+
+    free (surfData);
+    cairo_destroy (cr);
+
+    return textureId;
+
+}
+
+/**
+ *
+ */
+void TextWriter::write(
+    int x,
+    int y,
+    string text,
+    const Color &textColor
+
+) {
+    GLfloat textureCoord[] = {
+        f2vt(0.0f), f2vt(0.0f),
+        f2vt(1.0f), f2vt(0.0f),
+        f2vt(0.0f), f2vt(1.0f),
+        f2vt(1.0f), f2vt(1.0f)
+    };
+
+
+    // WORK IN PROGRESS 
+    // for the moment we just try a dirty hacky 
+    // display of a 256*24 surface
+    GLint  rect[] = {
+        0,0,
+       256,0,
+       0,24,
+       256,24
+        
+    };
+
+    glEnable(GL_TEXTURE_2D);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    GLuint textureId = draw_text(
+        x,
+        y,
+        256,//width,
+        24,//height,
+        text.c_str(),
+        textColor
+    );
+
+    glVertexPointer(2, GL_INT, 0, rect);
+    glTexCoordPointer(2, GL_FLOAT, 0, textureCoord);
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glDeleteTextures(1, &textureId); 
+
+}
+
+
+
+/**
+ *
+ */
+TextWriter::TextWriter(
+    int in_x,
+    int in_y,
+    Renderer &in_renderer,
+    bool in_centered,
+    int in_size,
+    string fontname
+) :
   x(in_x),
   y(in_y),
   size(in_size),
   original_x(0),
   last_line_height(0),
   centered(in_centered),
-  renderer(in_renderer) {
+  renderer(in_renderer) 
+{
 
   x += renderer.m_xoffset;
   original_x = x;
@@ -34,10 +223,16 @@ TextWriter::TextWriter(int in_x, int in_y, Renderer &in_renderer,
 
 }
 
+/**
+ *
+ */
 int TextWriter::get_point_size() {
   return point_size;
 }
 
+/**
+ *
+ */
 TextWriter& TextWriter::next_line() {
   y += max(last_line_height, get_point_size());
   x = original_x;
@@ -46,6 +241,9 @@ TextWriter& TextWriter::next_line() {
   return *this;
 }
 
+/**
+ *
+ */
 TextWriter& Text::operator<<(TextWriter& tw) const {
   int draw_x;
   int draw_y;

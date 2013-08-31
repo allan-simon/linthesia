@@ -402,10 +402,15 @@ void TitleState::Draw(Renderer &renderer) const {
   renderer.DrawTga(GetTexture(TitleLogo), left, TitleY);
 
   // Under logo text (head)
-  TextWriter head(left+3, TitleY + (compress_height ? 120 : 150), renderer, false, Layout::TitleFontSize);
-  head << "Linthesia's video game music samples are provided by" << Text(" Game Music", Dk_Green);
-  head.next_line() << Text("Themes", Dk_Green) << ". Other MIDI files are from Mutopia Project. Visit";
-  head.next_line() << Text("http://www.mutopiaproject.org", Dk_Blue) << " for more songs!";
+    TextWriter::write(
+        left+3,
+        TitleY + (compress_height ? 120 : 150),
+        string("Linthesia's video game music samples are provided by") ,
+        Dk_Green
+    );
+  //<< Text(" Game Music", Dk_Green);
+  //head.next_line() << Text("Themes", Dk_Green) << ". Other MIDI files are from Mutopia Project. Visit";
+  //head.next_line() << Text("http://www.mutopiaproject.org", Dk_Blue) << " for more songs!";
 
   TextWriter version(Layout::ScreenMarginX,
                      GetStateHeight() - Layout::ScreenMarginY - Layout::SmallFontSize * 2,

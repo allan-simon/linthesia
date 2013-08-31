@@ -24,7 +24,12 @@
 // screen in varying colors, fonts, and sizes.
 class TextWriter {
 public:
-
+    static void write(
+        int x,
+        int y,
+        std::string text,
+        const Color &textColor
+    );
   // Centering only works for single-write lines... in other words, centered
   // lines can only be 1 color.
   TextWriter(int in_x, int in_y,
