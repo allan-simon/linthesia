@@ -16,12 +16,6 @@
 
 using namespace std;
 
-// TODO: This should be deleted at shutdown
-static map<int, int> font_size_lookup;
-
-// TODO: This should be deleted at shutdown
-static map<int, Pango::FontDescription*> font_lookup;
-
 TextWriter::TextWriter(int in_x, int in_y, Renderer &in_renderer,
                        bool in_centered, int in_size, string fontname) :
   x(in_x),
@@ -38,38 +32,6 @@ TextWriter::TextWriter(int in_x, int in_y, Renderer &in_renderer,
   y += renderer.m_yoffset;
   point_size = size;
 
-  if (font_size_lookup[size] == 0) {
-
-    /*
-       disable to prevent segfault
-
-    // Get font from user settings
-    if (fontname.empty()) {
-      string key = "font_desc";
-      fontname = UserSetting::Get(key, "");
-
-      // Or set it if there is no default
-      if (fontname.empty()) {
-	fontname = "Serif";
-	UserSetting::Set(key, fontname);
-      }
-    }
-
-    */
-
-    int list_start = glGenLists(128);
-    /* fontname = STRING(fontname << " " << in_size); */
-    fontname = "courier 12";
-    Pango::FontDescription* font_desc = new Pango::FontDescription(fontname);
-    Glib::RefPtr<Pango::Font> ret = Gdk::GL::Font::use_pango_font(*font_desc, 0, 128, list_start);
-    if (ret == 0)
-      throw LinthesiaError("An error ocurred while trying to use use_pango_font() with "
-    			   "font '" + fontname + "'");
-
-    font_size_lookup[size] = list_start;
-    font_lookup[size] = font_desc;
-
-  }
 }
 
 int TextWriter::get_point_size() {
@@ -95,7 +57,7 @@ TextWriter& Text::operator<<(TextWriter& tw) const {
 
   glPushMatrix();
   tw.renderer.SetColor(m_color);
-  glListBase(font_size_lookup[tw.size]);
+  //glListBase( );
   glRasterPos2i(draw_x, draw_y + tw.size);
   glCallLists(static_cast<int>(narrow.length()), GL_UNSIGNED_BYTE, narrow.c_str());
   glPopMatrix();
@@ -110,7 +72,7 @@ void Text::calculate_position_and_advance_cursor(TextWriter &tw, int *out_x, int
 
   Glib::RefPtr<Pango::Layout> layout = Pango::Layout::create(tw.renderer.m_pangocontext);
   layout->set_text(m_text);
-  layout->set_font_description(*(font_lookup[tw.size]));
+  //layout->set_font_description( );
 
   Pango::Rectangle drawing_rect = layout->get_pixel_logical_extents();
   tw.last_line_height = drawing_rect.get_height();
