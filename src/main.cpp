@@ -169,7 +169,56 @@ Glib::RefPtr<Gdk::GL::Config> get_glconfig() {
 
 }
 
+int get_refresh_rate() {
+    string key = "refresh_rate";
+    int rate = 65;
+    string user_rate = UserSetting::Get(key, "");
+    if (user_rate.empty()) {
 
+        user_rate = STRING(rate);
+        UserSetting::Set(key, user_rate);
+
+    } else {
+        istringstream iss(user_rate);
+        if (not (iss >> rate)) {
+            Compatible::ShowError(
+                "Invalid setting for '"+ key +"' key.\n\n"
+                "Reset to default value when reload."
+            );
+            UserSetting::Set(key, "");
+        }
+    }
+    return rate; 
+}
+
+
+
+
+void setup_game_window(
+    Gtk::Window &window,
+    DrawingArea &drawingArea
+) {
+    
+   
+    window.add(drawingArea);
+    window.show_all();
+
+    window.fullscreen();
+    window.set_title(friendly_app_name);
+
+    window.set_icon_from_file(string(GRAPHDIR) + "/app_icon.ico");
+ 
+    // get refresh rate from user settings
+    int rate = get_refresh_rate();
+
+    Glib::signal_timeout().connect(
+        sigc::mem_fun(
+            drawingArea,
+            &DrawingArea::GameLoop
+        ),
+        1000/rate
+    );
+}
 
 
 int main(int argc, char *argv[]) {
@@ -198,10 +247,9 @@ int main(int argc, char *argv[]) {
 
         Gtk::Window window;
         DrawingArea da(glconfig);
-        window.add(da);
-        window.show_all();
-
         // do this after gl context is created (ie. after da realized)
+        setup_game_window(window, da);
+        
         SharedState state;
         state.song_title = FileSelector::TrimFilename(filename);
         state.midi = midi;
@@ -209,28 +257,6 @@ int main(int argc, char *argv[]) {
             state
         );
         
-        window.fullscreen();
-        window.set_title(friendly_app_name);
-        window.set_icon_from_file(string(GRAPHDIR) + "/app_icon.ico");
-
-        // get refresh rate from user settings
-        string key = "refresh_rate";
-        int rate = 65;
-        string user_rate = UserSetting::Get(key, "");
-        if (user_rate.empty()) {
-            user_rate = STRING(rate);
-            UserSetting::Set(key, user_rate);
-        }
-
-        else {
-            istringstream iss(user_rate);
-            if (not (iss >> rate)) {
-                Compatible::ShowError("Invalid setting for '"+ key +"' key.\n\nIt will be reset to default value.");
-                UserSetting::Set(key, "");
-            }
-        }
-
-        Glib::signal_timeout().connect(sigc::mem_fun(da, &DrawingArea::GameLoop), 1000/rate);
 
         main_loop.run(window);
 
