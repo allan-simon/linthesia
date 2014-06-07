@@ -11,7 +11,12 @@ const ScreenIndex MainScreen::INDEX = START_APPLICATION;
 /**
  *
  */
-ScreenIndex MainScreen::run(sf::Window &app) {
+const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
+
+/**
+ *
+ */
+ScreenIndex MainScreen::run(sf::RenderWindow &app) {
     sf::Event event;
 
     // on purpose
@@ -21,10 +26,12 @@ ScreenIndex MainScreen::run(sf::Window &app) {
                 return STOP_APPLICATION;
             }
 
-            if (event.type == sf::Event::MouseLeft) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 return SelectTrackScreen::INDEX;
             }
         }
+        app.clear(BACKGROUND_COLOR);
+        app.display();
     }
 }
 

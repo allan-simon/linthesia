@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     filename = string(argv[1]);
     Midi* midi = get_midi_file_from_cli(filename);
 
-    sf::Window application(
+    sf::RenderWindow application(
         sf::VideoMode(800, 600),
         "Linthesia"
     );

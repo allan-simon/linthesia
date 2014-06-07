@@ -10,7 +10,7 @@ class SelectTrackScreen : public AbstractScreen {
 
     public:
         const static ScreenIndex INDEX;
-        ScreenIndex run(sf::Window &app); 
+        ScreenIndex run(sf::RenderWindow &app);
 
 };
 

@@ -12,7 +12,7 @@ const ScreenIndex SelectTrackScreen::INDEX = "select_tracks_creen";
 /**
  *
  */
-ScreenIndex SelectTrackScreen::run(sf::Window &app) {
+ScreenIndex SelectTrackScreen::run(sf::RenderWindow &app) {
     sf::Event event;
 
     std::cout << INDEX << std::endl;
