@@ -6,6 +6,8 @@
 #include "libmidi/midi.h"
 #include "libmidi/midi_util.h"
 
+#include "screens/screens.h"
+
 
 using namespace std;
 
@@ -46,20 +48,16 @@ int main(int argc, char *argv[]) {
     filename = string(argv[1]);
     Midi* midi = get_midi_file_from_cli(filename);
 
-    sf::Window window(
+    sf::Window application(
         sf::VideoMode(800, 600),
         "Linthesia"
     );
 
+    auto screens = linthesia::init_game_screens();
+    auto currentScreen = linthesia::START_APPLICATION;
 
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-
-        }
+    while (currentScreen != linthesia::STOP_APPLICATION) {
+        currentScreen = screens[currentScreen]->run(application);
     }
 
     delete midi;
