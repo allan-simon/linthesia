@@ -13,9 +13,17 @@
 *.a
 
 #vim plugins files
-src/.ycm_extra_conf.*
+.ycm_extra_conf.*
+
+#binary file
+src/linthesia
 
 #autotools file
+.deps
+.libs
+.dirstamp
+
+libtool
 Makefile.in
 Makefile
 aclocal.m4
@@ -27,10 +35,4 @@ install-sh
 ltmain.sh
 missing
 autom4te.cache/
-libtool
-src/.deps/
-src/.libs
-src/libmidi/.deps/
-src/libmidi/.libs/
-src/libmidi/.dirstamp
-src/linthesia
+stamp-h1
