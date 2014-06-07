@@ -1,4 +1,6 @@
 -*- coding: utf-8 -*-
+0.4.3: - Added compilation with autotools
+       - Compile fine on 32 bits and 64 bits OS
 
 0.4-1: - Added support for internal keyboard (using PC keyboard)
 
