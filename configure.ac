@@ -1,8 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-
 AC_PREREQ([2.69])
-AC_INIT([linthesia], [0.4.3], [victor.lavaud@gmail.com])
+AC_INIT([linthesia], [0.5.0], [victor.lavaud@gmail.com])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 #AM_LANG([C++])
 AC_CONFIG_SRCDIR([src/main.cpp])
@@ -20,10 +19,15 @@ AC_PROG_MKDIR_P
 # Checks for header files.
 AC_CHECK_HEADERS([string string.h iostream algorithm locale vector sstream queue functional map iomanip set exception sys/time.h])
 
-PKG_CHECK_MODULES([GTKGLEXTMM],[gtkglextmm-1.2])
-PKG_CHECK_MODULES([GTKMM],[gtkmm-2.4])
-PKG_CHECK_MODULES([GCONFMM],[gconfmm-2.6])
-PKG_CHECK_MODULES([ALSA],[alsa])
+AC_LANG_PUSH([C++])
+AC_CHECK_HEADER(
+    [SFML/Config.hpp],
+    [],
+    [AC_MSG_ERROR([SFML headers not found.])]
+)
+AC_LANG_POP([C++])
+
+CXXFLAGS="$CXXFLAGS -std=c++11"
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
