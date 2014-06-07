@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([linthesia], [0.6.2], [victor.lavaud@gmail.com])
+AC_INIT([linthesia], [0.4.3], [victor.lavaud@gmail.com])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 #AM_LANG([C++])
 AC_CONFIG_SRCDIR([src/main.cpp])
