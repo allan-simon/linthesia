@@ -12,6 +12,6 @@
 #include <string>
 
 // See CHANGELOG for a list of what has changed between versions
-static const std::string LinthesiaVersionString = "0.4.2";
+static const std::string LinthesiaVersionString = "0.4.3";
 
 #endif // __LINTHESIA_VERSION_H__
