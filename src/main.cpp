@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
         sf::VideoMode(800, 600),
         "Linthesia"
     );
+    application.setVerticalSyncEnabled(true);
 
     auto screens = linthesia::init_game_screens();
     auto currentScreen = linthesia::START_APPLICATION;

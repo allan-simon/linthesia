@@ -12,6 +12,11 @@ const ScreenIndex SelectTrackScreen::INDEX = "select_tracks_creen";
 /**
  *
  */
+const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
+
+/**
+ *
+ */
 ScreenIndex SelectTrackScreen::run(sf::RenderWindow &app) {
     sf::Event event;
 
@@ -24,6 +29,8 @@ ScreenIndex SelectTrackScreen::run(sf::RenderWindow &app) {
                 return STOP_APPLICATION;
             }
         }
+        app.clear(BACKGROUND_COLOR);
+        app.display();
     }
 }
 
