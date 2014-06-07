@@ -14,15 +14,18 @@
 
 #autotools file
 Makefile.in
+Makefile
 aclocal.m4
-autom4te.cache/
 compile
-config.guess
-config.h.in
-config.sub
+config.*
 configure
 depcomp
 install-sh
 ltmain.sh
 missing
-
+autom4te.cache/
+libtool
+src/.deps/
+src/.libs
+src/libmidi/.deps/
+src/libmidi/.libs/
