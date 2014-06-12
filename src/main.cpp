@@ -37,17 +37,6 @@ Midi* get_midi_file_from_cli(std::string& filename) {
 
 int main(int argc, char *argv[]) {
 
-    string filename;
-    if (argc != 2) {
-        cerr << "For the time being, you must run linthesia with" <<
-            " a filename" <<
-            endl;
-        return 1;
-    }
-
-    filename = string(argv[1]);
-    Midi* midi = get_midi_file_from_cli(filename);
-
     sf::RenderWindow application(
         sf::VideoMode(800, 600),
         "Linthesia"
@@ -60,8 +49,6 @@ int main(int argc, char *argv[]) {
     while (currentScreen != linthesia::STOP_APPLICATION) {
         currentScreen = screens[currentScreen]->run(application);
     }
-
-    delete midi;
 
     return 0;
 }

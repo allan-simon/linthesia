@@ -34,4 +34,4 @@ For version 0.5 and above (including current master) you simply need
 
 ##Launching it
 
-    ./src/linthesia  PATH_TO_A_MIDI_FILE
+    cd src ; ./linthesia
