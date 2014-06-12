@@ -49,7 +49,13 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
-        sf::Text text;
+        sf::Text label;
+
+        /**
+         *
+         */
+        sf::Font font;
+
 };
 
 }

@@ -22,7 +22,15 @@ AbstractButton::AbstractButton(
     }
     sprite.setTexture(texture);
 
-    //TODO: display text on top of the button
+    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
+        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    }
+    label.setFont(font);
+    label.setString(_text);
+    //TODO replace this by a smartly calculated position
+    //in order to have text centered
+    label.setPosition(10.0f,5.0f);
+
 }
 
 /**
@@ -41,6 +49,7 @@ void AbstractButton::draw(
 ) const {
     states.transform *= getTransform();
     target.draw(sprite, states);
+    target.draw(label, states);
 }
 
 }
