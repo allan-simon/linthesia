@@ -24,6 +24,10 @@ ScreenIndex MainScreen::run(sf::RenderWindow &app) {
 
     //TODO: i18n it
     linthesia::AbstractButton exitButton("exit game");
+    exitButton.setPosition(
+        0,
+        app.getSize().y - exitButton.getGlobalBounds().height
+    );
     //TODO: add real position to this button
 
     // on purpose

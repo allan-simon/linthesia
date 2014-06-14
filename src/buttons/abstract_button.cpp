@@ -37,7 +37,20 @@ AbstractButton::AbstractButton(
  *
  */
 bool AbstractButton::containsPoint(sf::Vector2i point) const {
-    return sprite.getGlobalBounds().contains(point.x, point.y);
+    // we subtract the x,y position of the button itself
+    // as the point given in parameter has its coordinate relative to
+    // the window
+    return getGlobalBounds().contains(
+        point.x - getPosition().x,
+        point.y - getPosition().y
+    );
+}
+
+/**
+ *
+ */
+sf::FloatRect AbstractButton::getGlobalBounds() const {
+    return sprite.getGlobalBounds();
 }
 
 /**

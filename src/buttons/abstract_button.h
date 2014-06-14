@@ -26,6 +26,11 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          */
         bool containsPoint(sf::Vector2i point) const;
 
+        /**
+         *
+         */
+        sf::FloatRect getGlobalBounds() const;
+
     private:
 
         /**
