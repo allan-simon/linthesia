@@ -33,6 +33,14 @@ class MainScreen : public AbstractScreen {
 
         linthesia::AbstractButton exitButton;
 
+        /**
+         *
+         */
+        sf::Texture logoTexture;
+        sf::Sprite logo;
+
+        void setLogoPosition(sf::RenderWindow &app);
+
 };
 
 
