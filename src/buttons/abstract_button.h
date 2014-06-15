@@ -25,13 +25,6 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
 
     public :
 
-        /** 
-         * @param text text to put hover the button
-         */
-        AbstractButton(
-            const std::string& text
-        );
-
         /**
          * Check if the button state needs to be changed
          * (set as hovered, clicked etc.) and change it
@@ -40,14 +33,14 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          * we click on it)
          * TODO: find a better name
          */
-        bool actionTriggered(const sf::Window &app);
+        virtual bool actionTriggered(const sf::Window &app) = 0;
 
         /**
          *
          */
-        sf::FloatRect getGlobalBounds() const;
+        virtual sf::FloatRect getGlobalBounds() const = 0;
 
-    private:
+    protected:
 
         /**
          *
@@ -55,7 +48,7 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
         virtual void draw(
             sf::RenderTarget& target,
             sf::RenderStates states
-        ) const;
+        ) const = 0;
 
 
         /**
@@ -63,35 +56,6 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          */
         bool containsPoint(sf::Vector2i point) const;
 
-        /**
-         *
-         */
-        void setHovered();
-        void setUnhovered();
-
-        /**
-         *
-         */
-        sf::Sprite sprite;
-
-        /**
-         *
-         */
-        sf::Texture texture;
-
-        /**
-         *
-         */
-        sf::Text label;
-
-        /**
-         *
-         */
-        sf::Font font;
-
-        /**
-         *
-         */
         ButtonStates currentState;
 };
 

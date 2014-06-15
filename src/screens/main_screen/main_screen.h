@@ -4,7 +4,7 @@
 #include "screens/abstract_screen.h"
 #include "screens/screens.h"
 
-#include "buttons/abstract_button.h"
+#include "buttons/one_line_button.h"
 
 namespace linthesia {
 
@@ -25,13 +25,13 @@ class MainScreen : public AbstractScreen {
          */
         ScreenIndex run(sf::RenderWindow &app);
 
-    private:
+    protected:
         /**
          * Set the position of the exit button on main screen
          */
         void setExitButtonPosition(sf::RenderWindow &app);
 
-        linthesia::AbstractButton exitButton;
+        linthesia::OneLineButton exitButton;
 
         /**
          *
