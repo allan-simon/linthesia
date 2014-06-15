@@ -1,7 +1,6 @@
 #include "main_screen.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
-#include "buttons/abstract_button.h"
 
 namespace linthesia {
 
@@ -18,18 +17,22 @@ const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
 /**
  *
  */
+MainScreen::MainScreen() :
+    AbstractScreen(),
+    exitButton("exit game")
+{
+
+}
+
+/**
+ *
+ */
 ScreenIndex MainScreen::run(sf::RenderWindow &app) {
     sf::Event event;
 
-
+    setExitButtonPosition(app);
     //TODO: i18n it
-    linthesia::AbstractButton exitButton("exit game");
     // we set the exit button to bottom left (with padding)
-    exitButton.setPosition(
-        PADDING,
-        app.getSize().y - (exitButton.getGlobalBounds().height + PADDING)
-    );
-
     // on purpose infinite loop
     while (true) {
         while (app.pollEvent(event)) {
@@ -46,6 +49,16 @@ ScreenIndex MainScreen::run(sf::RenderWindow &app) {
         app.draw(exitButton);
         app.display();
     }
+}
+
+/**
+ *
+ */
+void MainScreen::setExitButtonPosition(sf::RenderWindow &app) {
+    exitButton.setPosition(
+        PADDING,
+        app.getSize().y - (exitButton.getGlobalBounds().height + PADDING)
+    );
 }
 
 } // end namespace linthesia
