@@ -8,17 +8,31 @@
 
 namespace linthesia {
 
+/**
+ * application main screen, the one which is displayed when game
+ * is started
+ */
 class MainScreen : public AbstractScreen {
 
     public:
         MainScreen();
         const static ScreenIndex INDEX;
+
+        /**
+         * Event loop for this screen is runned inside this function
+         * it returns the key corresponding to the next screen to load
+         * or if the application needs to be quitted
+         */
         ScreenIndex run(sf::RenderWindow &app);
 
     private:
+        /**
+         * Set the position of the exit button on main screen
+         */
         void setExitButtonPosition(sf::RenderWindow &app);
 
         linthesia::AbstractButton exitButton;
+
 };
 
 
