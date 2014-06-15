@@ -27,9 +27,14 @@ AbstractButton::AbstractButton(
     }
     label.setFont(font);
     label.setString(_text);
-    //TODO replace this by a smartly calculated position
-    //in order to have text centered
-    label.setPosition(10.0f,5.0f);
+
+    //We center the text inside the button
+    label.setPosition(
+        (sprite.getLocalBounds().width - label.getLocalBounds().width) / 2.0f,
+        // TODO: logically it should be  / 2.0 but then it's not centered etc..
+        // need to figure out why
+        (sprite.getLocalBounds().height - label.getLocalBounds().height) / 4.0f
+    );
 
 }
 
