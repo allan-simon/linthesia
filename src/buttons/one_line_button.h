@@ -12,6 +12,10 @@ namespace linthesia {
 class OneLineButton : public AbstractButton {
 
     public :
+        /**
+         * Load the texture once for all
+         */
+        static void init();
 
         /** 
          * @param text text to put hover the button
@@ -33,6 +37,19 @@ class OneLineButton : public AbstractButton {
     private:
 
         /**
+         * static so the texture is load only once, and available
+         * for all application lifetime
+         */
+        static sf::Texture texture;
+
+        /**
+         *
+         */
+        static sf::Font font;
+
+
+
+        /**
          *
          */
         virtual void draw(
@@ -51,22 +68,10 @@ class OneLineButton : public AbstractButton {
          *
          */
         sf::Sprite sprite;
-
-        /**
-         *
-         */
-        sf::Texture texture;
-
         /**
          *
          */
         sf::Text label;
-
-        /**
-         *
-         */
-        sf::Font font;
-
 };
 
 }

@@ -4,6 +4,8 @@
 #include "screens/abstract_screen.h"
 #include "screens/screens.h"
 
+#include "buttons/one_line_button.h"
+
 namespace linthesia {
 
 class FileSelectScreen : public AbstractScreen {
@@ -12,6 +14,8 @@ class FileSelectScreen : public AbstractScreen {
         const static ScreenIndex INDEX;
         ScreenIndex run(sf::RenderWindow &app); 
 
+    private:
+        std::vector<OneLineButton> fileButtons;
 };
 
 

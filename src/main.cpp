@@ -8,6 +8,7 @@
 
 #include "screens/screens.h"
 
+#include "buttons/one_line_button.h"
 
 using namespace std;
 
@@ -42,6 +43,8 @@ int main(int argc, char *argv[]) {
         "Linthesia"
     );
     application.setVerticalSyncEnabled(true);
+
+    linthesia::OneLineButton::init();
 
     auto screens = linthesia::init_game_screens();
     auto currentScreen = linthesia::START_APPLICATION;

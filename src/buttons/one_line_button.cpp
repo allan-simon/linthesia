@@ -10,6 +10,25 @@
 
 namespace linthesia {
 
+sf::Texture OneLineButton::texture = sf::Texture();
+sf::Font OneLineButton::font = sf::Font();
+
+/**
+ *
+ */
+void OneLineButton::init() {
+    //TODO: replace hardcoded strings by something better
+    if (!texture.loadFromFile("../graphics/button.png")) {
+        std::cerr << "Can't load button.png" << std::endl;
+    }
+    texture.setSmooth(true);
+
+    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
+        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    }
+
+}
+
 /**
  *
  */
@@ -19,17 +38,7 @@ OneLineButton::OneLineButton(
     AbstractButton()
 {
     currentState = ButtonStates::NORMAL;
-
-    //TODO: replace hardcoded strings by something better
-    if (!texture.loadFromFile("../graphics/button.png")) {
-        std::cerr << "Can't load button.png" << std::endl;
-    }
-    texture.setSmooth(true);
     sprite.setTexture(texture);
-
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
-    }
     label.setFont(font);
     label.setString(_text);
 
