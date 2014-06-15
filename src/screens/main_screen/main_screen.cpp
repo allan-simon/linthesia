@@ -24,26 +24,23 @@ ScreenIndex MainScreen::run(sf::RenderWindow &app) {
 
     //TODO: i18n it
     linthesia::AbstractButton exitButton("exit game");
+    // we set the exit button to bottom left (with padding)
     exitButton.setPosition(
-        0,
-        app.getSize().y - exitButton.getGlobalBounds().height
+        PADDING,
+        app.getSize().y - (exitButton.getGlobalBounds().height + PADDING)
     );
-    //TODO: add real position to this button
 
-    // on purpose
+    // on purpose infinite loop
     while (true) {
         while (app.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 return STOP_APPLICATION;
             }
 
-            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                //TODO: maybe create directly a "isClicked" function ?
-                if (exitButton.containsPoint(sf::Mouse::getPosition(app))) {
-                    return STOP_APPLICATION;
-                }
-                return SelectTrackScreen::INDEX;
+            if (exitButton.actionTriggered(app)) {
+                return STOP_APPLICATION;
             }
+
         }
         app.clear(BACKGROUND_COLOR);
         app.draw(exitButton);

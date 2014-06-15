@@ -10,21 +10,37 @@
 #include <SFML/Graphics/Text.hpp>
 
 namespace linthesia {
+
+enum ButtonStates {
+    NORMAL,
+    HOVERED,
+    CLICKED,
+    DISABLED
+};
+
+/**
+ * represent a button with some text hover it
+ */
 class AbstractButton : public sf::Drawable , public sf::Transformable {
 
     public :
+
         /** 
-         *
+         * @param text text to put hover the button
          */
         AbstractButton(
-            const std::string &text
+            const std::string& text
         );
 
-            
         /**
-         * TODO maybe replace directly by a "isClicked" ?
+         * Check if the button state needs to be changed
+         * (set as hovered, clicked etc.) and change it
+         * We return true if we are in the state in which
+         * its action needs to be triggered (typically when
+         * we click on it)
+         * TODO: find a better name
          */
-        bool containsPoint(sf::Vector2i point) const;
+        bool actionTriggered(const sf::Window &app);
 
         /**
          *
@@ -40,6 +56,18 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
             sf::RenderTarget& target,
             sf::RenderStates states
         ) const;
+
+
+        /**
+         *
+         */
+        bool containsPoint(sf::Vector2i point) const;
+
+        /**
+         *
+         */
+        void setHovered();
+        void setUnhovered();
 
         /**
          *
@@ -61,6 +89,10 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          */
         sf::Font font;
 
+        /**
+         *
+         */
+        ButtonStates currentState;
 };
 
 }
