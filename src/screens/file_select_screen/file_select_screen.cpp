@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 #include "utilities/tinydir.h"
 #include "file_select_screen.h"
@@ -75,6 +76,8 @@ ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
     for (auto fileName : midiFileNames) {
         fileButtons.push_back(OneLineButton(fileName));
     }
+    updateIterators(app);
+    setFileButtonsPosition(app);
 
 
     // on purpose
@@ -86,10 +89,70 @@ ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
         }
 
         app.clear(BACKGROUND_COLOR);
+        std::for_each(
+            firstDisplayedIt,
+            lastDisplayedIt,
+            [&](const OneLineButton& oneFileButton) {
+                app.draw(oneFileButton);
+            }
+        );
         //TODO: for test purpose only
-        app.draw(fileButtons[0]);
         app.display();
     }
+
+}
+
+/**
+ *
+ */
+void FileSelectScreen::updateIterators(
+    const sf::RenderWindow& app
+) {
+    unsigned windowHeight = app.getSize().y;
+    unsigned maxDisplayableFileButton = 0;
+
+    // we first calculate how many file button fit in the
+    // visual place available
+    maxDisplayableFileButton = windowHeight / OneLineButton::getSize().y;
+
+    firstDisplayedIt = fileButtons.begin() + fileIndex;
+
+    // the last displayed item is either the
+    // "fileIndex + maxDisplayableFileButton"th fileButton
+    // or the actual last one 
+    if (fileIndex + maxDisplayableFileButton < fileButtons.size()) {
+        lastDisplayedIt = firstDisplayedIt + maxDisplayableFileButton;
+    } else {
+        lastDisplayedIt = fileButtons.end();
+    }
+}
+
+/**
+ *
+ */
+void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
+
+    // fileButtons are centered, as they all have the same size
+    // we compute it only once
+    unsigned widthCenter = (app.getSize().x - OneLineButton::getSize().x) / 2;
+
+    unsigned i = 0;
+    std::for_each(
+        firstDisplayedIt,
+        lastDisplayedIt,
+
+        // [&] in order to have access to i from inside the lambda
+        [&](OneLineButton& oneFileButton) {
+            //TODO : maybe add some margin before each file button
+            // right now they are stick each after the other
+            i += OneLineButton::getSize().y;
+            oneFileButton.setPosition(
+                widthCenter,
+                i
+            );
+        }
+
+    );
 
 }
 

@@ -17,6 +17,13 @@ class OneLineButton : public AbstractButton {
          */
         static void init();
 
+        /**
+         * Get the size of the common texture used for all
+         * instance of this class, useful so that we don't need
+         * to have an instance ready to prepare layout etc.
+         */
+        static const sf::Vector2u getSize();
+
         /** 
          * @param text text to put hover the button
          */

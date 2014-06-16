@@ -32,6 +32,13 @@ void OneLineButton::init() {
 /**
  *
  */
+const sf::Vector2u OneLineButton::getSize() {
+    return texture.getSize();
+}
+
+/**
+ *
+ */
 OneLineButton::OneLineButton(
     const std::string &_text
 ):
