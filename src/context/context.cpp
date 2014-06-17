@@ -26,7 +26,7 @@ bool Context::openMidiFile(const std::string& _filename) {
         // in case of multiple open, we delete the previous midi file
         delete midi;
         midi = new Midi(Midi::read_from_file(_filename));
-        filename = filename;
+        filename = _filename;
     } catch (const MidiError& exception) {
         std::cerr << exception.get_error_description() << std::endl;
         std::cerr << "while opening " << _filename << std::endl;

@@ -32,6 +32,11 @@ class TwoLinesButton: public AbstractButton {
          */
         sf::FloatRect getGlobalBounds() const;
 
+        /**
+         *
+         */
+        void setText(const std::string& newText);
+
     private:
 
         /**

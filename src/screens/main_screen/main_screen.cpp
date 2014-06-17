@@ -4,6 +4,7 @@
 #include "screens/select_track_screen/select_track_screen.h"
 #include "screens/file_select_screen/file_select_screen.h"
 
+#include "context/context.h"
 
 namespace linthesia {
 
@@ -42,6 +43,14 @@ ScreenIndex MainScreen::run(
     Context &context
 ) {
     sf::Event event;
+
+   //TODO replace by function more specific "isSongChosen""
+   // something like that
+   // if a song is selected we display its name on
+   // choose song button
+   if(!context.getFilename().empty()) {
+        chooseSongButton.setText(context.getFilename());
+   }
 
     setExitButtonPosition(app);
     setLogoPosition(app);

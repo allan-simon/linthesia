@@ -108,6 +108,13 @@ void TwoLinesButton::setUnhovered() {
 /**
  *
  */
+ void TwoLinesButton::setText(const std::string &newText) {
+    textLabel.setString(newText);
+ }
+
+/**
+ *
+ */
 void TwoLinesButton::draw(
     sf::RenderTarget& target,
     sf::RenderStates states
