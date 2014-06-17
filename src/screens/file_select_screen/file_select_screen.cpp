@@ -74,7 +74,7 @@ ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
 
     fileButtons.clear();
     for (auto fileName : midiFileNames) {
-        fileButtons.push_back(OneLineButton(fileName));
+        fileButtons.push_back(LongOneLineButton(fileName));
     }
     updateIterators(app);
     setFileButtonsPosition(app);
@@ -86,13 +86,17 @@ ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
             if (event.type == sf::Event::Closed) {
                 return START_APPLICATION;
             }
+
+            if (actionTriggeredFileButtons(app)) {
+                return START_APPLICATION;
+            }
         }
 
         app.clear(BACKGROUND_COLOR);
         std::for_each(
             firstDisplayedIt,
             lastDisplayedIt,
-            [&](const OneLineButton& oneFileButton) {
+            [&](const LongOneLineButton& oneFileButton) {
                 app.draw(oneFileButton);
             }
         );
@@ -113,13 +117,13 @@ void FileSelectScreen::updateIterators(
 
     // we first calculate how many file button fit in the
     // visual place available
-    maxDisplayableFileButton = windowHeight / OneLineButton::getSize().y;
+    maxDisplayableFileButton = windowHeight / LongOneLineButton::getSize().y;
 
     firstDisplayedIt = fileButtons.begin() + fileIndex;
 
     // the last displayed item is either the
     // "fileIndex + maxDisplayableFileButton"th fileButton
-    // or the actual last one 
+    // or the actual last one
     if (fileIndex + maxDisplayableFileButton < fileButtons.size()) {
         lastDisplayedIt = firstDisplayedIt + maxDisplayableFileButton;
     } else {
@@ -134,7 +138,7 @@ void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
 
     // fileButtons are centered, as they all have the same size
     // we compute it only once
-    unsigned widthCenter = (app.getSize().x - OneLineButton::getSize().x) / 2;
+    unsigned widthCenter = (app.getSize().x - LongOneLineButton::getSize().x) / 2;
 
     unsigned i = 0;
     std::for_each(
@@ -142,10 +146,10 @@ void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
         lastDisplayedIt,
 
         // [&] in order to have access to i from inside the lambda
-        [&](OneLineButton& oneFileButton) {
+        [&](LongOneLineButton& oneFileButton) {
             //TODO : maybe add some margin before each file button
             // right now they are stick each after the other
-            i += OneLineButton::getSize().y;
+            i += LongOneLineButton::getSize().y;
             oneFileButton.setPosition(
                 widthCenter,
                 i
@@ -154,6 +158,26 @@ void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
 
     );
 
+}
+
+/**
+ *
+ */
+bool FileSelectScreen::actionTriggeredFileButtons(const sf::RenderWindow &app) {
+
+    bool oneFileChosen = false;
+    std::for_each(
+        firstDisplayedIt,
+        lastDisplayedIt,
+        [&](LongOneLineButton& oneFileButton) {
+            if (oneFileButton.actionTriggered(app)) {
+                oneFileChosen = true;
+            }
+
+        }
+    );
+
+    return oneFileChosen;
 }
 
 } // end namespace linthesia

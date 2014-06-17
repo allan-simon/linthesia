@@ -33,7 +33,7 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          * we click on it)
          * TODO: find a better name
          */
-        virtual bool actionTriggered(const sf::Window &app) = 0;
+        virtual bool actionTriggered(const sf::Window &app);
 
         /**
          *
@@ -50,6 +50,11 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
             sf::RenderStates states
         ) const = 0;
 
+        /**
+         *
+         */
+        virtual void setHovered() = 0;
+        virtual void setUnhovered() = 0;
 
         /**
          *

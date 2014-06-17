@@ -10,73 +10,15 @@
 
 namespace linthesia {
 
-sf::Texture OneLineButton::texture = sf::Texture();
-sf::Font OneLineButton::font = sf::Font();
-
-/**
- *
- */
-void OneLineButton::init() {
-    //TODO: replace hardcoded strings by something better
-    if (!texture.loadFromFile("../graphics/button.png")) {
-        std::cerr << "Can't load button.png" << std::endl;
-    }
-    texture.setSmooth(true);
-
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
-    }
-
-}
-
-/**
- *
- */
-const sf::Vector2u OneLineButton::getSize() {
-    return texture.getSize();
-}
-
 /**
  *
  */
 OneLineButton::OneLineButton(
-    const std::string &_text
 ):
     AbstractButton()
 {
     currentState = ButtonStates::NORMAL;
-    sprite.setTexture(texture);
-    label.setFont(font);
-    label.setString(_text);
-
-    //We center the text inside the button
-    label.setPosition(
-        (sprite.getLocalBounds().width - label.getLocalBounds().width) / 2.0f,
-        // TODO: logically it should be  / 2.0 but then it's not centered etc..
-        // need to figure out why
-        (sprite.getLocalBounds().height - label.getLocalBounds().height) / 4.0f
-    );
-
 }
-
-/**
- *
- */
-bool OneLineButton::actionTriggered(const sf::Window &app) {
-    if (containsPoint(sf::Mouse::getPosition(app))) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // only if we left click inside the button
-            // we will consider the action of this button
-            // triggered
-            return true;
-        }
-        setHovered();
-    } else {
-        setUnhovered();
-    }
-    return false;
-}
-
 /**
  *
  */

@@ -7,6 +7,8 @@ bin_PROGRAMS = linthesia
 linthesia_SOURCES = main.cpp \
 	buttons/abstract_button.cpp \
 	buttons/one_line_button.cpp \
+	buttons/short_one_line_button.cpp \
+	buttons/long_one_line_button.cpp \
 	buttons/two_lines_button.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \

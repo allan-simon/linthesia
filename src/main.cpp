@@ -8,35 +8,14 @@
 
 #include "screens/screens.h"
 
-#include "buttons/one_line_button.h"
+//TODO should not be needed
+#include "buttons/short_one_line_button.h"
+#include "buttons/long_one_line_button.h"
 
 using namespace std;
 
 
-Midi* get_midi_file_from_cli(std::string& filename);
-/**
- *
- */
-Midi* get_midi_file_from_cli(std::string& filename) {
-    try {
-        return new Midi(Midi::read_from_file(filename));
-
-    } catch (const MidiError &e) {
-        string wrappedDescription = STRING(
-            "Problem while loading file: " <<
-            filename <<
-            "\n"
-        ) + e.get_error_description();
-
-        cerr << wrappedDescription << endl;
-        filename = "";
-        return nullptr;
-    }
-}
-
-
-
-int main(int argc, char *argv[]) {
+int main() {
 
     sf::RenderWindow application(
         sf::VideoMode(800, 600),
@@ -44,7 +23,9 @@ int main(int argc, char *argv[]) {
     );
     application.setVerticalSyncEnabled(true);
 
-    linthesia::OneLineButton::init();
+    //TODO should not be needed here
+    linthesia::ShortOneLineButton::init();
+    linthesia::LongOneLineButton::init();
 
     auto screens = linthesia::init_game_screens();
     auto currentScreen = linthesia::START_APPLICATION;
