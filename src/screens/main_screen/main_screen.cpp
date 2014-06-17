@@ -37,7 +37,10 @@ MainScreen::MainScreen() :
 /**
  *
  */
-ScreenIndex MainScreen::run(sf::RenderWindow &app) {
+ScreenIndex MainScreen::run(
+    sf::RenderWindow &app,
+    Context &context
+) {
     sf::Event event;
 
     setExitButtonPosition(app);

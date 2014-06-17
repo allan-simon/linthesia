@@ -24,7 +24,10 @@ class MainScreen : public AbstractScreen {
          * it returns the key corresponding to the next screen to load
          * or if the application needs to be quitted
          */
-        ScreenIndex run(sf::RenderWindow &app);
+        ScreenIndex run(
+            sf::RenderWindow &app,
+            Context &context
+        );
 
     protected:
         /**

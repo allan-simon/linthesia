@@ -17,7 +17,10 @@ const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
 /**
  *
  */
-ScreenIndex SelectTrackScreen::run(sf::RenderWindow &app) {
+ScreenIndex SelectTrackScreen::run(
+    sf::RenderWindow &app,
+    Context &context
+) {
     sf::Event event;
 
     std::cout << INDEX << std::endl;

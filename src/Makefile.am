@@ -10,6 +10,7 @@ linthesia_SOURCES = main.cpp \
 	buttons/short_one_line_button.cpp \
 	buttons/long_one_line_button.cpp \
 	buttons/two_lines_button.cpp \
+	context/context.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \
 	screens/game_over_screen/game_over_screen.cpp \

@@ -14,7 +14,10 @@ class OnePlayerScreen : public AbstractScreen {
 
     public:
         const static ScreenIndex INDEX;
-        ScreenIndex run(sf::RenderWindow &app); 
+        ScreenIndex run(
+            sf::RenderWindow &app,
+            Context &context
+        );
 
 };
 

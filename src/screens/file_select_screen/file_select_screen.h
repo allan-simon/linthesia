@@ -12,7 +12,10 @@ class FileSelectScreen : public AbstractScreen {
 
     public:
         const static ScreenIndex INDEX;
-        ScreenIndex run(sf::RenderWindow &app); 
+        ScreenIndex run(
+            sf::RenderWindow &app,
+            Context &context
+        );
 
     private:
 
@@ -22,13 +25,17 @@ class FileSelectScreen : public AbstractScreen {
          * and return true if one button was clicked
          * 
          */
-        bool actionTriggeredFileButtons(const sf::RenderWindow& app);
+        bool actionTriggeredFileButtons(
+            const sf::RenderWindow& app,
+            Context &context
+        );
 
         /**
          *
          */
         void setFileButtonsPosition(const sf::RenderWindow& app);
         std::vector<LongOneLineButton> fileButtons;
+        std::vector<std::string> midiFileNames;
 
 
         /**

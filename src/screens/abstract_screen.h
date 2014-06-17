@@ -7,10 +7,15 @@
 
 namespace linthesia {
 
+class Context;
+
 class AbstractScreen {
 
     public:
-        virtual ScreenIndex run(sf::RenderWindow &app) = 0;
+        virtual ScreenIndex run(
+            sf::RenderWindow &app,
+            Context& context
+        ) = 0;
         virtual ~AbstractScreen(){}
 
     protected:

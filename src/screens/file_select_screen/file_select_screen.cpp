@@ -4,6 +4,7 @@
 #include "utilities/tinydir.h"
 #include "file_select_screen.h"
 
+#include "context/context.h"
 
 namespace linthesia {
 
@@ -11,6 +12,11 @@ namespace linthesia {
  *
  */
 const ScreenIndex FileSelectScreen::INDEX = "select_tracks_creen";
+
+/**
+ *
+ */
+const static std::string MIDI_DIR_PATH("../songs/");
 
 /**
  *
@@ -64,13 +70,15 @@ static std::vector<std::string> get_midi_files(const std::string& path) {
 /**
  *
  */
-ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
+ScreenIndex FileSelectScreen::run(
+    sf::RenderWindow &app,
+    Context &context
+) {
     sf::Event event;
 
     std::cout << INDEX << std::endl;
 
-    std::string MIDI_DIR_PATH("../songs");
-    std::vector<std::string> midiFileNames = get_midi_files(MIDI_DIR_PATH);
+    midiFileNames = get_midi_files(MIDI_DIR_PATH);
 
     fileButtons.clear();
     for (auto fileName : midiFileNames) {
@@ -87,7 +95,7 @@ ScreenIndex FileSelectScreen::run(sf::RenderWindow &app) {
                 return START_APPLICATION;
             }
 
-            if (actionTriggeredFileButtons(app)) {
+            if (actionTriggeredFileButtons(app, context)) {
                 return START_APPLICATION;
             }
         }
@@ -163,16 +171,26 @@ void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
 /**
  *
  */
-bool FileSelectScreen::actionTriggeredFileButtons(const sf::RenderWindow &app) {
+bool FileSelectScreen::actionTriggeredFileButtons(
+    const sf::RenderWindow &app,
+    Context &context
+) {
 
+    unsigned buttonNumber = 0;
     bool oneFileChosen = false;
     std::for_each(
         firstDisplayedIt,
         lastDisplayedIt,
         [&](LongOneLineButton& oneFileButton) {
-            if (oneFileButton.actionTriggered(app)) {
-                oneFileChosen = true;
+            buttonNumber++;
+            if (!oneFileButton.actionTriggered(app)) {
+                return;
             }
+            std::string filename = midiFileNames[buttonNumber+fileIndex];
+            if (!context.openMidiFile(MIDI_DIR_PATH + filename)) {
+                return;
+            }
+            oneFileChosen = true;
 
         }
     );

@@ -2,11 +2,8 @@
 #include <iostream>
 
 #include <SFML/Window.hpp>
-
-#include "libmidi/midi.h"
-#include "libmidi/midi_util.h"
-
 #include "screens/screens.h"
+#include "context/context.h"
 
 //TODO should not be needed
 #include "buttons/short_one_line_button.h"
@@ -30,8 +27,13 @@ int main() {
     auto screens = linthesia::init_game_screens();
     auto currentScreen = linthesia::START_APPLICATION;
 
+    auto context = linthesia::Context();
+
     while (currentScreen != linthesia::STOP_APPLICATION) {
-        currentScreen = screens[currentScreen]->run(application);
+        currentScreen = screens[currentScreen]->run(
+            application,
+            context
+        );
     }
 
     return 0;
