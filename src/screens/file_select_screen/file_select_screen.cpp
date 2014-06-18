@@ -185,16 +185,18 @@ bool FileSelectScreen::actionTriggeredFileButtons(
         firstDisplayedIt,
         lastDisplayedIt,
         [&](LongOneLineButton& oneFileButton) {
+
+            unsigned currentButton = buttonNumber;
             buttonNumber++;
+
             if (!oneFileButton.actionTriggered(app)) {
                 return;
             }
-            std::string filename = midiFileNames[buttonNumber+fileIndex];
+            std::string filename = midiFileNames[currentButton + fileIndex];
             if (!context.openMidiFile(MIDI_DIR_PATH + filename)) {
                 return;
             }
             oneFileChosen = true;
-
         }
     );
 
