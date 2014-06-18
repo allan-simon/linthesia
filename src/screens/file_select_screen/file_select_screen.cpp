@@ -88,6 +88,9 @@ ScreenIndex FileSelectScreen::run(
     setFileButtonsPosition(app);
 
 
+    //arbitral sleep, otherwise it may happen that a click from
+    //previous screen is still present when we arrive on this screen
+    sf::sleep(sf::milliseconds(100));
     // on purpose
     while (true) {
         while (app.pollEvent(event)) {
