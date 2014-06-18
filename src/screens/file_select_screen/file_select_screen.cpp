@@ -63,7 +63,7 @@ static std::vector<std::string> get_midi_files(const std::string& path) {
         std::cout << tmpFileName << std::endl;
         midiFileNames.push_back(tmpFileName);
     }
-
+    tinydir_close(&midiDir);
     return midiFileNames;
 }
 
