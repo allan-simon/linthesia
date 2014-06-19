@@ -154,7 +154,8 @@ Midi Midi::read_from_stream(istream &stream) {
 
     // Translate each track's list of notes and list
     // of events into microseconds.
-    for (auto track : midi.tracks) { track.reset(); midi.translate_notes( track.get_notes(), pulsesPerQuarterNote);
+    for (auto& track : midi.tracks) {
+        track.reset(); midi.translate_notes( track.get_notes(), pulsesPerQuarterNote);
 
         MidiEventMsList eventsMs;
         for (auto eventPulse: track.get_event_pulses()) {
