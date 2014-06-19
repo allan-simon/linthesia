@@ -24,6 +24,7 @@ For version 0.4.3 on ubuntu you will need to install the following packages
 For version 0.5 and above (including current master) you simply need
 
      libsfml-dev
+     librtmidi-dev
 
 we also use [tinydir](https://github.com/cxong/tinydir), for cross-plateform file/directory
 operation but as a header so no need to install anything

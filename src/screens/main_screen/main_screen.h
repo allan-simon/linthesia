@@ -51,6 +51,10 @@ class MainScreen : public AbstractScreen {
 
         void setLogoPosition(sf::RenderWindow &app);
 
+        /**
+         *
+         */
+        void play(linthesia::Context &context, const sf::Time& delta);
 };
 
 

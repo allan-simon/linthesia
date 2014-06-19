@@ -43,13 +43,22 @@ ScreenIndex MainScreen::run(
     Context &context
 ) {
     sf::Event event;
+    sf::Clock clock;
+    sf::Time currentElapsed = clock.getElapsedTime();
+    sf::Time lastElapsed = clock.getElapsedTime();
 
+
+
+   bool playSong = false;
    //TODO replace by function more specific "isSongChosen""
    // something like that
    // if a song is selected we display its name on
    // choose song button
    if(!context.getFilename().empty()) {
+        currentElapsed = clock.getElapsedTime();
+        lastElapsed = currentElapsed;
         chooseSongButton.setText(context.getFilename());
+        playSong = true;
    }
 
     setExitButtonPosition(app);
@@ -73,6 +82,16 @@ ScreenIndex MainScreen::run(
             }
 
         }
+
+        if (playSong) {
+            play(
+                context,
+                currentElapsed - lastElapsed
+            );
+            lastElapsed = currentElapsed;
+            currentElapsed = clock.getElapsedTime();
+        }
+
         app.clear(BACKGROUND_COLOR);
         app.draw(exitButton);
         app.draw(chooseSongButton);
@@ -113,6 +132,19 @@ void MainScreen::setChooseSongButtonPosition(sf::RenderWindow &app) {
     );
 }
 
+/**
+ *
+ */
+void MainScreen::play(
+    linthesia::Context &context,
+    const sf::Time& delta
+) {
+    auto events =context.update(delta.asMicroseconds());
+    std::cout << "delta " <<  delta.asMicroseconds() << std::endl;
+    for (auto oneEvent : events) {
+        context.midiOut.write(oneEvent.second);
+    }
+}
 
 } // end namespace linthesia
 
