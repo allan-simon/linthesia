@@ -63,7 +63,7 @@ static std::vector<std::string> get_midi_files(const std::string& path) {
         std::cout << tmpFileName << std::endl;
         midiFileNames.push_back(tmpFileName);
     }
-
+    tinydir_close(&midiDir);
     return midiFileNames;
 }
 
@@ -88,6 +88,9 @@ ScreenIndex FileSelectScreen::run(
     setFileButtonsPosition(app);
 
 
+    //arbitral sleep, otherwise it may happen that a click from
+    //previous screen is still present when we arrive on this screen
+    sf::sleep(sf::milliseconds(100));
     // on purpose
     while (true) {
         while (app.pollEvent(event)) {
@@ -182,16 +185,18 @@ bool FileSelectScreen::actionTriggeredFileButtons(
         firstDisplayedIt,
         lastDisplayedIt,
         [&](LongOneLineButton& oneFileButton) {
+
+            unsigned currentButton = buttonNumber;
             buttonNumber++;
+
             if (!oneFileButton.actionTriggered(app)) {
                 return;
             }
-            std::string filename = midiFileNames[buttonNumber+fileIndex];
+            std::string filename = midiFileNames[currentButton + fileIndex];
             if (!context.openMidiFile(MIDI_DIR_PATH + filename)) {
                 return;
             }
             oneFileChosen = true;
-
         }
     );
 

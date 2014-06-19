@@ -35,6 +35,7 @@ int main() {
             context
         );
     }
+    application.close();
 
     return 0;
 }
