@@ -145,7 +145,7 @@ void MainScreen::play(
 ) {
     auto events =context.update(delta.asMicroseconds());
     std::cout << "delta " <<  delta.asMicroseconds() << std::endl;
-    for (auto oneEvent : events) {
+    for (const auto& oneEvent : events) {
         context.midiOut.write(oneEvent.second);
     }
 }
