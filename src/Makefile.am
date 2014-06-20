@@ -19,7 +19,14 @@ linthesia_SOURCES = main.cpp \
 	screens/file_select_screen/file_select_screen.cpp \
 	screens/select_track_screen/select_track_screen.cpp
 
-linthesia_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lrtmidi
-linthesia_LDADD = libmidi.la
+linthesia_DEPENDENCIES = libmidi.la
+
+linthesia_LDFLAGS = -lrtmidi
+
+linthesia_LDADD = $(linthesia_DEPENDENCIES) $(RTMIDI_LIBS)
+linthesia_LDADD += -lsfml-graphics -lsfml-window -lsfml-system
+
 linthesia_CXXFLAGS = -Wall -std=c++11 -iquote $(top_srcdir)/libmidi
+
 linthesia_CPPFLAGS = -DGRAPHDIR="\"$(GRAPHDIR)\""
+linthesia_CPPFLAGS = $(RTMIDI_CFLAGS)
