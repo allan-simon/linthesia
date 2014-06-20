@@ -48,8 +48,7 @@ std::string Context::getFilename() const {
  *
  */
 MidiEventListWithTrackId Context::update(const sf::Int64 deltaMicroseconds) {
-    MidiEventListWithTrackId events = midi->update(static_cast<microseconds_t>(deltaMicroseconds));
-    return events;
+    return midi->update(static_cast<microseconds_t>(deltaMicroseconds));
 }
 
 } // end namespace linthesia

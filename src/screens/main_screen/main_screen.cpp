@@ -49,17 +49,18 @@ ScreenIndex MainScreen::run(
 
 
 
-   bool playSong = false;
-   //TODO replace by function more specific "isSongChosen""
-   // something like that
-   // if a song is selected we display its name on
-   // choose song button
-   if(!context.getFilename().empty()) {
+    bool playSong = false;
+    //TODO replace by function more specific "isSongChosen""
+    // something like that
+    // if a song is selected we display its name on
+    // choose song button
+    context.midiOut.open();
+    if(!context.getFilename().empty()) {
         currentElapsed = clock.getElapsedTime();
         lastElapsed = currentElapsed;
         chooseSongButton.setText(context.getFilename());
         playSong = true;
-   }
+    }
 
     setExitButtonPosition(app);
     setLogoPosition(app);
@@ -70,14 +71,17 @@ ScreenIndex MainScreen::run(
     while (true) {
         while (app.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
+                context.midiOut.close();
                 return STOP_APPLICATION;
             }
 
             if (exitButton.actionTriggered(app)) {
+                context.midiOut.close();
                 return STOP_APPLICATION;
             }
 
             if (chooseSongButton.actionTriggered(app)) {
+                context.midiOut.close();
                 return FileSelectScreen::INDEX;
             }
 
