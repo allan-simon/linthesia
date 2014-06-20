@@ -11,6 +11,7 @@ linthesia_SOURCES = main.cpp \
 	buttons/long_one_line_button.cpp \
 	buttons/two_lines_button.cpp \
 	context/context.cpp \
+	midi_io/midi_out.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \
 	screens/game_over_screen/game_over_screen.cpp \
@@ -18,7 +19,7 @@ linthesia_SOURCES = main.cpp \
 	screens/file_select_screen/file_select_screen.cpp \
 	screens/select_track_screen/select_track_screen.cpp
 
-linthesia_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+linthesia_LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lrtmidi
 linthesia_LDADD = libmidi.la
 linthesia_CXXFLAGS = -Wall -std=c++11 -iquote $(top_srcdir)/libmidi
 linthesia_CPPFLAGS = -DGRAPHDIR="\"$(GRAPHDIR)\""

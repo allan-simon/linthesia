@@ -202,7 +202,7 @@ void Midi::build_tempo_track() {
     // events right over to the new track.
     map<uint32_t, MidiEvent> tempoEvents;
 
-    for (auto track : tracks) {
+    for (auto& track : tracks) {
         for (size_t i = 0; i < track.get_events().size(); ++i) {
             MidiEvent event = track.get_events()[i];
             uint32_t eventPulses = track.get_event_pulses()[i];

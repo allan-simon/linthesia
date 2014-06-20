@@ -43,14 +43,24 @@ ScreenIndex MainScreen::run(
     Context &context
 ) {
     sf::Event event;
+    sf::Clock clock;
+    sf::Time currentElapsed = clock.getElapsedTime();
+    sf::Time lastElapsed = clock.getElapsedTime();
 
-   //TODO replace by function more specific "isSongChosen""
-   // something like that
-   // if a song is selected we display its name on
-   // choose song button
-   if(!context.getFilename().empty()) {
+
+
+    bool playSong = false;
+    //TODO replace by function more specific "isSongChosen""
+    // something like that
+    // if a song is selected we display its name on
+    // choose song button
+    context.midiOut.open();
+    if(!context.getFilename().empty()) {
+        currentElapsed = clock.getElapsedTime();
+        lastElapsed = currentElapsed;
         chooseSongButton.setText(context.getFilename());
-   }
+        playSong = true;
+    }
 
     setExitButtonPosition(app);
     setLogoPosition(app);
@@ -61,18 +71,31 @@ ScreenIndex MainScreen::run(
     while (true) {
         while (app.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
+                context.midiOut.close();
                 return STOP_APPLICATION;
             }
 
             if (exitButton.actionTriggered(app)) {
+                context.midiOut.close();
                 return STOP_APPLICATION;
             }
 
             if (chooseSongButton.actionTriggered(app)) {
+                context.midiOut.close();
                 return FileSelectScreen::INDEX;
             }
 
         }
+
+        if (playSong) {
+            play(
+                context,
+                currentElapsed - lastElapsed
+            );
+            lastElapsed = currentElapsed;
+            currentElapsed = clock.getElapsedTime();
+        }
+
         app.clear(BACKGROUND_COLOR);
         app.draw(exitButton);
         app.draw(chooseSongButton);
@@ -113,6 +136,19 @@ void MainScreen::setChooseSongButtonPosition(sf::RenderWindow &app) {
     );
 }
 
+/**
+ *
+ */
+void MainScreen::play(
+    linthesia::Context &context,
+    const sf::Time& delta
+) {
+    auto events =context.update(delta.asMicroseconds());
+    std::cout << "delta " <<  delta.asMicroseconds() << std::endl;
+    for (auto oneEvent : events) {
+        context.midiOut.write(oneEvent.second);
+    }
+}
 
 } // end namespace linthesia
 
