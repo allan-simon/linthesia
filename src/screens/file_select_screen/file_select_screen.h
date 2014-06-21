@@ -5,12 +5,14 @@
 #include "screens/screens.h"
 
 #include "buttons/long_one_line_button.h"
+#include "buttons/short_one_line_button.h"
 
 namespace linthesia {
 
 class FileSelectScreen : public AbstractScreen {
 
     public:
+        FileSelectScreen();
         const static ScreenIndex INDEX;
         ScreenIndex run(
             sf::RenderWindow &app,
@@ -62,6 +64,14 @@ class FileSelectScreen : public AbstractScreen {
          * TODO: not sure if really needed, maybe ease comprehension
          */
         unsigned fileIndex = 0;
+
+        /**
+         * Set the position of the back button to main screen
+         */
+        void setBackButtonPosition(const sf::RenderWindow &app);
+        linthesia::ShortOneLineButton backButton;
+
+
 };
 
 

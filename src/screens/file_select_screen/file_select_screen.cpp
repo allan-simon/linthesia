@@ -70,16 +70,24 @@ static std::vector<std::string> get_midi_files(const std::string& path) {
 /**
  *
  */
+FileSelectScreen::FileSelectScreen() :
+    AbstractScreen(),
+    backButton("back")
+{
+
+}
+
+/**
+ *
+ */
 ScreenIndex FileSelectScreen::run(
     sf::RenderWindow &app,
     Context &context
 ) {
     sf::Event event;
 
-    std::cout << INDEX << std::endl;
-
+    // we initalize the file selector list
     midiFileNames = get_midi_files(MIDI_DIR_PATH);
-
     fileButtons.clear();
     for (auto fileName : midiFileNames) {
         fileButtons.push_back(LongOneLineButton(fileName));
@@ -87,6 +95,7 @@ ScreenIndex FileSelectScreen::run(
     updateIterators(app);
     setFileButtonsPosition(app);
 
+    setBackButtonPosition(app);
 
     //arbitral sleep, otherwise it may happen that a click from
     //previous screen is still present when we arrive on this screen
@@ -101,9 +110,14 @@ ScreenIndex FileSelectScreen::run(
             if (actionTriggeredFileButtons(app, context)) {
                 return START_APPLICATION;
             }
+
+            if (backButton.actionTriggered(app)) {
+                return START_APPLICATION;
+            }
         }
 
         app.clear(BACKGROUND_COLOR);
+        app.draw(backButton);
         std::for_each(
             firstDisplayedIt,
             lastDisplayedIt,
@@ -111,7 +125,6 @@ ScreenIndex FileSelectScreen::run(
                 app.draw(oneFileButton);
             }
         );
-        //TODO: for test purpose only
         app.display();
     }
 
@@ -201,6 +214,17 @@ bool FileSelectScreen::actionTriggeredFileButtons(
     );
 
     return oneFileChosen;
+}
+
+/**
+ *
+ */
+void FileSelectScreen::setBackButtonPosition(const sf::RenderWindow &app) {
+    // put the "back" putton at bottom left (with some padding)
+    backButton.setPosition(
+        PADDING,
+        app.getSize().y - (backButton.getGlobalBounds().height + PADDING)
+    );
 }
 
 } // end namespace linthesia
