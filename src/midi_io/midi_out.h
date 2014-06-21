@@ -13,7 +13,10 @@ namespace linthesia {
 class MidiOut {
 
     public:
-        MidiOut();
+        // 1 because it's the channel that work by default on my computer(tm)
+        // eventually it will be replaced by a more rational default one
+        // (read from user settings etc.)
+        MidiOut(unsigned _chosenPort = 1);
         /**
          * Write the given midi event on the output
          * (for a standard note midi event it will play it)
@@ -23,7 +26,13 @@ class MidiOut {
         /**
          * Change the output port use when writing midi event
          */
-        void set_chosen_port(unsigned newChosenport);
+        void switchNextPort();
+        void switchPrevPort();
+
+        /**
+         *
+         */
+        std::string getCurrentOutputName();
 
         /**
          * Open the midi output, so that writing event actually goes
@@ -40,10 +49,7 @@ class MidiOut {
     private:
         RtMidiOut  rtMidiOut;
 
-        // 1 because it's the channel that work by default on my computer(tm)
-        // eventually it will be replaced by a more rational default one
-        // (read from user settings etc.)
-        unsigned chosenPort = 1;
+        unsigned chosenPort;
 };
 
 

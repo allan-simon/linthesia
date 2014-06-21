@@ -19,6 +19,11 @@ const ScreenIndex MainScreen::INDEX = START_APPLICATION;
 const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
 
 /**
+ * Space to put between buttons
+ */
+const unsigned INTER_BUTTON_SPACING = 15;
+
+/**
  *
  */
 MainScreen::MainScreen() :
@@ -47,26 +52,23 @@ ScreenIndex MainScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    context.midiOut.open();
 
-
-    bool playSong = false;
     //TODO replace by function more specific "isSongChosen""
     // something like that
     // if a song is selected we display its name on
     // choose song button
-    context.midiOut.open();
     if(!context.getFilename().empty()) {
         currentElapsed = clock.getElapsedTime();
         lastElapsed = currentElapsed;
         chooseSongButton.setText(context.getFilename());
-        playSong = true;
     }
 
     setExitButtonPosition(app);
     setLogoPosition(app);
     setChooseSongButtonPosition(app);
-    //TODO: i18n it
-    // we set the exit button to bottom left (with padding)
+    setSelectMidiOutPosition(app);
+
     // on purpose infinite loop
     while (true) {
         while (app.pollEvent(event)) {
@@ -84,20 +86,22 @@ ScreenIndex MainScreen::run(
                 context.midiOut.close();
                 return FileSelectScreen::INDEX;
             }
-
+            selectMidiOut.actionTriggered(app, event, context);
         }
 
-        if (playSong) {
-            play(
-                context,
-                currentElapsed - lastElapsed
-            );
-            lastElapsed = currentElapsed;
-            currentElapsed = clock.getElapsedTime();
-        }
+        selectMidiOut.run(
+            app,
+            context,
+            currentElapsed - lastElapsed
+        );
+
+
+        lastElapsed = currentElapsed;
+        currentElapsed = clock.getElapsedTime();
 
         app.clear(BACKGROUND_COLOR);
         app.draw(exitButton);
+        app.draw(selectMidiOut);
         app.draw(chooseSongButton);
         app.draw(logo);
         app.display();
@@ -139,16 +143,17 @@ void MainScreen::setChooseSongButtonPosition(sf::RenderWindow &app) {
 /**
  *
  */
-void MainScreen::play(
-    linthesia::Context &context,
-    const sf::Time& delta
-) {
-    auto events =context.update(delta.asMicroseconds());
-    std::cout << "delta " <<  delta.asMicroseconds() << std::endl;
-    for (const auto& oneEvent : events) {
-        context.midiOut.write(oneEvent.second);
-    }
-}
+void MainScreen::setSelectMidiOutPosition(const sf::RenderWindow &app) {
 
+    float yPosition =
+        chooseSongButton.getPosition().y +
+        chooseSongButton.getGlobalBounds().height +
+        INTER_BUTTON_SPACING;
+
+    selectMidiOut.setPosition(
+        (app.getSize().x - chooseSongButton.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+}
 } // end namespace linthesia
 

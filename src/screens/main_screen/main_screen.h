@@ -7,6 +7,8 @@
 #include "buttons/short_one_line_button.h"
 #include "buttons/two_lines_button.h"
 
+#include "select_midi_out.h"
+
 namespace linthesia {
 
 /**
@@ -46,15 +48,17 @@ class MainScreen : public AbstractScreen {
         /**
          *
          */
+        void setSelectMidiOutPosition(const sf::RenderWindow &app);
+        linthesia::SelectMidiOut selectMidiOut;
+
+        /**
+         *
+         */
         sf::Texture logoTexture;
         sf::Sprite logo;
 
         void setLogoPosition(sf::RenderWindow &app);
 
-        /**
-         *
-         */
-        void play(linthesia::Context &context, const sf::Time& delta);
 };
 
 

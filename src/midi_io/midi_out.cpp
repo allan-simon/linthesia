@@ -6,7 +6,9 @@
 
 namespace linthesia {
 
-MidiOut::MidiOut () {
+MidiOut::MidiOut (unsigned _chosenPort):
+    chosenPort(_chosenPort)
+{
 }
 /**
  *
@@ -41,8 +43,22 @@ void MidiOut::close() {
 /**
  *
  */
-void MidiOut::set_chosen_port(unsigned newChosenport) {
-    chosenPort = newChosenport;
+void MidiOut::switchNextPort() {
+    chosenPort = (chosenPort + 1) % rtMidiOut.getPortCount();
+}
+
+/**
+ *
+ */
+void MidiOut::switchPrevPort() {
+    chosenPort = (chosenPort - 1) % rtMidiOut.getPortCount();
+}
+
+/**
+ *
+ */
+std::string MidiOut::getCurrentOutputName() {
+    return rtMidiOut.getPortName(chosenPort);
 }
 
 

@@ -14,6 +14,7 @@ linthesia_SOURCES = main.cpp \
 	midi_io/midi_out.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \
+	screens/main_screen/select_midi_out.cpp\
 	screens/game_over_screen/game_over_screen.cpp \
 	screens/one_player_screen/one_player_screen.cpp \
 	screens/file_select_screen/file_select_screen.cpp \
