@@ -28,6 +28,8 @@ bool Context::openMidiFile(const std::string& _filename) {
         midi = new Midi(Midi::read_from_file(_filename));
         filename = _filename;
     } catch (const MidiError& exception) {
+        // make sure that we have a nullptr
+        midi = nullptr;
         std::cerr << exception.get_error_description() << std::endl;
         std::cerr << "while opening " << _filename << std::endl;
 
@@ -48,6 +50,9 @@ std::string Context::getFilename() const {
  *
  */
 MidiEventListWithTrackId Context::update(const sf::Int64 deltaMicroseconds) {
+    if (midi == nullptr) {
+        return MidiEventListWithTrackId();
+    }
     return midi->update(static_cast<microseconds_t>(deltaMicroseconds));
 }
 
