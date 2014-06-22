@@ -47,7 +47,9 @@ void MidiOut::switchNextPort() {
  *
  */
 void MidiOut::switchPrevPort() {
-    chosenPort = (chosenPort - 1) % rtMidiOut.getPortCount();
+    // we are using unsigned so we can't just do chosenPort - 1 % PORT_COUNT
+    const unsigned PORT_COUNT = rtMidiOut.getPortCount();
+    chosenPort = (chosenPort + PORT_COUNT - 1) % PORT_COUNT;
 }
 
 /**

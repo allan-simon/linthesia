@@ -46,6 +46,11 @@ class SelectMidiOut : public sf::Drawable , public sf::Transformable {
             const sf::Time &delta
         );
 
+        /**
+         * Change the name of the output, displayed on the button
+         */
+        void setOutputName(const std::string &outputName);
+
     private:
 
         /**

@@ -247,6 +247,13 @@ bool SelectMidiOut::buttonContainsPoint(
 /**
  *
  */
+void SelectMidiOut::setOutputName(const std::string &outputName) {
+    outputLabel.setString(outputName);
+}
+
+/**
+ *
+ */
 void SelectMidiOut::draw(
     sf::RenderTarget& target,
     sf::RenderStates states

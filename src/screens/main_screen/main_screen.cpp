@@ -67,7 +67,10 @@ ScreenIndex MainScreen::run(
     setExitButtonPosition(app);
     setLogoPosition(app);
     setChooseSongButtonPosition(app);
+
+    selectMidiOut.setOutputName(context.midiOut.getCurrentOutputName());
     setSelectMidiOutPosition(app);
+
 
     // on purpose infinite loop
     while (true) {

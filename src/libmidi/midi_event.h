@@ -17,7 +17,7 @@
 #include "midi_util.h"
 
 /**
- *
+ * For the midi format, a "event" is represent by 3 bytes
  */
 struct MidiEventSimple {
 
