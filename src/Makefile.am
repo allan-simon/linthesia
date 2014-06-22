@@ -12,6 +12,7 @@ linthesia_SOURCES = main.cpp \
 	buttons/two_lines_button.cpp \
 	context/context.cpp \
 	midi_io/midi_out.cpp \
+	icons/icon.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \
 	screens/main_screen/select_midi_out.cpp\

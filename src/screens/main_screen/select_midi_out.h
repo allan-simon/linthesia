@@ -7,6 +7,8 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include "icons/icon.h"
+
 namespace sf {
     class Time;
     class Event;
@@ -52,24 +54,6 @@ class SelectMidiOut : public sf::Drawable , public sf::Transformable {
         void setOutputName(const std::string &outputName);
 
     private:
-
-        /**
-         * TODO: move in a dedicated 'icon' class
-         */
-        bool buttonActionTriggered(
-            const sf::Window &app,
-            const sf::Event &event,
-            sf::Sprite &button
-        );
-
-        /**
-         * TODO: move in a dedicated 'icon' class
-         */
-        bool buttonContainsPoint(
-            const sf::Sprite &button,
-            const sf::Vector2i &point
-        ) const;
-
         /**
          *
          */
@@ -87,17 +71,17 @@ class SelectMidiOut : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
-        sf::Sprite next;
+        Icon next;
         
         /**
          *
          */
-        sf::Sprite previous;
+        Icon previous;
 
         /**
          *
          */
-        sf::Sprite play;
+        Icon play;
 
         /**
          *

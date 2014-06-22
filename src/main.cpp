@@ -8,6 +8,7 @@
 //TODO should not be needed
 #include "buttons/short_one_line_button.h"
 #include "buttons/long_one_line_button.h"
+#include "icons/icon.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ int main() {
     //TODO should not be needed here
     linthesia::ShortOneLineButton::init();
     linthesia::LongOneLineButton::init();
+    linthesia::Icon::init();
 
     auto screens = linthesia::init_game_screens();
     auto currentScreen = linthesia::START_APPLICATION;
