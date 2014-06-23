@@ -80,12 +80,12 @@ ScreenIndex MainScreen::run(
                 return STOP_APPLICATION;
             }
 
-            if (exitButton.actionTriggered(app)) {
+            if (exitButton.actionTriggered(app, event)) {
                 context.midiOut.close();
                 return STOP_APPLICATION;
             }
 
-            if (chooseSongButton.actionTriggered(app)) {
+            if (chooseSongButton.actionTriggered(app, event)) {
                 context.midiOut.close();
                 return FileSelectScreen::INDEX;
             }

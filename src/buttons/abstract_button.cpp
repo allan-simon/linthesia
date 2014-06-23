@@ -28,18 +28,26 @@ bool AbstractButton::containsPoint(sf::Vector2i point) const {
 /**
  *
  */
-bool AbstractButton::actionTriggered(const sf::Window &app) {
-    if (containsPoint(sf::Mouse::getPosition(app))) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // only if we left click inside the button
-            // we will consider the action of this button
-            // triggered
-            return true;
-        }
-        setHovered();
-    } else {
+bool AbstractButton::actionTriggered(
+    const sf::Window &app,
+    const sf::Event &event
+) {
+    if (!containsPoint(sf::Mouse::getPosition(app))) {
         setUnhovered();
+        return false;
     }
+
+    setHovered();
+    if (
+        event.type == sf::Event::MouseButtonPressed &&
+        sf::Mouse::isButtonPressed(sf::Mouse::Left)
+    ) {
+        // only if we left click inside the button
+        // we will consider the action of this button
+        // triggered
+        return true;
+    }
+
     return false;
 }
 

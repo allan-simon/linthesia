@@ -19,6 +19,7 @@ OneLineButton::OneLineButton(
 {
     currentState = ButtonStates::NORMAL;
 }
+
 /**
  *
  */

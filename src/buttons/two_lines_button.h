@@ -23,11 +23,6 @@ class TwoLinesButton: public AbstractButton {
         );
 
         /**
-         * @see AbstractButton::actionTriggered
-         */
-        bool actionTriggered(const sf::Window &app);
-
-        /**
          *
          */
         sf::FloatRect getGlobalBounds() const;

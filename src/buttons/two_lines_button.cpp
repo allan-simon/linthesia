@@ -57,24 +57,6 @@ TwoLinesButton::TwoLinesButton(
 /**
  *
  */
-bool TwoLinesButton::actionTriggered(const sf::Window &app) {
-    if (containsPoint(sf::Mouse::getPosition(app))) {
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-            // only if we left click inside the button
-            // we will consider the action of this button
-            // triggered
-            return true;
-        }
-        setHovered();
-    } else {
-        setUnhovered();
-    }
-    return false;
-}
-
-/**
- *
- */
 sf::FloatRect TwoLinesButton::getGlobalBounds() const {
     return sprite.getGlobalBounds();
 }

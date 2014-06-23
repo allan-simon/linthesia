@@ -97,9 +97,6 @@ ScreenIndex FileSelectScreen::run(
 
     setBackButtonPosition(app);
 
-    //arbitral sleep, otherwise it may happen that a click from
-    //previous screen is still present when we arrive on this screen
-    sf::sleep(sf::milliseconds(100));
     // on purpose
     while (true) {
         while (app.pollEvent(event)) {
@@ -107,11 +104,11 @@ ScreenIndex FileSelectScreen::run(
                 return START_APPLICATION;
             }
 
-            if (actionTriggeredFileButtons(app, context)) {
+            if (actionTriggeredFileButtons(app, event, context)) {
                 return START_APPLICATION;
             }
 
-            if (backButton.actionTriggered(app)) {
+            if (backButton.actionTriggered(app, event)) {
                 return START_APPLICATION;
             }
         }
@@ -189,6 +186,7 @@ void FileSelectScreen::setFileButtonsPosition(const sf::RenderWindow& app) {
  */
 bool FileSelectScreen::actionTriggeredFileButtons(
     const sf::RenderWindow &app,
+    const sf::Event &event,
     Context &context
 ) {
 
@@ -202,7 +200,7 @@ bool FileSelectScreen::actionTriggeredFileButtons(
             unsigned currentButton = buttonNumber;
             buttonNumber++;
 
-            if (!oneFileButton.actionTriggered(app)) {
+            if (!oneFileButton.actionTriggered(app, event)) {
                 return;
             }
             std::string filename = midiFileNames[currentButton + fileIndex];

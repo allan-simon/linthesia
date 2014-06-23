@@ -33,7 +33,10 @@ class AbstractButton : public sf::Drawable , public sf::Transformable {
          * we click on it)
          * TODO: find a better name
          */
-        virtual bool actionTriggered(const sf::Window &app);
+        virtual bool actionTriggered(
+            const sf::Window &app,
+            const sf::Event &event
+        );
 
         /**
          *

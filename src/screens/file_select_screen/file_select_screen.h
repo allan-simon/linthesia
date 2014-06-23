@@ -29,6 +29,7 @@ class FileSelectScreen : public AbstractScreen {
          */
         bool actionTriggeredFileButtons(
             const sf::RenderWindow& app,
+            const sf::Event &event,
             Context &context
         );
 
