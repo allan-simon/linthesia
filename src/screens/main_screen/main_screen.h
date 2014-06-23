@@ -42,6 +42,12 @@ class MainScreen : public AbstractScreen {
         /**
          *
          */
+        void setSelectTrackButtonPosition(sf::RenderWindow &app);
+        linthesia::ShortOneLineButton selectTrackButton;
+
+        /**
+         *
+         */
         void setChooseSongButtonPosition(sf::RenderWindow &app);
         linthesia::TwoLinesButton chooseSongButton;
 

@@ -3,6 +3,7 @@
 #include "main_screen.h"
 #include "screens/select_track_screen/select_track_screen.h"
 #include "screens/file_select_screen/file_select_screen.h"
+#include "screens/select_track_screen/select_track_screen.h"
 
 #include "context/context.h"
 
@@ -29,6 +30,7 @@ const unsigned INTER_BUTTON_SPACING = 15;
 MainScreen::MainScreen() :
     AbstractScreen(),
     exitButton("exit game"),
+    selectTrackButton("play"),
     chooseSongButton("song:", "no song selected yet")
 {
     //TODO: replace hardcoded strings by something better
@@ -67,6 +69,7 @@ ScreenIndex MainScreen::run(
     setExitButtonPosition(app);
     setLogoPosition(app);
     setChooseSongButtonPosition(app);
+    setSelectTrackButtonPosition(app);
 
     selectMidiOut.setOutputName(context.midiOut.getCurrentOutputName());
     setSelectMidiOutPosition(app);
@@ -89,6 +92,12 @@ ScreenIndex MainScreen::run(
                 context.midiOut.close();
                 return FileSelectScreen::INDEX;
             }
+
+            if (selectTrackButton.actionTriggered(app, event)) {
+                context.midiOut.close();
+                return SelectTrackScreen::INDEX;
+            }
+
             selectMidiOut.actionTriggered(app, event, context);
         }
 
@@ -104,6 +113,7 @@ ScreenIndex MainScreen::run(
 
         app.clear(BACKGROUND_COLOR);
         app.draw(exitButton);
+        app.draw(selectTrackButton);
         app.draw(selectMidiOut);
         app.draw(chooseSongButton);
         app.draw(logo);
@@ -128,6 +138,19 @@ void MainScreen::setLogoPosition(sf::RenderWindow &app) {
     logo.setPosition(
         (app.getSize().x - logo.getGlobalBounds().width) / 2.0f,
         PADDING
+    );
+}
+
+/**
+ *
+ */
+void MainScreen::setSelectTrackButtonPosition(sf::RenderWindow &app) {
+    auto appSize = app.getSize();
+    auto buttonBound = selectTrackButton.getGlobalBounds();
+
+    selectTrackButton.setPosition(
+        appSize.x - (buttonBound.width + PADDING) ,
+        appSize.y - (buttonBound.height + PADDING)
     );
 }
 

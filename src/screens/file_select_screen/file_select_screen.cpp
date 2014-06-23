@@ -11,7 +11,7 @@ namespace linthesia {
 /**
  *
  */
-const ScreenIndex FileSelectScreen::INDEX = "select_tracks_creen";
+const ScreenIndex FileSelectScreen::INDEX = "file_select_screen";
 
 /**
  *
