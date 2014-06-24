@@ -54,6 +54,7 @@ ScreenIndex MainScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    context.midiIn.open();
     context.midiOut.open();
 
     //TODO replace by function more specific "isSongChosen""
@@ -74,22 +75,28 @@ ScreenIndex MainScreen::run(
     selectMidiOut.setOutputName(context.midiOut.getCurrentOutputName());
     setSelectMidiOutPosition(app);
 
+    selectMidiIn.setInputName(context.midiIn.getCurrentPortName());
+    setSelectMidiInPosition(app);
+
 
     // on purpose infinite loop
     while (true) {
         while (app.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 context.midiOut.close();
+                context.midiIn.close();
                 return STOP_APPLICATION;
             }
 
             if (exitButton.actionTriggered(app, event)) {
                 context.midiOut.close();
+                context.midiIn.close();
                 return STOP_APPLICATION;
             }
 
             if (chooseSongButton.actionTriggered(app, event)) {
                 context.midiOut.close();
+                context.midiIn.close();
                 return FileSelectScreen::INDEX;
             }
 

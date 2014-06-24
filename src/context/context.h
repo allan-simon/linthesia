@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include "libmidi/midi.h"
 #include "midi_io/midi_out.h"
+#include "midi_io/midi_in.h"
 
 namespace linthesia {
 
@@ -19,9 +20,11 @@ class Context {
         std::string getFilename() const;
 
         linthesia::MidiOut midiOut;
+        linthesia::MidiIn midiIn;
     private:
         Midi* midi;
         std::string filename;
+
 };
 
 
