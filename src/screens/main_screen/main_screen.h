@@ -8,6 +8,7 @@
 #include "buttons/two_lines_button.h"
 
 #include "select_midi_out.h"
+#include "select_midi_in.h"
 
 namespace linthesia {
 
@@ -56,6 +57,14 @@ class MainScreen : public AbstractScreen {
          */
         void setSelectMidiOutPosition(const sf::RenderWindow &app);
         linthesia::SelectMidiOut selectMidiOut;
+
+        /**
+         *
+         */
+        void setSelectMidiInPosition(const sf::RenderWindow &app);
+        linthesia::SelectMidiIn selectMidiIn;
+
+
 
         /**
          *

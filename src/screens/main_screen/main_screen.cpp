@@ -106,9 +106,15 @@ ScreenIndex MainScreen::run(
             }
 
             selectMidiOut.actionTriggered(app, event, context);
+            selectMidiIn.actionTriggered(app, event, context);
         }
 
         selectMidiOut.run(
+            app,
+            context,
+            currentElapsed - lastElapsed
+        );
+        selectMidiIn.run(
             app,
             context,
             currentElapsed - lastElapsed
@@ -122,6 +128,7 @@ ScreenIndex MainScreen::run(
         app.draw(exitButton);
         app.draw(selectTrackButton);
         app.draw(selectMidiOut);
+        app.draw(selectMidiIn);
         app.draw(chooseSongButton);
         app.draw(logo);
         app.display();
@@ -188,5 +195,22 @@ void MainScreen::setSelectMidiOutPosition(const sf::RenderWindow &app) {
         yPosition
     );
 }
+
+/**
+ *
+ */
+void MainScreen::setSelectMidiInPosition(const sf::RenderWindow &app) {
+
+    float yPosition =
+        selectMidiOut.getPosition().y +
+        chooseSongButton.getGlobalBounds().height +
+        INTER_BUTTON_SPACING;
+
+    selectMidiIn.setPosition(
+        (app.getSize().x - chooseSongButton.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+}
+
 } // end namespace linthesia
 
