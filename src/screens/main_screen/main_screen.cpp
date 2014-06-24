@@ -54,6 +54,9 @@ ScreenIndex MainScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    // note: because of a bug in version 2.0.1 of rtmidi
+    // we HAVE to open Out AFTER In , otherwise In will get
+    // not input MIDI messages
     context.midiIn.open();
     context.midiOut.open();
 
