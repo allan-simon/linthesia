@@ -18,7 +18,7 @@ void MidiOut::write(const MidiEvent &out) {
 
     message[0] = out.get_status_code();
     message[1] = static_cast<unsigned char>(out.get_note_number());
-    message[2] = 90;//static_cast<unsigned char>(out.get_note_velocity());
+    message[2] = static_cast<unsigned char>(out.get_note_velocity());
     rtMidiOut.sendMessage(&message);
 }
 
