@@ -86,11 +86,6 @@ class SelectMidiIn : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
-        sf::Texture iconsTexture; 
-
-        /**
-         *
-         */
         sf::Font font;
 
         /**
