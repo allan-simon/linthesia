@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "select_track_screen.h"
+#include "context/context.h"
+#include "track_box.h"
 
 namespace linthesia {
 
@@ -35,6 +37,15 @@ ScreenIndex SelectTrackScreen::run(
 
     setBackButtonPosition(app);
 
+    auto tracks = context.getTracks();
+    for (const auto& oneTrack : tracks) {
+        allTrackBoxes.emplace_back(
+            oneTrack.get_instrument_name(),
+            oneTrack.aggregate_notes_count()
+        );
+    }
+    setTrackBoxesPosition(app);
+
     // on purpose
     while (true) {
         while (app.pollEvent(event)) {
@@ -51,6 +62,9 @@ ScreenIndex SelectTrackScreen::run(
 
         app.clear(BACKGROUND_COLOR);
         app.draw(backButton);
+        for (const auto &trackBox : allTrackBoxes) {
+            app.draw(trackBox);
+        }
         app.display();
 
     }
@@ -68,6 +82,20 @@ void SelectTrackScreen::setBackButtonPosition(const sf::RenderWindow &app) {
     );
 }
 
+/**
+ *
+ */
+void SelectTrackScreen::setTrackBoxesPosition(const sf::RenderWindow &app) {
+    for (auto& trackBox: allTrackBoxes) {
+
+        float yPosition = 300;
+
+        trackBox.setPosition(
+            (app.getSize().x - 100) / 2.0f,
+            yPosition
+        );
+    }
+}
 
 
 } // end namespace linthesia

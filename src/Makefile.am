@@ -21,6 +21,7 @@ linthesia_SOURCES = main.cpp \
 	screens/game_over_screen/game_over_screen.cpp \
 	screens/one_player_screen/one_player_screen.cpp \
 	screens/file_select_screen/file_select_screen.cpp \
+	screens/select_track_screen/track_box.cpp \
 	screens/select_track_screen/select_track_screen.cpp
 
 linthesia_DEPENDENCIES = libmidi.la
