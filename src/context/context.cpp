@@ -56,5 +56,13 @@ MidiEventListWithTrackId Context::update(const sf::Int64 deltaMicroseconds) {
     return midi->update(static_cast<microseconds_t>(deltaMicroseconds));
 }
 
+/**
+ *
+ */
+const MidiTrackList& Context::getTracks() const {
+    // TODO: throw exception if midi is null
+    return midi->get_tracks();
+}
+
 } // end namespace linthesia
 

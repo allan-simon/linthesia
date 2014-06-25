@@ -17,6 +17,7 @@ class Context {
         bool openMidiFile(const std::string& filename);
 
         MidiEventListWithTrackId update(const sf::Int64 deltaMicroseconds);
+        const MidiTrackList &getTracks() const;
         std::string getFilename() const;
 
         linthesia::MidiOut midiOut;

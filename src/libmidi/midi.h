@@ -45,7 +45,7 @@ class Midi {
         /**
          *
          */
-        const std::vector<MidiTrack> &get_tracks() const {
+        const MidiTrackList &get_tracks() const {
             return tracks;
         }
 
