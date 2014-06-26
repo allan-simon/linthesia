@@ -52,28 +52,29 @@ TrackBox::TrackBox(
     const std::string instrument("Instrument:");
     const std::string notes("Notes:");
     const std::string playChoice("Play automatically");
-    const unsigned BUTTON_PADDING = 20;
+    const unsigned BUTTON_PADDING = 15;
     const unsigned CHARACTER_SIZE = 15;
     const unsigned INTER_LINE_SPACE = 10;
 
-    const unsigned SECOND_LINE_Y =
-        BUTTON_PADDING +
-        CHARACTER_SIZE +
-        INTER_LINE_SPACE;
-
     background.setTexture(backgroundTexture);
+
+    const float CHOICE_LINE_Y =
+        background.getGlobalBounds().height -
+        BUTTON_PADDING -
+        ICON_HEIGHT;
 
 
     // init ">" button to go to next output source
     next.setPosition(
-        ICON_WIDTH,
-        SECOND_LINE_Y
+        // top right with a little padding
+        background.getGlobalBounds().width - BUTTON_PADDING - ICON_WIDTH,
+        CHOICE_LINE_Y
     );
 
     // init "<" button to go to previous output source
     previous.setPosition(
         BUTTON_PADDING,
-        SECOND_LINE_Y
+        CHOICE_LINE_Y
     );
 
 
@@ -93,7 +94,7 @@ TrackBox::TrackBox(
     playChoiceLabel.setPosition(
         BUTTON_PADDING + ICON_WIDTH,
         // we center text in the middle of the icon
-        SECOND_LINE_Y + (ICON_WIDTH - CHARACTER_SIZE) / 2.0f
+        CHOICE_LINE_Y + (ICON_WIDTH - CHARACTER_SIZE) / 2.0f
     );
 }
 
