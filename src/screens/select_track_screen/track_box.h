@@ -33,6 +33,11 @@ class TrackBox : public sf::Drawable , public sf::Transformable {
         static void init();
 
         /**
+         *
+         */
+        sf::FloatRect getGlobalBounds() const;
+
+        /**
          * Regarding the current events (mouse position etc.)
          * check if there are actions to be triggered
          */

@@ -93,9 +93,13 @@ void SelectTrackScreen::setBackButtonPosition(const sf::RenderWindow &app) {
  */
 void SelectTrackScreen::setTrackBoxesPosition(const sf::RenderWindow &app) {
 
+    if (allTrackBoxes.size() == 0) {
+        return;
+    }
+
     unsigned TRACK_BOX_MARGIN = 20;
-    unsigned TRACK_BOX_HEIGHT = 50;
-    unsigned TRACK_BOX_WIDTH = 200;
+    float TRACK_BOX_HEIGHT = allTrackBoxes[0].getGlobalBounds().height;
+    float TRACK_BOX_WIDTH = allTrackBoxes[0].getGlobalBounds().width;
 
     float firstX = (app.getSize().x / 2.0f) - TRACK_BOX_MARGIN - TRACK_BOX_WIDTH;
     float secondX = (app.getSize().x / 2.0f) + TRACK_BOX_MARGIN;

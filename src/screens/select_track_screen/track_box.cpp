@@ -34,6 +34,13 @@ void TrackBox::init() {
 /**
  *
  */
+sf::FloatRect TrackBox::getGlobalBounds() const {
+    return background.getGlobalBounds();
+}
+
+/**
+ *
+ */
 TrackBox::TrackBox(
     const std::string &instrumentName,
     unsigned notesNumber
