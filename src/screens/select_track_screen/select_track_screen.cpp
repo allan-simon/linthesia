@@ -41,7 +41,7 @@ ScreenIndex SelectTrackScreen::run(
     for (const auto& oneTrack : tracks) {
 
         // we don't display any option for track without notes
-        if (oneTrack.aggregate_notes_count() != 0) {
+        if (oneTrack.aggregate_notes_count() == 0) {
             continue;
         }
 

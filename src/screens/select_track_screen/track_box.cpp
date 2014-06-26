@@ -87,10 +87,29 @@ TrackBox::TrackBox(
         BUTTON_PADDING
     );
 
+    // X position of the title values (number of notes, name of the instrument
+    const float TITLE_VALUES_X =
+        BUTTON_PADDING +
+        instrumentLabel.getGlobalBounds().width +
+        INTER_LINE_SPACE;
+
+
+    instrumentNameLabel.setFont(font);
+    instrumentNameLabel.setCharacterSize(CHARACTER_SIZE);
+    instrumentNameLabel.setString(instrumentName);
+    instrumentNameLabel.setPosition(
+        TITLE_VALUES_X,
+        BUTTON_PADDING
+    );
+
+
+
+
     const float NOTES_LABEL_Y =
         BUTTON_PADDING +
         CHARACTER_SIZE +
         INTER_LINE_SPACE;
+
 
     notesLabel.setFont(font);
     notesLabel.setCharacterSize(CHARACTER_SIZE);
@@ -100,6 +119,16 @@ TrackBox::TrackBox(
         BUTTON_PADDING,
         NOTES_LABEL_Y
     );
+
+    notesNumberLabel.setFont(font);
+    notesNumberLabel.setCharacterSize(CHARACTER_SIZE);
+    notesNumberLabel.setString(std::to_string(notesNumber));
+    notesNumberLabel.setPosition(
+        TITLE_VALUES_X,
+        NOTES_LABEL_Y
+    );
+
+
 
 
     // init the part displaying the midi output used
