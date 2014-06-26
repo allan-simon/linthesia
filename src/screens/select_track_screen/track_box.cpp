@@ -87,6 +87,21 @@ TrackBox::TrackBox(
         BUTTON_PADDING
     );
 
+    const float NOTES_LABEL_Y =
+        BUTTON_PADDING +
+        CHARACTER_SIZE +
+        INTER_LINE_SPACE;
+
+    notesLabel.setFont(font);
+    notesLabel.setCharacterSize(CHARACTER_SIZE);
+    notesLabel.setStyle(sf::Text::Bold);
+    notesLabel.setString(notes);
+    notesLabel.setPosition(
+        BUTTON_PADDING,
+        NOTES_LABEL_Y
+    );
+
+
     // init the part displaying the midi output used
     playChoiceLabel.setFont(font);
     playChoiceLabel.setCharacterSize(CHARACTER_SIZE);
