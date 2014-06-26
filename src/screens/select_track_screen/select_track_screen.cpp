@@ -39,6 +39,12 @@ ScreenIndex SelectTrackScreen::run(
 
     auto tracks = context.getTracks();
     for (const auto& oneTrack : tracks) {
+
+        // we don't display any option for track without notes
+        if (oneTrack.aggregate_notes_count() != 0) {
+            continue;
+        }
+
         allTrackBoxes.emplace_back(
             oneTrack.get_instrument_name(),
             oneTrack.aggregate_notes_count()
@@ -86,14 +92,32 @@ void SelectTrackScreen::setBackButtonPosition(const sf::RenderWindow &app) {
  *
  */
 void SelectTrackScreen::setTrackBoxesPosition(const sf::RenderWindow &app) {
+
+    unsigned TRACK_BOX_MARGIN = 20;
+    unsigned TRACK_BOX_HEIGHT = 50;
+    unsigned TRACK_BOX_WIDTH = 200;
+
+    float firstX = (app.getSize().x / 2.0f) - TRACK_BOX_MARGIN - TRACK_BOX_WIDTH;
+    float secondX = (app.getSize().x / 2.0f) + TRACK_BOX_MARGIN;
+
+    unsigned currentIndex = 0;
+
+    float usedY = 0;
+
     for (auto& trackBox: allTrackBoxes) {
 
-        float yPosition = 300;
+        float usedX = secondX;
+        if ((currentIndex % 2) == 0) {
+            usedX = firstX;
+            usedY += TRACK_BOX_HEIGHT + TRACK_BOX_MARGIN;
+        }
 
         trackBox.setPosition(
-            (app.getSize().x - 100) / 2.0f,
-            yPosition
+            usedX,
+            usedY
         );
+
+        currentIndex++;
     }
 }
 
