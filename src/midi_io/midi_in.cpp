@@ -6,16 +6,6 @@
 
 #include "midi_in.h"
 
-static void mycallback( double deltatime, std::vector< unsigned char > *message, void *userData )
-{
-unsigned int nBytes = message->size();
-for ( unsigned int i=0; i<nBytes; i++ )
-std::cout << "Byte " << i << " = " << (int)message->at(i) << ", " << std::endl;
-if ( nBytes > 0 )
-std::cout << "stamp = " << deltatime << std::endl;
-}
-
-
 namespace linthesia {
 
 MidiIn::MidiIn (unsigned _chosenPort):
