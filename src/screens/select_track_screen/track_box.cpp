@@ -7,7 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
-#include "context/context.h"
+#include "track_options/track_options.h"
 #include "track_box.h"
 
 namespace linthesia {
@@ -43,15 +43,17 @@ sf::FloatRect TrackBox::getGlobalBounds() const {
  */
 TrackBox::TrackBox(
     const std::string &instrumentName,
-    unsigned notesNumber
+    unsigned notesNumber,
+    unsigned _trackId
 ) :
+    trackId(_trackId),
     next(IconType::NEXT, IconColor::GREY),
     previous(IconType::PREVIOUS, IconColor::GREY)
 {
 
     const std::string instrument("Instrument:");
     const std::string notes("Notes:");
-    const std::string playChoice("Play automatically");
+    const std::string playChoice("Played automatically");
     const unsigned BUTTON_PADDING = 15;
     const unsigned CHARACTER_SIZE = 15;
     const unsigned INTER_LINE_SPACE = 10;
@@ -148,19 +150,19 @@ TrackBox::TrackBox(
 bool TrackBox::actionTriggered(
     const sf::Window &app,
     const sf::Event &event,
-    linthesia::Context &context
+    linthesia::TrackOptions  &trackOptions
 ) {
     // if "next" output button clicked
     if (next.actionTriggered(app, event, getPosition())) {
-        // TODO: change context track option
-        // TODO: change playChoice text
+        const std::string style = trackOptions.toNextStyle(trackId);
+        playChoiceLabel.setString(style);
         return true;
     }
 
     // if "previous" button clicked
     if (previous.actionTriggered(app, event, getPosition())) {
-        // TODO: change context track option
-        // TODO: change playChoice text
+        const std::string style = trackOptions.toPreviousStyle(trackId);
+        playChoiceLabel.setString(style);
         return true;
     }
     return false;

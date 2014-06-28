@@ -16,7 +16,7 @@ namespace sf {
 
 namespace linthesia {
 
-class Context;
+class TrackOptions;
 
 class TrackBox : public sf::Drawable , public sf::Transformable {
 
@@ -24,7 +24,8 @@ class TrackBox : public sf::Drawable , public sf::Transformable {
     public:
         TrackBox(
             const std::string &instrumentName,
-            unsigned notesNumber
+            unsigned notesNumber,
+            unsigned trackId
         );
 
         /**
@@ -44,7 +45,7 @@ class TrackBox : public sf::Drawable , public sf::Transformable {
         bool actionTriggered(
             const sf::Window &app,
             const sf::Event &event,
-            linthesia::Context &context
+            linthesia::TrackOptions &TrackOptions
         );
 
     private:
@@ -55,6 +56,13 @@ class TrackBox : public sf::Drawable , public sf::Transformable {
             sf::RenderTarget& target,
             sf::RenderStates states
         ) const;
+
+
+        /**
+         * Id of the track for which this track box
+         * is changing the option of
+         */
+        unsigned trackId;
 
  
         /**

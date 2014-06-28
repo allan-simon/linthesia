@@ -47,7 +47,8 @@ ScreenIndex SelectTrackScreen::run(
 
         allTrackBoxes.emplace_back(
             oneTrack.get_instrument_name(),
-            oneTrack.aggregate_notes_count()
+            oneTrack.aggregate_notes_count(),
+            oneTrack.get_track_id()
         );
     }
     setTrackBoxesPosition(app);
@@ -63,6 +64,13 @@ ScreenIndex SelectTrackScreen::run(
                 return START_APPLICATION;
             }
 
+            for (auto& oneTrackBox : allTrackBoxes) {
+                oneTrackBox.actionTriggered(
+                    app,
+                    event,
+                    context.tracksOptions
+                );
+            }
 
         }
 
