@@ -13,6 +13,7 @@ linthesia_SOURCES = main.cpp \
 	context/context.cpp \
 	midi_io/midi_out.cpp \
 	midi_io/midi_in.cpp \
+	track_options/track_options.cpp \
 	icons/icon.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \
