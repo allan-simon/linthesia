@@ -17,6 +17,8 @@
 #include "midi_util.h"
 #include "midi_event.h"
 
+// totally arbitrary value
+const static unsigned TRACK_ID_NOT_SET = 424242;
 
 typedef std::vector<MidiEvent> MidiEventList;
 typedef std::vector<uint32_t> MidiEventPulsesList;
@@ -109,6 +111,11 @@ public:
     void set_track_id (size_t trackId);
 
     /**
+     *
+     */
+    size_t get_track_id() const;
+
+    /**
      * Reports whether this track contains any Note-On MIDI events
      * (vs. just being an information track with a title or copyright)
      */
@@ -177,7 +184,10 @@ private:
     /**
      *
      */
-    MidiTrack() : instrumentId(0) {
+    MidiTrack() :
+        instrumentId(0),
+        trackId(TRACK_ID_NOT_SET)
+    {
         reset();
     }
 
@@ -192,6 +202,7 @@ private:
     NoteSet noteSet;
 
     int instrumentId;
+    unsigned trackId;
 
     microseconds_t runningMs;
     uint32_t lastEvent;

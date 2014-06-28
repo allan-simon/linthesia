@@ -241,8 +241,8 @@ void MidiTrack::discover_instrument() {
 /**
  *
  */
-void MidiTrack::set_track_id(size_t trackId) {
-
+void MidiTrack::set_track_id(size_t _trackId) {
+    trackId = _trackId;
     // we copy the old note set
     // we delete the original
     NoteSet old = noteSet;
@@ -258,6 +258,13 @@ void MidiTrack::set_track_id(size_t trackId) {
         note.trackId = trackId;
         noteSet.insert(note);
     }
+}
+
+/**
+ *
+ */
+size_t MidiTrack::get_track_id() const {
+    return trackId;
 }
 
 /**
