@@ -37,7 +37,13 @@ class SelectTrackScreen : public AbstractScreen {
          */
         void setTrackBoxesPosition(const sf::RenderWindow &app);
         std::vector<TrackBox> allTrackBoxes;
-        
+
+         /**
+          * button to launch the actual game
+          */
+        void setStartGameButtonPosition(const sf::RenderWindow &app);
+        linthesia::ShortOneLineButton startGameButton;
+
 };
 
 

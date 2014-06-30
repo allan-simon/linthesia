@@ -21,7 +21,8 @@ const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
  */
 SelectTrackScreen::SelectTrackScreen() :
     AbstractScreen(),
-    backButton("back")
+    backButton("back"),
+    startGameButton("start game")
 {
 
 }
@@ -36,6 +37,7 @@ ScreenIndex SelectTrackScreen::run(
     sf::Event event;
 
     setBackButtonPosition(app);
+    setStartGameButtonPosition(app);
 
     auto tracks = context.getTracks();
     for (const auto& oneTrack : tracks) {
@@ -72,10 +74,14 @@ ScreenIndex SelectTrackScreen::run(
                 );
             }
 
+            if (startGameButton.actionTriggered(app, event)) {
+
+            }
         }
 
         app.clear(BACKGROUND_COLOR);
         app.draw(backButton);
+        app.draw(startGameButton);
         for (const auto &trackBox : allTrackBoxes) {
             app.draw(trackBox);
         }
@@ -94,6 +100,20 @@ void SelectTrackScreen::setBackButtonPosition(const sf::RenderWindow &app) {
         PADDING,
         app.getSize().y - (backButton.getGlobalBounds().height + PADDING)
     );
+}
+
+/**
+ *
+ */
+void SelectTrackScreen::setStartGameButtonPosition(const sf::RenderWindow &app) {
+    auto appSize = app.getSize();
+    auto buttonBound = startGameButton.getGlobalBounds();
+
+    startGameButton.setPosition(
+        appSize.x - (buttonBound.width + PADDING) ,
+        appSize.y - (buttonBound.height + PADDING)
+    );
+
 }
 
 /**
