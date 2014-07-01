@@ -13,10 +13,7 @@ namespace linthesia {
 class MidiOut {
 
     public:
-        // 1 because it's the channel that work by default on my computer(tm)
-        // eventually it will be replaced by a more rational default one
-        // (read from user settings etc.)
-        MidiOut(unsigned _chosenPort = 1);
+        MidiOut(unsigned _chosenPort = 0);
         /**
          * Write the given midi event on the output
          * (for a standard note midi event it will play it)

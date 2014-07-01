@@ -13,10 +13,7 @@ namespace linthesia {
 class MidiIn {
 
     public:
-        // 1 because it's the channel that work by default on my computer(tm)
-        // eventually it will be replaced by a more rational default one
-        // (read from user settings etc.)
-        MidiIn(unsigned _chosenPort = 1);
+        MidiIn(unsigned _chosenPort = 0);
 
         /**
          * Get the next MIDI in the buffer, return a "NullEvent" instance
