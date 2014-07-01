@@ -39,6 +39,7 @@ ScreenIndex SelectTrackScreen::run(
     setBackButtonPosition(app);
     setStartGameButtonPosition(app);
 
+    allTrackBoxes.clear();
     auto tracks = context.getTracks();
     for (const auto& oneTrack : tracks) {
 
