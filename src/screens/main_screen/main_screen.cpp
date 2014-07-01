@@ -105,6 +105,7 @@ ScreenIndex MainScreen::run(
 
             if (selectTrackButton.actionTriggered(app, event)) {
                 context.midiOut.close();
+                context.midiIn.close();
                 return SelectTrackScreen::INDEX;
             }
 
