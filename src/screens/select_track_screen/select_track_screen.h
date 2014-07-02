@@ -44,10 +44,6 @@ class SelectTrackScreen : public AbstractScreen {
         void setStartGameButtonPosition(const sf::RenderWindow &app);
         linthesia::ShortOneLineButton startGameButton;
 
-        /**
-         *
-         */
-        bool isPlaying = false;
 };
 
 

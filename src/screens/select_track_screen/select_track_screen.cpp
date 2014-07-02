@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "select_track_screen.h"
+#include "screens/one_player_screen/one_player_screen.h"
 #include "context/context.h"
 #include "track_box.h"
 
@@ -15,25 +16,6 @@ const ScreenIndex SelectTrackScreen::INDEX = "select_tracks_creen";
  *
  */
 const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
-/**
- * advance the song by the given delta time
- * and play/stop the notes according to the events
- * present in that delta time
- */
-static void playSong(
-    linthesia::Context &context,
-    const sf::Time& delta
-) {
-    auto events = context.update(delta.asMicroseconds());
-    for (const auto& oneEvent : events) {
-        unsigned char noteChannel = oneEvent.second.get_channel();
-        if (!context.tracksOptions.isPlayedByComputer(noteChannel)) {
-            continue;
-        }
-        context.midiOut.write(oneEvent.second);
-    }
-}
-
 
 
 /**
@@ -56,11 +38,6 @@ ScreenIndex SelectTrackScreen::run(
 ) {
     sf::Event event;
 
-    sf::Clock clock;
-    sf::Time currentElapsed = clock.getElapsedTime();
-    sf::Time lastElapsed = clock.getElapsedTime();
-
-
 
     setBackButtonPosition(app);
     setStartGameButtonPosition(app);
@@ -82,8 +59,6 @@ ScreenIndex SelectTrackScreen::run(
     }
     setTrackBoxesPosition(app);
 
-    context.midiOut.open();
-
     // on purpose
     while (true) {
         while (app.pollEvent(event)) {
@@ -103,20 +78,12 @@ ScreenIndex SelectTrackScreen::run(
                 );
             }
 
+            // if we click on "start game" we go on the one player
+            // game screen
             if (startGameButton.actionTriggered(app, event)) {
-                isPlaying = true;
+                return OnePlayerScreen::INDEX;
             }
         }
-
-
-        if (isPlaying) {
-            playSong(
-                context,
-                currentElapsed - lastElapsed
-            );
-        }
-        lastElapsed = currentElapsed;
-        currentElapsed = clock.getElapsedTime();
 
 
         app.clear(BACKGROUND_COLOR);
