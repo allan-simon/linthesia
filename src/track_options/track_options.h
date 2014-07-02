@@ -41,6 +41,11 @@ class TrackOptions {
         /**
          *
          */
+        bool isPlayedByComputer(unsigned trackId);
+
+        /**
+         *
+         */
         PlayStyle getStyle(unsigned trackId);
 
     private:

@@ -15,6 +15,26 @@ const ScreenIndex SelectTrackScreen::INDEX = "select_tracks_creen";
  *
  */
 const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
+/**
+ * advance the song by the given delta time
+ * and play/stop the notes according to the events
+ * present in that delta time
+ */
+static void playSong(
+    linthesia::Context &context,
+    const sf::Time& delta
+) {
+    auto events = context.update(delta.asMicroseconds());
+    for (const auto& oneEvent : events) {
+        unsigned char noteChannel = oneEvent.second.get_channel();
+        if (!context.tracksOptions.isPlayedByComputer(noteChannel)) {
+            continue;
+        }
+        context.midiOut.write(oneEvent.second);
+    }
+}
+
+
 
 /**
  *
@@ -36,6 +56,12 @@ ScreenIndex SelectTrackScreen::run(
 ) {
     sf::Event event;
 
+    sf::Clock clock;
+    sf::Time currentElapsed = clock.getElapsedTime();
+    sf::Time lastElapsed = clock.getElapsedTime();
+
+
+
     setBackButtonPosition(app);
     setStartGameButtonPosition(app);
 
@@ -55,6 +81,8 @@ ScreenIndex SelectTrackScreen::run(
         );
     }
     setTrackBoxesPosition(app);
+
+    context.midiOut.open();
 
     // on purpose
     while (true) {
@@ -76,9 +104,20 @@ ScreenIndex SelectTrackScreen::run(
             }
 
             if (startGameButton.actionTriggered(app, event)) {
-
+                isPlaying = true;
             }
         }
+
+
+        if (isPlaying) {
+            playSong(
+                context,
+                currentElapsed - lastElapsed
+            );
+        }
+        lastElapsed = currentElapsed;
+        currentElapsed = clock.getElapsedTime();
+
 
         app.clear(BACKGROUND_COLOR);
         app.draw(backButton);

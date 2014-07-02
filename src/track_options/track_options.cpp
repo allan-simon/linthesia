@@ -72,6 +72,12 @@ PlayStyle TrackOptions::getStyle(unsigned trackId) {
     return trackidStyle[trackId];
 }
 
+/**
+ *
+ */
+bool TrackOptions::isPlayedByComputer(unsigned trackId) {
+    return trackidStyle[trackId] == PlayStyle::AUTO_PLAY;
+}
 
 
 }
