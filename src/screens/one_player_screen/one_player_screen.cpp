@@ -1,7 +1,9 @@
 #include <iostream>
+#include <vector>
 
 #include "one_player_screen.h"
 #include "context/context.h"
+#include "keyboard/white_key.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
 namespace linthesia {
@@ -48,6 +50,15 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    //TODO: move that into keyboard class
+    std::vector<WhiteKey> allWhiteKeys(56);
+    const unsigned WHITE_KEY_WIDTH = 13;
+    unsigned xWhite = 0;
+    for (auto &oneWhiteKey : allWhiteKeys) {
+        oneWhiteKey.setPosition(xWhite, 200);
+        xWhite += WHITE_KEY_WIDTH;
+    };
+
     bool isPlaying = false;
 
     context.midiOut.open();
@@ -73,6 +84,10 @@ ScreenIndex OnePlayerScreen::run(
 
         }
         app.clear(BACKGROUND_COLOR);
+        // WIP replace by draw keyboard
+        for (const auto& oneWhiteKey: allWhiteKeys) {
+            app.draw(oneWhiteKey);
+        }
         app.display();
 
         if (isPlaying) {
