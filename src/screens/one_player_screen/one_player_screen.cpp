@@ -4,6 +4,7 @@
 #include "one_player_screen.h"
 #include "context/context.h"
 #include "keyboard/white_key.h"
+#include "keyboard/black_key.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
 namespace linthesia {
@@ -61,6 +62,12 @@ ScreenIndex OnePlayerScreen::run(
         xWhite += WHITE_KEY_WIDTH;
     };
 
+    BlackKey blackKey;
+    blackKey.setPosition(
+        WHITE_KEY_WIDTH - (BLACK_KEY_WIDTH / 2.0f),
+        200
+    );
+
     bool isPlaying = false;
 
     context.midiOut.open();
@@ -90,6 +97,7 @@ ScreenIndex OnePlayerScreen::run(
         for (const auto& oneWhiteKey: allWhiteKeys) {
             app.draw(oneWhiteKey);
         }
+        app.draw(blackKey);
         app.display();
 
         if (isPlaying) {
