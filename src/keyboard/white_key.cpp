@@ -5,8 +5,8 @@
 
 namespace linthesia {
 
-const static int WHITE_KEY_WIDTH = 13;
-const static int WHITE_KEY_HEIGHT = 75;
+const static int WHITE_KEY_WIDTH = 20;
+const static int WHITE_KEY_HEIGHT = 112;
 
 
 /**

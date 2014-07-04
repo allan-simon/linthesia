@@ -51,8 +51,10 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time lastElapsed = clock.getElapsedTime();
 
     //TODO: move that into keyboard class
-    std::vector<WhiteKey> allWhiteKeys(56);
-    const unsigned WHITE_KEY_WIDTH = 13;
+    // 35 because my low cost keyboard has 35 white keys (5 Octaves)...
+    std::vector<WhiteKey> allWhiteKeys(35);
+    const unsigned WHITE_KEY_WIDTH = 20;
+    const unsigned BLACK_KEY_WIDTH = 12;
     unsigned xWhite = 0;
     for (auto &oneWhiteKey : allWhiteKeys) {
         oneWhiteKey.setPosition(xWhite, 200);
