@@ -37,6 +37,9 @@ Keyboard::Keyboard():
     ) {
         const unsigned offset = currentOctave * NBR_BLACK_KEYS_BY_OCTAVE;
 
+        //Note: I could have used a loop with a if
+        //but I think the unrolled version looks more "visual" to what it
+        //actually do (hence the two statements on one line)
         blackKeys[0 + offset].setPosition(xBlack, 0); xBlack += WHITE_KEY_WIDTH;
         blackKeys[1 + offset].setPosition(xBlack, 0); xBlack += WHITE_KEY_WIDTH;
         xBlack += WHITE_KEY_WIDTH;
