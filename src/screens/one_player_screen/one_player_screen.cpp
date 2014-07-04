@@ -3,8 +3,7 @@
 
 #include "one_player_screen.h"
 #include "context/context.h"
-#include "keyboard/white_key.h"
-#include "keyboard/black_key.h"
+#include "keyboard/keyboard.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
 namespace linthesia {
@@ -51,22 +50,7 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
-    //TODO: move that into keyboard class
-    // 35 because my low cost keyboard has 35 white keys (5 Octaves)...
-    std::vector<WhiteKey> allWhiteKeys(35);
-    const unsigned WHITE_KEY_WIDTH = 20;
-    const unsigned BLACK_KEY_WIDTH = 12;
-    unsigned xWhite = 0;
-    for (auto &oneWhiteKey : allWhiteKeys) {
-        oneWhiteKey.setPosition(xWhite, 200);
-        xWhite += WHITE_KEY_WIDTH;
-    };
-
-    BlackKey blackKey;
-    blackKey.setPosition(
-        WHITE_KEY_WIDTH - (BLACK_KEY_WIDTH / 2.0f),
-        200
-    );
+    Keyboard keyboard;
 
     bool isPlaying = false;
 
@@ -93,11 +77,7 @@ ScreenIndex OnePlayerScreen::run(
 
         }
         app.clear(BACKGROUND_COLOR);
-        // WIP replace by draw keyboard
-        for (const auto& oneWhiteKey: allWhiteKeys) {
-            app.draw(oneWhiteKey);
-        }
-        app.draw(blackKey);
+        app.draw(keyboard);
         app.display();
 
         if (isPlaying) {
