@@ -3,7 +3,6 @@
 
 #include "one_player_screen.h"
 #include "context/context.h"
-#include "keyboard/keyboard.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
 namespace linthesia {
@@ -23,17 +22,33 @@ const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
  * and play/stop the notes according to the events
  * present in that delta time
  */
-static void playSong(
+void OnePlayerScreen::playSong(
     linthesia::Context &context,
     const sf::Time& delta
 ) {
     auto events = context.update(delta.asMicroseconds());
     for (const auto& oneEvent : events) {
-        unsigned char noteChannel = oneEvent.second.get_channel();
+
+        if (!oneEvent.second.is_playable()) {
+            continue;
+        }
+        const unsigned char noteChannel = oneEvent.second.get_channel();
+        const unsigned noteNumber = oneEvent.second.get_note_number();
+        const sf::Color color = context.getChannelColor(noteChannel);
+
         if (!context.tracksOptions.isPlayedByComputer(noteChannel)) {
             continue;
         }
+
         context.midiOut.write(oneEvent.second);
+
+        if (oneEvent.second.is_note_on()) {
+            keyboard.keyPressed(noteNumber, color);
+        }
+
+        if (oneEvent.second.is_note_off()) {
+            keyboard.keyReleased(noteNumber);
+        }
     }
 }
 
@@ -50,7 +65,6 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
-    Keyboard keyboard;
 
     bool isPlaying = false;
 
