@@ -27,7 +27,7 @@ class WhiteKey : public sf::Drawable , public sf::Transformable {
          * would have been hard to manage when the user will be able to choose
          * himself the color of each track
          */
-        void pressed(sf::Color color);
+        void pressed(const sf::Color &color);
 
         /**
          * Set back key to normal state when key is released:

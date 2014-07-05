@@ -26,7 +26,7 @@ WhiteKey::WhiteKey():
 /**
  *
  */
-void WhiteKey::pressed(sf::Color color) {
+void WhiteKey::pressed(const sf::Color &color) {
     whiteBody.setFillColor(color);
 
 }

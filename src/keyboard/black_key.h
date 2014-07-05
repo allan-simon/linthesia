@@ -23,7 +23,7 @@ class BlackKey : public sf::Drawable , public sf::Transformable {
          * Action to execute when the key is pressed
          * @see WhiteKey::pressed for more details
          */
-        void pressed(sf::Color color);
+        void pressed(const sf::Color &color);
 
         /**
          * Set back key to normal state when key is released:

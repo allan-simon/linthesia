@@ -22,7 +22,7 @@ BlackKey::BlackKey():
 /**
  *
  */
-void BlackKey::pressed(sf::Color color) {
+void BlackKey::pressed(const sf::Color &color) {
     blackBody.setFillColor(color);
 
 }
