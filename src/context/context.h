@@ -1,6 +1,7 @@
 #ifndef LINTHESIA_CONTEXT_H
 #define LINTHESIA_CONTEXT_H
 
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/System.hpp>
 #include "libmidi/midi.h"
 #include "midi_io/midi_out.h"
@@ -20,6 +21,12 @@ class Context {
         MidiEventListWithTrackId update(const sf::Int64 deltaMicroseconds);
         const MidiTrackList &getTracks() const;
         std::string getFilename() const;
+
+        /**
+         * Get the color used to represent a given channel
+         * As we may want later to make it user configurable
+         */
+        sf::Color getChannelColor(const unsigned channel) const;
 
         linthesia::MidiOut midiOut;
         linthesia::MidiIn midiIn;

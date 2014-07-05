@@ -59,6 +59,20 @@ MidiEventListWithTrackId Context::update(const sf::Int64 deltaMicroseconds) {
 /**
  *
  */
+sf::Color Context::getChannelColor(const unsigned channel) const {
+
+    switch(channel) {
+        case 1: return sf::Color::Green;
+        case 2: return sf::Color::Blue;
+        case 3: return sf::Color::Yellow;
+        case 4: return sf::Color::Magenta;
+        default: return sf::Color::Red;
+    }
+}
+
+/**
+ *
+ */
 const MidiTrackList& Context::getTracks() const {
     // TODO: throw exception if midi is null
     return midi->get_tracks();
