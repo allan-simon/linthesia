@@ -118,6 +118,22 @@ public:
     int get_note_velocity() const;
 
     /**
+     * Check if the midi event is a 'playable' one
+     * i.e a event we can send to the midi output
+     */
+    bool is_playable() const;
+
+    /**
+     * If it's the midi event of a note that starts
+     */
+    bool is_note_on() const;
+
+    /**
+     * if it's the midi event of a note that ends
+     */
+    bool is_note_off() const;
+
+    /**
      *
      */
     void set_velocity(int velocity);

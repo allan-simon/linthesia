@@ -135,7 +135,10 @@ void SelectMidiIn::run(
     const sf::Time &delta
 ) {
     MidiEvent event = context.midiIn.read();
-    while(event.get_type() == MidiEventType_NoteOff || event.get_type() == MidiEventType_NoteOn) {
+    while(
+        event.get_type() == MidiEventType_NoteOff ||
+        event.get_type() == MidiEventType_NoteOn
+    ) {
         playInput(context, event);
         event = context.midiIn.read();
     }

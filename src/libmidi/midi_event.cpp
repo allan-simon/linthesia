@@ -217,6 +217,29 @@ bool MidiEvent::get_simple_event(MidiEventSimple *simple) const {
 /**
  *
  */
+bool MidiEvent::is_playable() const {
+    return
+        get_type() == MidiEventType_NoteOn ||
+        get_type() == MidiEventType_NoteOff;
+}
+
+/**
+ *
+ */
+bool MidiEvent::is_note_on() const {
+    return get_type() == MidiEventType_NoteOn;
+}
+
+/**
+ *
+ */
+bool MidiEvent::is_note_off() const {
+    return get_type() == MidiEventType_NoteOff;
+}
+
+/**
+ *
+ */
 MidiEventType MidiEvent::get_type() const {
     if (status >  0xEF && status < 0xFF) {
         return MidiEventType_SysEx;
