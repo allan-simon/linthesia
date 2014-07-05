@@ -16,6 +16,16 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
     public:
         Keyboard();
 
+
+        void keyPressed(
+            unsigned noteNumber,
+            const sf::Color &color = sf::Color::Blue
+        );
+
+        void keyReleased(
+            unsigned noteNumber
+        );
+
     private:
 
         /**
@@ -25,6 +35,26 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
             sf::RenderTarget& target,
             sf::RenderStates states
         ) const;
+
+
+        /**
+         *
+         */
+        static bool isBlackKey(unsigned noteNumber);
+
+        /**
+         *
+         */
+        static unsigned noteToIndex(
+            unsigned baseNoteNumber
+        );
+
+        /**
+         * If the key is not playable by current keyboard
+         * (i.e is not playable by player and anyway will
+         * create a out of bound exception)
+         */
+        static bool isOutOfKeyboard(unsigned noteNumber);
 
         std::vector<WhiteKey> whiteKeys;
         std::vector<BlackKey> blackKeys;
