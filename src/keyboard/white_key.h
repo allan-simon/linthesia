@@ -19,6 +19,21 @@ class WhiteKey : public sf::Drawable , public sf::Transformable {
    public:
         WhiteKey();
 
+        /**
+         * Action to execute when the key is pressed
+         * Note: we give a color directly rather
+         * than something more abstract like a "trackid" because otherwise
+         * we would have needed something to map trackId to a color, which
+         * would have been hard to manage when the user will be able to choose
+         * himself the color of each track
+         */
+        void pressed(sf::Color color);
+
+        /**
+         * Set back key to normal state when key is released:
+         */
+        void released();
+
     private:
 
         /**

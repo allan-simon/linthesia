@@ -26,6 +26,23 @@ WhiteKey::WhiteKey():
 /**
  *
  */
+void WhiteKey::pressed(sf::Color color) {
+    whiteBody.setFillColor(color);
+
+}
+
+/**
+ *
+ */
+void WhiteKey::released() {
+    whiteBody.setFillColor(sf::Color::White);
+}
+
+
+
+/**
+ *
+ */
 void WhiteKey::draw(
     sf::RenderTarget& target,
     sf::RenderStates states

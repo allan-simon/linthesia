@@ -19,7 +19,16 @@ class BlackKey : public sf::Drawable , public sf::Transformable {
    public:
         BlackKey();
 
-        static void init();
+        /**
+         * Action to execute when the key is pressed
+         * @see WhiteKey::pressed for more details
+         */
+        void pressed(sf::Color color);
+
+        /**
+         * Set back key to normal state when key is released:
+         */
+        void released();
 
     private:
 

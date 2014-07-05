@@ -22,6 +22,23 @@ BlackKey::BlackKey():
 /**
  *
  */
+void BlackKey::pressed(sf::Color color) {
+    blackBody.setFillColor(color);
+
+}
+
+/**
+ *
+ */
+void BlackKey::released() {
+    blackBody.setFillColor(sf::Color::Black);
+}
+
+
+
+/**
+ *
+ */
 void BlackKey::draw(
     sf::RenderTarget& target,
     sf::RenderStates states
