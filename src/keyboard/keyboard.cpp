@@ -195,7 +195,7 @@ bool Keyboard::isOutOfKeyboard(unsigned noteNumber) {
         // too low or..
         (noteNumber < KEYBOARD_OFFSET) ||
         // to high
-        (noteNumber > NUMBER_OCTAVES * NOTES_PER_OCTAVE + KEYBOARD_OFFSET);
+        (noteNumber >= NUMBER_OCTAVES * NOTES_PER_OCTAVE + KEYBOARD_OFFSET);
 }
 
 
