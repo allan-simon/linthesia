@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+#include "libmidi/midi.h"
 #include "one_player_screen.h"
 #include "context/context.h"
 #include "screens/select_track_screen/select_track_screen.h"
@@ -33,22 +34,11 @@ void OnePlayerScreen::playSong(
             continue;
         }
         const unsigned char noteChannel = oneEvent.second.get_channel();
-        const unsigned noteNumber = oneEvent.second.get_note_number();
-        const sf::Color color = context.getChannelColor(noteChannel);
 
         if (!context.tracksOptions.isPlayedByComputer(noteChannel)) {
             continue;
         }
-
         context.midiOut.write(oneEvent.second);
-
-        if (oneEvent.second.is_note_on()) {
-            keyboard.keyPressed(noteNumber, color);
-        }
-
-        if (oneEvent.second.is_note_off()) {
-            keyboard.keyReleased(noteNumber);
-        }
     }
 }
 
@@ -69,6 +59,9 @@ ScreenIndex OnePlayerScreen::run(
     bool isPlaying = false;
 
     context.midiOut.open();
+    context.midiIn.open();
+
+    MidiEventList inputNotes;
 
     // on purpose
     while (true) {
@@ -85,6 +78,7 @@ ScreenIndex OnePlayerScreen::run(
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                     context.midiOut.close();
+                    context.midiIn.close();
                     return SelectTrackScreen::INDEX;
                 }
             }
@@ -100,8 +94,37 @@ ScreenIndex OnePlayerScreen::run(
                 currentElapsed - lastElapsed
             );
         }
+        inputNotes = context.midiIn.readAllNotes();
+        updateKeyboard(inputNotes, context);
+
         lastElapsed = currentElapsed;
         currentElapsed = clock.getElapsedTime();
+    }
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::updateKeyboard(
+    const MidiEventList& inputNotes,
+    linthesia::Context &context
+) {
+    for (const auto& oneNote : inputNotes) {
+
+        const unsigned noteNumber = oneNote.get_note_number();
+        //note: on my keyboard at least, NoteOff are not sent
+        //instead we got NoteOn with a velocity of 0
+        const int velocity = oneNote.get_note_velocity();
+
+        context.midiOut.write(oneNote);
+        if (oneNote.is_note_on() && velocity > 0) {
+            keyboard.keyPressed(noteNumber);
+        }
+
+        if (oneNote.is_note_off() || velocity == 0) {
+            keyboard.keyReleased(noteNumber);
+        }
+
     }
 }
 
