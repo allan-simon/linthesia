@@ -3,6 +3,8 @@
 
 #include <RtMidi.h>
 
+#include "libmidi/midi.h"
+
 class MidiEvent;
 
 namespace linthesia {
@@ -17,9 +19,15 @@ class MidiIn {
 
         /**
          * Get the next MIDI in the buffer, return a "NullEvent" instance
-         * if buffer is empty or input message not 
+         * if buffer is empty
          */
         MidiEvent read();
+
+        /**
+         * Get all the MIDI "note" event currently in input buffer, return a empty
+         * list if no "note" midi event available
+         */
+        MidiEventList readAllNotes();
 
         /**
          * Change the output port use when writing midi event

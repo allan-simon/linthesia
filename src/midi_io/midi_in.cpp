@@ -37,10 +37,26 @@ MidiEvent MidiIn::read() {
 /**
  *
  */
+MidiEventList MidiIn::readAllNotes() {
+    MidiEventList allNotes;
+    //TODO: should be possible to transform it into
+    // a do while
+    MidiEvent event = read();
+    while(
+        event.get_type() == MidiEventType_NoteOff ||
+        event.get_type() == MidiEventType_NoteOn
+    ) {
+        allNotes.push_back(event);
+        event = read();
+    }
+    return allNotes;
+}
+
+/**
+ *
+ */
 void MidiIn::open() {
     rtMidiIn.openPort(chosenPort);
-    //rtMidiIn.setCallback(&mycallback);
-    //std::cout << " we open port " << chosenPort << std::endl;
 }
 
 /**
