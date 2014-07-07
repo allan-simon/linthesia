@@ -25,6 +25,10 @@ class OnePlayerScreen : public AbstractScreen {
 
 
     private:
+        /**
+         *
+         */
+        void setKeyboardPosition(const sf::RenderWindow &app);
         Keyboard keyboard;
 
         /**

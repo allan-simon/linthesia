@@ -1,6 +1,3 @@
-#include <iostream>
-#include <vector>
-
 #include "libmidi/midi.h"
 #include "one_player_screen.h"
 #include "context/context.h"
@@ -55,6 +52,7 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    setKeyboardPosition(app);
 
     bool isPlaying = false;
 
@@ -126,6 +124,22 @@ void OnePlayerScreen::updateKeyboard(
         }
 
     }
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::setKeyboardPosition(const sf::RenderWindow &app) {
+    const unsigned SPACE_BUTTONS = 60;
+
+    float yPosition = app.getSize().y -
+        keyboard.getGlobalBounds().height -
+        SPACE_BUTTONS;
+
+    keyboard.setPosition(
+        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
 }
 
 } // end namespace linthesia

@@ -26,6 +26,11 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
             unsigned noteNumber
         );
 
+        /**
+         *
+         */
+        sf::FloatRect getGlobalBounds() const;
+
     private:
 
         /**

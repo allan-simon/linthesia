@@ -19,6 +19,9 @@ class WhiteKey : public sf::Drawable , public sf::Transformable {
    public:
         WhiteKey();
 
+        const static int WHITE_KEY_WIDTH = 20;
+        const static int WHITE_KEY_HEIGHT = 112;
+
         /**
          * Action to execute when the key is pressed
          * Note: we give a color directly rather

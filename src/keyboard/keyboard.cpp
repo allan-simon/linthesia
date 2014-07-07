@@ -198,5 +198,17 @@ bool Keyboard::isOutOfKeyboard(unsigned noteNumber) {
         (noteNumber >= NUMBER_OCTAVES * NOTES_PER_OCTAVE + KEYBOARD_OFFSET);
 }
 
+/**
+ *
+ */
+sf::FloatRect Keyboard::getGlobalBounds() const {
+    return sf::FloatRect(
+        0, //left TODO: not actual left
+        0, //top TODO: not actual top
+        WhiteKey::WHITE_KEY_WIDTH * NBR_WHITE_KEYS, // width
+        WhiteKey::WHITE_KEY_HEIGHT //height
+    );
+}
+
 
 } // end of namespace
