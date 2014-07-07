@@ -54,6 +54,14 @@ ScreenIndex OnePlayerScreen::run(
 
     setKeyboardPosition(app);
 
+    KeyboardTrail keyboardTrail(
+        static_cast<int>(keyboard.getGlobalBounds().width)
+    );
+    setKeyboardTrailPosition(
+        app,
+        keyboardTrail
+    );
+
     bool isPlaying = false;
 
     context.midiOut.open();
@@ -84,6 +92,7 @@ ScreenIndex OnePlayerScreen::run(
         }
         app.clear(BACKGROUND_COLOR);
         app.draw(keyboard);
+        app.draw(keyboardTrail);
         app.display();
 
         if (isPlaying) {
@@ -140,6 +149,27 @@ void OnePlayerScreen::setKeyboardPosition(const sf::RenderWindow &app) {
         (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
     );
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::setKeyboardTrailPosition(
+    const sf::RenderWindow &app,
+    KeyboardTrail &trail
+) {
+    const unsigned SPACE_BUTTONS = 60;
+
+    float yPosition = app.getSize().y -
+        keyboard.getGlobalBounds().height -
+        trail.getGlobalBounds().height -
+        SPACE_BUTTONS;
+
+    trail.setPosition(
+        (app.getSize().x - trail.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+
 }
 
 } // end namespace linthesia
