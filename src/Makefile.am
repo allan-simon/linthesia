@@ -17,6 +17,7 @@ linthesia_SOURCES = main.cpp \
 	icons/icon.cpp \
 	keyboard/white_key.cpp \
 	keyboard/black_key.cpp \
+	keyboard/trail.cpp \
 	keyboard/keyboard.cpp \
 	screens/screens.cpp \
 	screens/main_screen/main_screen.cpp \

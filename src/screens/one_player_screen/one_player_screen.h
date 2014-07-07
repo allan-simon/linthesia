@@ -6,6 +6,7 @@
 #include "screens/abstract_screen.h"
 #include "screens/screens.h"
 #include "keyboard/keyboard.h"
+#include "keyboard/trail.h"
 
 
 namespace linthesia {
@@ -30,6 +31,14 @@ class OnePlayerScreen : public AbstractScreen {
          */
         void setKeyboardPosition(const sf::RenderWindow &app);
         Keyboard keyboard;
+
+        /**
+         * set the "separator" (the "trail") at the top of the keyboard
+         */
+        void setKeyboardTrailPosition(
+            const sf::RenderWindow &app,
+            KeyboardTrail &keyboardTrail
+        );
 
         /**
          * Play the part of the song that should be played during that
