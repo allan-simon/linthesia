@@ -18,12 +18,12 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
 
 
         void keyPressed(
-            unsigned noteNumber,
+            const unsigned noteNumber,
             const sf::Color &color = sf::Color::Blue
         );
 
         void keyReleased(
-            unsigned noteNumber
+            const unsigned noteNumber
         );
 
         /**
@@ -45,13 +45,13 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
-        static bool isBlackKey(unsigned noteNumber);
+        static bool isBlackKey(const unsigned noteNumber);
 
         /**
          *
          */
         static unsigned noteToIndex(
-            unsigned baseNoteNumber
+            const unsigned baseNoteNumber
         );
 
         /**
@@ -59,7 +59,7 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
          * (i.e is not playable by player and anyway will
          * create a out of bound exception)
          */
-        static bool isOutOfKeyboard(unsigned noteNumber);
+        static bool isOutOfKeyboard(const unsigned noteNumber);
 
         std::vector<WhiteKey> whiteKeys;
         std::vector<BlackKey> blackKeys;

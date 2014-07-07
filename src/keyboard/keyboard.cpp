@@ -73,7 +73,7 @@ Keyboard::Keyboard():
  *
  */
 void Keyboard::keyPressed(
-    unsigned noteNumber,
+    const unsigned noteNumber,
     const sf::Color &color
 ) {
     if (isOutOfKeyboard(noteNumber)) {
@@ -82,18 +82,16 @@ void Keyboard::keyPressed(
 
     //TODO: hack
     //this line works only because the offset of note is exactly X octave
-    noteNumber -= KEYBOARD_OFFSET;
+    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
+    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
 
-    unsigned octave = noteNumber / NOTES_PER_OCTAVE;
-    unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
-
-    unsigned baseIndex = noteToIndex(noteBase);
+    const unsigned baseIndex = noteToIndex(noteBase);
 
     if (isBlackKey(noteBase)) {
-        unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
+        const unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
         blackKeys[index].pressed(color);
     } else {
-        unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
+        const unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
         whiteKeys[index].pressed(color);
     }
 }
@@ -102,27 +100,24 @@ void Keyboard::keyPressed(
  *
  */
 void Keyboard::keyReleased(
-    unsigned noteNumber
+    const unsigned noteNumber
 ) {
+    //TODO should be possible to refactor with keyPressed
     if (isOutOfKeyboard(noteNumber)) {
         return;
     }
     //TODO: hack
     //this line works only because the offset of note is exactly X octave
-    noteNumber -= KEYBOARD_OFFSET;
-
-    //TODO should be possible to refactor with keyPressed
-
-    unsigned octave = noteNumber / NOTES_PER_OCTAVE;
-    unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
+    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
+    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
 
 
-    unsigned baseIndex = noteToIndex(noteBase);
+    const unsigned baseIndex = noteToIndex(noteBase);
     if (isBlackKey(noteBase)) {
-        unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
+        const unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
         blackKeys[index].released();
     } else {
-        unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
+        const unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
         whiteKeys[index].released();
     }
 
@@ -131,7 +126,7 @@ void Keyboard::keyReleased(
 /**
  *
  */
-unsigned Keyboard::noteToIndex(unsigned baseNoteNumber) {
+unsigned Keyboard::noteToIndex(const unsigned baseNoteNumber) {
 
     switch(baseNoteNumber) {
 
@@ -159,7 +154,7 @@ unsigned Keyboard::noteToIndex(unsigned baseNoteNumber) {
 /**
  *
  */
-bool Keyboard::isBlackKey(unsigned baseNoteNumber) {
+bool Keyboard::isBlackKey(const unsigned baseNoteNumber) {
 
     return
         baseNoteNumber == Keys::C_SHARP ||
@@ -189,8 +184,7 @@ void Keyboard::draw(
 /**
  *
  */
-bool Keyboard::isOutOfKeyboard(unsigned noteNumber) {
-
+bool Keyboard::isOutOfKeyboard(const unsigned noteNumber) {
     return
         // too low or..
         (noteNumber < KEYBOARD_OFFSET) ||
