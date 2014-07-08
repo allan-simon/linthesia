@@ -7,6 +7,7 @@
 #include "screens/screens.h"
 #include "keyboard/keyboard.h"
 #include "keyboard/trail.h"
+#include "note_ground.h"
 
 
 namespace linthesia {
@@ -38,6 +39,14 @@ class OnePlayerScreen : public AbstractScreen {
         void setKeyboardTrailPosition(
             const sf::RenderWindow &app,
             KeyboardTrail &keyboardTrail
+        );
+
+        /**
+         *
+         */
+        void setNoteGroundPosition(
+            const sf::RenderWindow &app,
+            NoteGround &noteGround
         );
 
         /**

@@ -53,14 +53,16 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time lastElapsed = clock.getElapsedTime();
 
     setKeyboardPosition(app);
+    const float keyboardWidth = keyboard.getGlobalBounds().width;
 
-    KeyboardTrail keyboardTrail(
-        static_cast<int>(keyboard.getGlobalBounds().width)
-    );
+    KeyboardTrail keyboardTrail(static_cast<int>(keyboardWidth));
     setKeyboardTrailPosition(
         app,
         keyboardTrail
     );
+
+    NoteGround noteGround(keyboardWidth, 300);
+    setNoteGroundPosition(app, noteGround);
 
     bool isPlaying = false;
 
@@ -93,6 +95,7 @@ ScreenIndex OnePlayerScreen::run(
         app.clear(BACKGROUND_COLOR);
         app.draw(keyboard);
         app.draw(keyboardTrail);
+        app.draw(noteGround);
         app.display();
 
         if (isPlaying) {
@@ -169,6 +172,32 @@ void OnePlayerScreen::setKeyboardTrailPosition(
         (app.getSize().x - trail.getGlobalBounds().width) / 2.0f,
         yPosition
     );
+
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::setNoteGroundPosition(
+    const sf::RenderWindow &app,
+    NoteGround &noteGround
+) {
+    const unsigned SPACE_BUTTONS = 60;
+
+    float yPosition = app.getSize().y -
+
+        keyboard.getGlobalBounds().height -
+        16 - //trail.getGlobalBounds().height -
+        noteGround.getGlobalBounds().height -
+        SPACE_BUTTONS;
+
+    noteGround.setPosition(
+        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+
+
+
 
 }
 
