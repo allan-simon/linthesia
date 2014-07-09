@@ -9,7 +9,7 @@ namespace linthesia {
  *
  */
 NoteGround::NoteGround() {
-    ground.setFillColor(sf::Color(223, 223, 223));
+    ground.setFillColor(sf::Color(95, 95, 95));
 }
 
 /**
