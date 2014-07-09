@@ -14,12 +14,17 @@ namespace linthesia {
  */
 class KeyboardTrail : public sf::Drawable , public sf::Transformable {
     public:
-        KeyboardTrail(const int width);
+        KeyboardTrail();
 
         /**
          * get the size of keyboard trail
          */
         const sf::FloatRect getGlobalBounds() const;
+
+        /**
+         *
+         */
+        void setWidth(const int width);
 
     private:
 

@@ -9,24 +9,28 @@ namespace linthesia {
 /**
  *
  */
-KeyboardTrail::KeyboardTrail(
-    const int width
-) {
+KeyboardTrail::KeyboardTrail() {
     //TODO: replace hardcoded strings by something better
     if (!texture.loadFromFile("../graphics/keyboard_top_separator.png")) {
         std::cerr << "Can't load keyboard_top_separator.png" << std::endl;
     }
     texture.setSmooth(true);
     texture.setRepeated(true);
+    sprite.setTexture(texture);
+}
 
+/**
+ *
+ */
+void KeyboardTrail::setWidth(const int width) {
     sprite.setTextureRect(sf::IntRect(
         0,
         0,
         width,
         static_cast<int>(texture.getSize().y)
     ));
-    sprite.setTexture(texture);
 }
+
 
 /**
  *

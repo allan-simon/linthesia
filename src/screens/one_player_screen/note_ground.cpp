@@ -8,9 +8,7 @@ namespace linthesia {
 /**
  *
  */
-NoteGround::NoteGround(float width, float height):
-    ground(sf::Vector2f(width, height))
-{
+NoteGround::NoteGround() {
     ground.setFillColor(sf::Color(223, 223, 223));
 }
 
@@ -19,6 +17,15 @@ NoteGround::NoteGround(float width, float height):
  */
 sf::FloatRect NoteGround::getGlobalBounds() const {
     return ground.getGlobalBounds();
+}
+
+/**
+ *
+ */
+void NoteGround::setSize(
+    const sf::Vector2f &size
+) {
+    ground.setSize(size);
 }
 
 /**

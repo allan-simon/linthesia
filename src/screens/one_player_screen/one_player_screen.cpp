@@ -53,16 +53,8 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time lastElapsed = clock.getElapsedTime();
 
     setKeyboardPosition(app);
-    const float keyboardWidth = keyboard.getGlobalBounds().width;
-
-    KeyboardTrail keyboardTrail(static_cast<int>(keyboardWidth));
-    setKeyboardTrailPosition(
-        app,
-        keyboardTrail
-    );
-
-    NoteGround noteGround(keyboardWidth, 300);
-    setNoteGroundPosition(app, noteGround);
+    setKeyboardTrailPosition(app);
+    setNoteGroundPosition(app);
 
     bool isPlaying = false;
 
@@ -142,7 +134,6 @@ void OnePlayerScreen::updateKeyboard(
  *
  */
 void OnePlayerScreen::setKeyboardPosition(const sf::RenderWindow &app) {
-    const unsigned SPACE_BUTTONS = 60;
 
     float yPosition = app.getSize().y -
         keyboard.getGlobalBounds().height -
@@ -158,18 +149,19 @@ void OnePlayerScreen::setKeyboardPosition(const sf::RenderWindow &app) {
  *
  */
 void OnePlayerScreen::setKeyboardTrailPosition(
-    const sf::RenderWindow &app,
-    KeyboardTrail &trail
+    const sf::RenderWindow &app
 ) {
-    const unsigned SPACE_BUTTONS = 60;
+
+    const float keyboardWidth = keyboard.getGlobalBounds().width;
+    keyboardTrail.setWidth(static_cast<int>(keyboardWidth));
 
     float yPosition = app.getSize().y -
         keyboard.getGlobalBounds().height -
-        trail.getGlobalBounds().height -
+        keyboardTrail.getGlobalBounds().height -
         SPACE_BUTTONS;
 
-    trail.setPosition(
-        (app.getSize().x - trail.getGlobalBounds().width) / 2.0f,
+    keyboardTrail.setPosition(
+        (app.getSize().x - keyboardWidth) / 2.0f,
         yPosition
     );
 
@@ -179,21 +171,21 @@ void OnePlayerScreen::setKeyboardTrailPosition(
  *
  */
 void OnePlayerScreen::setNoteGroundPosition(
-    const sf::RenderWindow &app,
-    NoteGround &noteGround
+    const sf::RenderWindow &app
 ) {
-    const unsigned SPACE_BUTTONS = 60;
+    const float keyboardWidth = keyboard.getGlobalBounds().width;
 
-    float yPosition = app.getSize().y -
-
+    float height = app.getSize().y -
         keyboard.getGlobalBounds().height -
-        16 - //trail.getGlobalBounds().height -
+        keyboardTrail.getGlobalBounds().height -
         noteGround.getGlobalBounds().height -
         SPACE_BUTTONS;
 
+    noteGround.setSize(sf::Vector2f(keyboardWidth, height));
+
     noteGround.setPosition(
-        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
-        yPosition
+        (app.getSize().x - keyboardWidth) / 2.0f,
+        0
     );
 
 

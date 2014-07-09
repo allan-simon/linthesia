@@ -28,6 +28,12 @@ class OnePlayerScreen : public AbstractScreen {
 
     private:
         /**
+         * Arbitrary height at the bottom that we will use latter to put score
+         * play/pause buttons etc.
+         */
+        const unsigned SPACE_BUTTONS = 60;
+
+        /**
          *
          */
         void setKeyboardPosition(const sf::RenderWindow &app);
@@ -37,17 +43,17 @@ class OnePlayerScreen : public AbstractScreen {
          * set the "separator" (the "trail") at the top of the keyboard
          */
         void setKeyboardTrailPosition(
-            const sf::RenderWindow &app,
-            KeyboardTrail &keyboardTrail
+            const sf::RenderWindow &app
         );
+        KeyboardTrail keyboardTrail;
 
         /**
          *
          */
         void setNoteGroundPosition(
-            const sf::RenderWindow &app,
-            NoteGround &noteGround
+            const sf::RenderWindow &app
         );
+        NoteGround noteGround;
 
         /**
          * Play the part of the song that should be played during that

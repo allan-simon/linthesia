@@ -18,12 +18,19 @@ namespace linthesia {
 class NoteGround : public sf::Drawable , public sf::Transformable {
 
     public:
-        NoteGround(float width, float height);
+        NoteGround();
 
         /**
          *
          */
         sf::FloatRect getGlobalBounds() const;
+
+        /**
+         *
+         */
+        void setSize(
+            const sf::Vector2f &size
+        );
 
     private:
 
