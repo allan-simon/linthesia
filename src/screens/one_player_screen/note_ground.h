@@ -4,7 +4,9 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
 namespace linthesia {
 
@@ -34,7 +36,10 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
 
     private:
 
-        sf::RectangleShape ground;
+        sf::RectangleShape groundBackground;
+        sf::RectangleShape noteSeparator;
+        sf::RenderTexture ground;
+        sf::Sprite sprite;
 
         /**
          *

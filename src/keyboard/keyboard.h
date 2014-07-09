@@ -31,6 +31,8 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
          */
         sf::FloatRect getGlobalBounds() const;
 
+        const static unsigned NBR_WHITE_KEYS = 35;
+
     private:
 
         /**

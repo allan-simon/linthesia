@@ -6,7 +6,6 @@
 namespace linthesia {
 
 const static unsigned NUMBER_OCTAVES = 5;
-const static unsigned NBR_WHITE_KEYS = 35;
 const static unsigned NBR_BLACK_KEYS = 25;
 const static unsigned NBR_WHITE_KEYS_BY_OCTAVE = 7;
 const static unsigned NBR_BLACK_KEYS_BY_OCTAVE = 5;
