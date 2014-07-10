@@ -56,6 +56,9 @@ ScreenIndex OnePlayerScreen::run(
     setKeyboardTrailPosition(app);
     setNoteGroundPosition(app);
 
+    noteGround.addNote();
+    noteGround.render();
+
     bool isPlaying = false;
 
     context.midiOut.open();

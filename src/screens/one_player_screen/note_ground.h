@@ -25,6 +25,22 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
+        const static unsigned NOTE_SEPARATOR_WIDTH = 1;
+
+        /**
+         * Stub function to add a note to the ground itself
+         * TODO: complexify this function to take parameters in order to
+         * have:
+         * 1 - note number (do, re, mi etc. and octavte)
+         * 2 - note duration
+         * 3 - note starting time
+         * 4 - color
+         */
+        void addNote();
+
+        /**
+         *
+         */
         sf::FloatRect getGlobalBounds() const;
 
         /**
@@ -33,6 +49,14 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         void setSize(
             const sf::Vector2f &size
         );
+
+        /**
+         * Dump the intermediate renderer into a sprite, that can be used
+         * after to be drawn on the window, this function must be called
+         * at least once, if you want to see something
+         * it should be safe to call it several time
+         */
+        void render();
 
     private:
 

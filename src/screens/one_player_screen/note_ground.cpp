@@ -2,6 +2,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 
 #include "note_ground.h"
+#include "white_note_to_play.h"
 #include "keyboard/keyboard.h"
 
 namespace linthesia {
@@ -45,7 +46,10 @@ void NoteGround::setSize(
         offset < roundedWidth;
         offset += sizeOneKey
     ) {
-        noteSeparator.setPosition(offset - 1, 0);
+        noteSeparator.setPosition(
+            offset - NoteGround::NOTE_SEPARATOR_WIDTH,
+            0
+        );
         //note: we need to draw in that intermediate renderer
         //because we can't change the position of noteSepator
         //in draw as it's a "const" function
@@ -54,7 +58,24 @@ void NoteGround::setSize(
 
     }
 
+}
+
+/**
+ *
+ */
+void NoteGround::render() {
     sprite.setTexture(ground.getTexture());
+}
+
+/**
+ *
+ */
+void NoteGround::addNote() {
+    WhiteNoteToPlay testNote(
+        20,
+        sf::Color(230, 20, 20)
+    );
+    ground.draw(testNote);
 }
 
 /**
