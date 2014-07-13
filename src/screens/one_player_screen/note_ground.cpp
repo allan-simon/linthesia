@@ -4,8 +4,11 @@
 #include "note_ground.h"
 #include "white_note_to_play.h"
 #include "keyboard/keyboard.h"
+#include "keyboard/white_key.h"
 
 namespace linthesia {
+
+const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
 
 /**
  *
@@ -70,10 +73,27 @@ void NoteGround::render() {
 /**
  *
  */
-void NoteGround::addNote() {
+void NoteGround::addNote(
+    const unsigned noteNumber,
+    const unsigned start,
+    const unsigned end,
+    const sf::Color &color
+) {
+    if (Keyboard::isOutOfKeyboard(noteNumber)) {
+        return;
+    }
+    unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
+
+    if (Keyboard::isBlackKey(noteNumber)) {
+        return;
+    }
     WhiteNoteToPlay testNote(
-        20,
+        (end - start) / MICRO_SECOND_PER_PIXEL,
         sf::Color(230, 20, 20)
+    );
+    testNote.setPosition(
+       WhiteKey::WHITE_KEY_WIDTH * index,
+       start / MICRO_SECOND_PER_PIXEL
     );
     ground.draw(testNote);
 }

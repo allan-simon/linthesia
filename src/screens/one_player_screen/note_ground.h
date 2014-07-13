@@ -28,15 +28,18 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         const static unsigned NOTE_SEPARATOR_WIDTH = 1;
 
         /**
-         * Stub function to add a note to the ground itself
-         * TODO: complexify this function to take parameters in order to
-         * have:
-         * 1 - note number (do, re, mi etc. and octavte)
-         * 2 - note duration
-         * 3 - note starting time
-         * 4 - color
+         * add a note to the ground itself
+         * @param note number (do, re, mi etc. and octavte)
+         * @param note starting time
+         * @param note ending time
+         * @param color
          */
-        void addNote();
+        void addNote(
+            const unsigned noteNumber,
+            const unsigned start,
+            const unsigned end,
+            const sf::Color &color
+        );
 
         /**
          *
