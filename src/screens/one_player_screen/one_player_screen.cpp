@@ -54,9 +54,11 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
     noteGround.setSizeFromDurationAndKeyboard(
         context.getSongLength(),
-        Keyboard::NBR_WHITE_KEYS
+        Keyboard::NBR_WHITE_KEYS,
+        MICRO_SECOND_PER_PIXEL
     );
     setKeyboardPosition(app);
     setKeyboardTrailPosition(app);
@@ -106,6 +108,10 @@ ScreenIndex OnePlayerScreen::run(
         app.display();
 
         if (isPlaying) {
+            scrollNoteGround(
+                MICRO_SECOND_PER_PIXEL,
+                currentElapsed - lastElapsed
+            );
             playSong(
                 context,
                 currentElapsed - lastElapsed
@@ -248,6 +254,18 @@ void OnePlayerScreen::setNoteGroundView(
         noteGroundXRatio,
         noteGroundYRatio
     ));
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::scrollNoteGround(
+    const unsigned microSecondPerPixel,
+    const sf::Time& delta
+) {
+    auto offsetY = delta.asMicroseconds() / microSecondPerPixel;
+    // it's -offsetY because we're scrolling up
+    noteGroundView.move(0, -offsetY);
 }
 
 } // end namespace linthesia

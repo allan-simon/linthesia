@@ -10,7 +10,6 @@
 
 namespace linthesia {
 
-const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
 
 /**
  *
@@ -32,11 +31,14 @@ sf::FloatRect NoteGround::getGlobalBounds() const {
  */
 void NoteGround::setSizeFromDurationAndKeyboard(
     const unsigned duration,
-    const unsigned keyboardNbrKeys
+    const unsigned keyboardNbrKeys,
+    const unsigned _microSecondPerPixel
 ) {
 
+    microSecondPerPixel = _microSecondPerPixel;
+
     const unsigned width = keyboardNbrKeys * WhiteKey::WHITE_KEY_WIDTH;
-    const unsigned height = duration / MICRO_SECOND_PER_PIXEL;
+    const unsigned height = duration / microSecondPerPixel;
     groundBackground.setSize(sf::Vector2f(
         width,
         height
@@ -86,8 +88,8 @@ void NoteGround::addNote(
     }
     const unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
 
-    const unsigned noteHeight = (end - start) / MICRO_SECOND_PER_PIXEL;
-    const unsigned noteYPosition = start / MICRO_SECOND_PER_PIXEL;
+    const unsigned noteHeight = (end - start) / microSecondPerPixel;
+    const unsigned noteYPosition = start / microSecondPerPixel;
 
     if (Keyboard::isBlackKey(noteNumber)) {
         //TODO: 140 because in getChannelColor , primary is set to 200

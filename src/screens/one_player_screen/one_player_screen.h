@@ -59,6 +59,15 @@ class OnePlayerScreen : public AbstractScreen {
         void setNoteGroundView(
             const sf::RenderWindow &app
         );
+
+        /**
+         * Use speed (well invert of speed as it's microsec per pixel)
+         * and delta time to scroll the noteGround accordingly
+         */
+        void scrollNoteGround(
+            const unsigned microSecondPerPixel,
+            const sf::Time& delta
+        );
         sf::View noteGroundView;
 
         /**
