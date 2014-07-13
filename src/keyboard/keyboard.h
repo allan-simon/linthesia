@@ -33,6 +33,28 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
 
         const static unsigned NBR_WHITE_KEYS = 35;
 
+        /**
+         * Take a MIDI note number and determine if it's played by a black
+         * key on keybaord
+         */
+        static bool isBlackKey(const unsigned noteNumber);
+
+        /**
+         * get the key's number on keyboard index from MIDI note number
+         * Note: in order to know if it's a black or white key you need
+         * to call isBlackKey first
+         * Note: you need to call isOutOfKeyboard first to be sure its
+         * a note playable by current keyboard
+         */
+        static unsigned noteToKeyboardIndex(const unsigned noteNumber);
+
+        /**
+         * If the key is not playable by current keyboard
+         * (i.e is not playable by player and anyway will
+         * create a out of bound exception)
+         */
+        static bool isOutOfKeyboard(const unsigned noteNumber);
+
     private:
 
         /**
@@ -43,25 +65,15 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
             sf::RenderStates states
         ) const;
 
-
         /**
-         *
+         * get the note index in one octave (0 for Do/C, 6 for Si/B)
+         * in order to know if white note index or black note index you need
+         * to use "isBlackKey" method
          */
-        static bool isBlackKey(const unsigned noteNumber);
-
-        /**
-         *
-         */
-        static unsigned noteToIndex(
+        static unsigned noteToOctaveIndex(
             const unsigned baseNoteNumber
         );
 
-        /**
-         * If the key is not playable by current keyboard
-         * (i.e is not playable by player and anyway will
-         * create a out of bound exception)
-         */
-        static bool isOutOfKeyboard(const unsigned noteNumber);
 
         std::vector<WhiteKey> whiteKeys;
         std::vector<BlackKey> blackKeys;

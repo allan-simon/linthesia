@@ -79,18 +79,10 @@ void Keyboard::keyPressed(
         return;
     }
 
-    //TODO: hack
-    //this line works only because the offset of note is exactly X octave
-    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
-    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
-
-    const unsigned baseIndex = noteToIndex(noteBase);
-
-    if (isBlackKey(noteBase)) {
-        const unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
+    const unsigned index = noteToKeyboardIndex(noteNumber);
+    if (isBlackKey(noteNumber)) {
         blackKeys[index].pressed(color);
     } else {
-        const unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
         whiteKeys[index].pressed(color);
     }
 }
@@ -105,18 +97,11 @@ void Keyboard::keyReleased(
     if (isOutOfKeyboard(noteNumber)) {
         return;
     }
-    //TODO: hack
-    //this line works only because the offset of note is exactly X octave
-    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
-    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
 
-
-    const unsigned baseIndex = noteToIndex(noteBase);
-    if (isBlackKey(noteBase)) {
-        const unsigned index = baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
+    const unsigned index = noteToKeyboardIndex(noteNumber);
+    if (isBlackKey(noteNumber)) {
         blackKeys[index].released();
     } else {
-        const unsigned index = baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
         whiteKeys[index].released();
     }
 
@@ -125,7 +110,23 @@ void Keyboard::keyReleased(
 /**
  *
  */
-unsigned Keyboard::noteToIndex(const unsigned baseNoteNumber) {
+unsigned Keyboard::noteToKeyboardIndex(const unsigned noteNumber) {
+    //TODO: hack
+    //this line works only because the offset of note is exactly X octave
+    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
+    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
+    const unsigned baseIndex = noteToOctaveIndex(noteBase);
+    if (isBlackKey(noteBase)) {
+        return baseIndex + NBR_BLACK_KEYS_BY_OCTAVE*octave;
+    } else {
+        return baseIndex + NBR_WHITE_KEYS_BY_OCTAVE*octave;
+    }
+}
+
+/**
+ *
+ */
+unsigned Keyboard::noteToOctaveIndex(const unsigned baseNoteNumber) {
 
     switch(baseNoteNumber) {
 
@@ -153,7 +154,8 @@ unsigned Keyboard::noteToIndex(const unsigned baseNoteNumber) {
 /**
  *
  */
-bool Keyboard::isBlackKey(const unsigned baseNoteNumber) {
+bool Keyboard::isBlackKey(const unsigned noteNumber) {
+    const unsigned baseNoteNumber = noteNumber % NOTES_PER_OCTAVE;
 
     return
         baseNoteNumber == Keys::C_SHARP ||
