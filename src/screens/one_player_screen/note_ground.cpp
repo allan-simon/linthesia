@@ -1,3 +1,4 @@
+#include <algorithm> // for std::min
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
@@ -89,9 +90,18 @@ void NoteGround::addNote(
     const unsigned noteYPosition = start / MICRO_SECOND_PER_PIXEL;
 
     if (Keyboard::isBlackKey(noteNumber)) {
+        //TODO: 140 because in getChannelColor , primary is set to 200
+        //and in RGB,  140 will be darker than 200
+        sf::Uint8 darker = 140;
         BlackNoteToPlay testNote(
             noteHeight,
-            sf::Color(180, 20, 20)
+            sf::Color(
+                // TODO: original color but darker
+                // find better method to do that
+                std::min(darker, color.r),
+                std::min(darker, color.g),
+                std::min(darker, color.b)
+            )
         );
         testNote.setPosition(
             Keyboard::xPositionBlackNote(noteNumber),
@@ -101,7 +111,7 @@ void NoteGround::addNote(
     } else {
         WhiteNoteToPlay testNote(
             noteHeight,
-            sf::Color(230, 20, 20)
+            color
         );
         testNote.setPosition(
            WhiteKey::WHITE_KEY_WIDTH * index,

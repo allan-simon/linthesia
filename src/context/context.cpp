@@ -70,12 +70,15 @@ const TranslatedNoteSet &Context::getNotes() const {
  */
 sf::Color Context::getChannelColor(const unsigned channel) const {
 
+    const sf::Uint8 primary = 200;
+    const sf::Uint8 secondary = 50;
     switch(channel) {
-        case 1: return sf::Color::Green;
-        case 2: return sf::Color::Blue;
-        case 3: return sf::Color::Yellow;
-        case 4: return sf::Color::Magenta;
-        default: return sf::Color::Red;
+        case 1: return sf::Color(secondary, primary, secondary); // ~green
+        case 2: return sf::Color(secondary, primary, primary); // ~cyan
+        case 3: return sf::Color(primary, primary, secondary); // ~yellow
+        case 4: return sf::Color(primary, secondary, primary); // ~magenta
+        case 5: return sf::Color(secondary, secondary, primary); // ~blue
+        default: return sf::Color(primary, secondary, secondary); // ~red
     }
 }
 
