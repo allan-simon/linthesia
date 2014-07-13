@@ -3,6 +3,7 @@
 
 #include "note_ground.h"
 #include "white_note_to_play.h"
+#include "black_note_to_play.h"
 #include "keyboard/keyboard.h"
 #include "keyboard/white_key.h"
 
@@ -82,20 +83,32 @@ void NoteGround::addNote(
     if (Keyboard::isOutOfKeyboard(noteNumber)) {
         return;
     }
-    unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
+    const unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
+
+    const unsigned noteHeight = (end - start) / MICRO_SECOND_PER_PIXEL;
+    const unsigned noteYPosition = start / MICRO_SECOND_PER_PIXEL;
 
     if (Keyboard::isBlackKey(noteNumber)) {
-        return;
+        BlackNoteToPlay testNote(
+            noteHeight,
+            sf::Color(180, 20, 20)
+        );
+        testNote.setPosition(
+            Keyboard::xPositionBlackNote(noteNumber),
+            noteYPosition
+        );
+        ground.draw(testNote);
+    } else {
+        WhiteNoteToPlay testNote(
+            noteHeight,
+            sf::Color(230, 20, 20)
+        );
+        testNote.setPosition(
+           WhiteKey::WHITE_KEY_WIDTH * index,
+           noteYPosition
+        );
+        ground.draw(testNote);
     }
-    WhiteNoteToPlay testNote(
-        (end - start) / MICRO_SECOND_PER_PIXEL,
-        sf::Color(230, 20, 20)
-    );
-    testNote.setPosition(
-       WhiteKey::WHITE_KEY_WIDTH * index,
-       start / MICRO_SECOND_PER_PIXEL
-    );
-    ground.draw(testNote);
 }
 
 /**

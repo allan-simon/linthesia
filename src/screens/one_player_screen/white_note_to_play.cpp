@@ -27,7 +27,7 @@ WhiteNoteToPlay::WhiteNoteToPlay(
         height
     ));
 
-    // half-transparent blank
+    // half-transparent black
     border.setFillColor(sf::Color(
         0,
         0,

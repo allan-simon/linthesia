@@ -34,6 +34,11 @@ class Keyboard : public sf::Drawable , public sf::Transformable {
         const static unsigned NBR_WHITE_KEYS = 35;
 
         /**
+         * get the x position of a black note given its midi note number
+         */
+        static unsigned xPositionBlackNote(const unsigned noteNumber);
+
+        /**
          * Take a MIDI note number and determine if it's played by a black
          * key on keybaord
          */

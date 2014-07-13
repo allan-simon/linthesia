@@ -40,6 +40,7 @@ Keyboard::Keyboard():
     const unsigned BLACK_KEY_WIDTH = 12;
     unsigned xWhite = 0;
 
+    // white keys are simple because they are next to each others
     for (auto &oneWhiteKey : whiteKeys) {
         oneWhiteKey.setPosition(xWhite, 0);
         xWhite += WHITE_KEY_WIDTH;
@@ -148,7 +149,9 @@ unsigned Keyboard::noteToOctaveIndex(const unsigned baseNoteNumber) {
         case Keys::A_SHARP : return 4;
     }
 
-    throw new std::exception();
+    throw new std::overflow_error(
+        "note not in octave range" + std::to_string(baseNoteNumber)
+    );
 }
 
 /**
@@ -192,6 +195,57 @@ bool Keyboard::isOutOfKeyboard(const unsigned noteNumber) {
         // to high
         (noteNumber >= NUMBER_OCTAVES * NOTES_PER_OCTAVE + KEYBOARD_OFFSET);
 }
+
+/**
+ *
+ */
+unsigned Keyboard::xPositionBlackNote(const unsigned noteNumber) {
+    //TODO: hack
+    //this line works only because the offset of note is exactly X octave
+    const unsigned octave = (noteNumber - KEYBOARD_OFFSET) / NOTES_PER_OCTAVE;
+    const unsigned noteBase = noteNumber % NOTES_PER_OCTAVE;
+
+    // base offset as black keys in the middle of two white keys
+    const unsigned xBlackOffset =
+        WhiteKey::WHITE_KEY_WIDTH -
+        (BlackKey::BLACK_KEY_WIDTH / 2);
+
+    // arbitrary 'sentinel' value
+    const unsigned UNVALID_POSITION = 42;
+    unsigned position = UNVALID_POSITION;
+    switch(noteBase) {
+
+        // if white keys => exception
+        case Keys::C :
+        case Keys::D :
+        case Keys::E :
+        case Keys::F :
+        case Keys::G :
+        case Keys::A :
+        case Keys::B :
+            throw new std::invalid_argument("we are not supposed to receive white keys");
+
+        //black keys
+
+        case Keys::C_SHARP : position = 0; break;
+        case Keys::D_SHARP : position = 1; break;
+        //there a 'hole' between D#/re# and F#/fa#
+        case Keys::F_SHARP : position = 3; break;
+        case Keys::G_SHARP : position = 4; break;
+        case Keys::A_SHARP : position = 5; break;
+
+        default :
+            throw new std::overflow_error(
+                "note not in octave range" + std::to_string(noteBase)
+            );
+    }
+
+    return xBlackOffset +
+        WhiteKey::WHITE_KEY_WIDTH * position +
+        octave * NBR_WHITE_KEYS_BY_OCTAVE  * WhiteKey::WHITE_KEY_WIDTH;
+}
+
+
 
 /**
  *
