@@ -19,6 +19,11 @@ class BlackKey : public sf::Drawable , public sf::Transformable {
    public:
         BlackKey();
 
+        const static int BLACK_KEY_WIDTH = 12;
+        const static int BLACK_KEY_HEIGHT = 67;
+
+
+
         /**
          * Action to execute when the key is pressed
          * @see WhiteKey::pressed for more details

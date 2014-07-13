@@ -5,10 +5,6 @@
 
 namespace linthesia {
 
-const static int BLACK_KEY_WIDTH = 12;
-const static int BLACK_KEY_HEIGHT = 67;
-
-
 /**
  *
  */
