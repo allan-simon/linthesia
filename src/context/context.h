@@ -19,8 +19,14 @@ class Context {
         bool openMidiFile(const std::string& filename);
 
         MidiEventListWithTrackId update(const sf::Int64 deltaMicroseconds);
+
         const MidiTrackList &getTracks() const;
         std::string getFilename() const;
+
+        /**
+         * Get the complete list of notes in current midi files
+         */
+        const TranslatedNoteSet &getNotes() const;
 
         /**
          * Get the color used to represent a given channel

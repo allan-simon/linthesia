@@ -59,6 +59,15 @@ MidiEventListWithTrackId Context::update(const sf::Int64 deltaMicroseconds) {
 /**
  *
  */
+const TranslatedNoteSet &Context::getNotes() const {
+    return midi->get_notes();
+}
+
+
+
+/**
+ *
+ */
 sf::Color Context::getChannelColor(const unsigned channel) const {
 
     switch(channel) {
