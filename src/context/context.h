@@ -29,6 +29,11 @@ class Context {
         const TranslatedNoteSet &getNotes() const;
 
         /**
+         * get the length of current song
+         */
+        unsigned getSongLength () const;
+
+        /**
          * Get the color used to represent a given channel
          * As we may want later to make it user configurable
          */

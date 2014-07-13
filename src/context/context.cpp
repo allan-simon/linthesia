@@ -63,6 +63,12 @@ const TranslatedNoteSet &Context::getNotes() const {
     return midi->get_notes();
 }
 
+/**
+ *
+ */
+unsigned Context::getSongLength() const {
+    return midi->get_song_length_in_ms();
+}
 
 
 /**
