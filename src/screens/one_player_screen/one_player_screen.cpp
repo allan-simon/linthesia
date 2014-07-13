@@ -52,6 +52,10 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    noteGround.setSizeFromDurationAndKeyboard(
+        context.getSongLength(),
+        Keyboard::NBR_WHITE_KEYS
+    );
     setKeyboardPosition(app);
     setKeyboardTrailPosition(app);
     setNoteGroundPosition(app);
@@ -210,7 +214,6 @@ void OnePlayerScreen::setNoteGroundPosition(
         noteGround.getGlobalBounds().height -
         SPACE_BUTTONS;
 
-    noteGround.setSize(sf::Vector2f(keyboardWidth, height));
 
     noteGround.setPosition(
         (app.getSize().x - keyboardWidth) / 2.0f,

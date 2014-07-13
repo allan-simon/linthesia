@@ -49,8 +49,9 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
-        void setSize(
-            const sf::Vector2f &size
+        void setSizeFromDurationAndKeyboard(
+            const unsigned duration,
+            const unsigned keyboardNbrKeys
         );
 
         /**

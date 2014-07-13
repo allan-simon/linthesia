@@ -30,26 +30,26 @@ sf::FloatRect NoteGround::getGlobalBounds() const {
 /**
  *
  */
-void NoteGround::setSize(
-    const sf::Vector2f &size
+void NoteGround::setSizeFromDurationAndKeyboard(
+    const unsigned duration,
+    const unsigned keyboardNbrKeys
 ) {
 
-    const unsigned roundedWidth = static_cast<unsigned>(size.x);
-    const unsigned roundedHeight = static_cast<unsigned>(size.y);
-    groundBackground.setSize(size);
-    ground.create(roundedWidth, roundedHeight);
+    const unsigned width = keyboardNbrKeys * WhiteKey::WHITE_KEY_WIDTH;
+    const unsigned height = duration / MICRO_SECOND_PER_PIXEL;
+    groundBackground.setSize(sf::Vector2f(
+        width,
+        height
+    ));
+    ground.create(width, height);
 
-    noteSeparator.setSize(sf::Vector2f(1, size.y));
-
-    //TODO: we certainly can make it in a less hackish way
-    //by giving the number of key and size of one key directly in parameter
-    const unsigned sizeOneKey = roundedWidth / Keyboard::NBR_WHITE_KEYS;
+    noteSeparator.setSize(sf::Vector2f(1, height));
 
     ground.draw(groundBackground);
     for (
-        unsigned offset = sizeOneKey;
-        offset < roundedWidth;
-        offset += sizeOneKey
+        unsigned offset = WhiteKey::WHITE_KEY_WIDTH;
+        offset < width;
+        offset += WhiteKey::WHITE_KEY_WIDTH
     ) {
         noteSeparator.setPosition(
             offset - NoteGround::NOTE_SEPARATOR_WIDTH,
