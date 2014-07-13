@@ -71,6 +71,14 @@ class OnePlayerScreen : public AbstractScreen {
             const MidiEventList& inputNotes,
             linthesia::Context &context
         );
+
+        /**
+         * Take the context (midi file/colors/ which tracks are played etc.)
+         * to create the ground of notes
+         */
+        void initNoteGround(
+            const Context &context
+        );
 };
 
 

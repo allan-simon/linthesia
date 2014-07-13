@@ -56,6 +56,7 @@ ScreenIndex OnePlayerScreen::run(
     setKeyboardTrailPosition(app);
     setNoteGroundPosition(app);
 
+    initNoteGround(context);
     noteGround.render();
 
     bool isPlaying = false;
@@ -103,6 +104,32 @@ ScreenIndex OnePlayerScreen::run(
 
         lastElapsed = currentElapsed;
         currentElapsed = clock.getElapsedTime();
+    }
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::initNoteGround(
+    const Context &context
+) {
+
+    const TranslatedNoteSet &notes = context.getNotes();
+
+    for (const auto& oneNote : notes) {
+        std::cout << "add one note: " <<
+            "start:" << oneNote.start <<
+            "end:" << oneNote.end <<
+            "noteid:" << oneNote.noteId <<
+            "channel:" << oneNote.channel <<
+            std::endl;
+
+        noteGround.addNote(
+            oneNote.noteId,
+            oneNote.start,
+            oneNote.end,
+            context.getChannelColor(oneNote.channel)
+        );
     }
 }
 
