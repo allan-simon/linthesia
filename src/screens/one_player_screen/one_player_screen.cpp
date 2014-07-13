@@ -1,3 +1,5 @@
+#include <SFML/Graphics/View.hpp>
+
 #include "libmidi/midi.h"
 #include "one_player_screen.h"
 #include "context/context.h"
@@ -58,7 +60,7 @@ ScreenIndex OnePlayerScreen::run(
     );
     setKeyboardPosition(app);
     setKeyboardTrailPosition(app);
-    setNoteGroundPosition(app);
+    setNoteGroundView(app);
 
     initNoteGround(context);
     noteGround.render();
@@ -94,7 +96,13 @@ ScreenIndex OnePlayerScreen::run(
         app.clear(BACKGROUND_COLOR);
         app.draw(keyboard);
         app.draw(keyboardTrail);
+
+        // the note ground is displayed in the view
+        // so that we can scroll it
+        app.setView(noteGroundView);
         app.draw(noteGround);
+        app.setView(app.getDefaultView());
+
         app.display();
 
         if (isPlaying) {
@@ -203,26 +211,43 @@ void OnePlayerScreen::setKeyboardTrailPosition(
 /**
  *
  */
-void OnePlayerScreen::setNoteGroundPosition(
+void OnePlayerScreen::setNoteGroundView(
     const sf::RenderWindow &app
 ) {
     const float keyboardWidth = keyboard.getGlobalBounds().width;
 
-    float height = app.getSize().y -
-        keyboard.getGlobalBounds().height -
+    //height of the noteGroundView is the space remaining in the application
+    // after we remove...
+    const float height = app.getSize().y -
+        // height of keyboard trail ...
         keyboardTrail.getGlobalBounds().height -
-        noteGround.getGlobalBounds().height -
+        // height of keyboard itself ...
+        keyboard.getGlobalBounds().height -
+        // and the spaces left for buttons at the bottom
         SPACE_BUTTONS;
 
 
-    noteGround.setPosition(
-        (app.getSize().x - keyboardWidth) / 2.0f,
-        0
-    );
+    noteGroundView.reset(sf::FloatRect(
+        // we put the view at the bottom of note ground with the equivalent
+        // (minus the dimension of the view itself)
+        // so that we show the first notes
+        noteGround.getGlobalBounds().width - keyboardWidth,
+        noteGround.getGlobalBounds().height - height,
+        //
+        keyboardWidth,
+        height
+    ));
 
-
-
-
+    const float noteGroundXRatio = keyboardWidth / app.getSize().x;
+    const float noteGroundYRatio = height / app.getSize().y;
+    noteGroundView.setViewport(sf::FloatRect(
+        // center in middle of window on X axis
+        (1 - noteGroundXRatio) / 2.0f,
+        //put at top of the window
+        0,
+        noteGroundXRatio,
+        noteGroundYRatio
+    ));
 }
 
 } // end namespace linthesia

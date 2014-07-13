@@ -50,10 +50,16 @@ class OnePlayerScreen : public AbstractScreen {
         /**
          *
          */
-        void setNoteGroundPosition(
+        NoteGround noteGround;
+
+        /**
+         * Set the dimension and position of the notes ground view
+         * that will be latter scrolled down as we play the song
+         */
+        void setNoteGroundView(
             const sf::RenderWindow &app
         );
-        NoteGround noteGround;
+        sf::View noteGroundView;
 
         /**
          * Play the part of the song that should be played during that
