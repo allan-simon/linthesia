@@ -135,12 +135,6 @@ void OnePlayerScreen::initNoteGround(
     const TranslatedNoteSet &notes = context.getNotes();
 
     for (const auto& oneNote : notes) {
-        std::cout << "add one note: " <<
-            "start:" << oneNote.start <<
-            "end:" << oneNote.end <<
-            "noteid:" << oneNote.noteId <<
-            "channel:" << oneNote.channel <<
-            std::endl;
 
         noteGround.addNote(
             oneNote.noteId,
