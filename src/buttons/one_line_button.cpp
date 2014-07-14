@@ -63,4 +63,23 @@ void OneLineButton::draw(
     target.draw(label, states);
 }
 
+/**
+ *
+ */
+void OneLineButton::setActive() {
+    currentState = ButtonStates::NORMAL;
+    sprite.setColor(sf::Color::White);
+    label.setColor(sf::Color::White);
+}
+
+/**
+ *
+ */
+void OneLineButton::setInactive () {
+    currentState = ButtonStates::DISABLED;
+    sprite.setColor(sf::Color(100,100,100));
+    label.setColor(sf::Color(100,100,100));
+
+}
+
 }

@@ -32,6 +32,11 @@ bool AbstractButton::actionTriggered(
     const sf::Window &app,
     const sf::Event &event
 ) {
+    // disabled button are not clickable / hoverable etc.
+    if (currentState == ButtonStates::DISABLED) {
+        return false;
+    }
+
     if (!containsPoint(sf::Mouse::getPosition(app))) {
         setUnhovered();
         return false;

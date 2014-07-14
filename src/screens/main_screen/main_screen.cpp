@@ -68,6 +68,9 @@ ScreenIndex MainScreen::run(
         currentElapsed = clock.getElapsedTime();
         lastElapsed = currentElapsed;
         chooseSongButton.setText(context.getFilename());
+        selectTrackButton.setActive();
+    } else {
+        selectTrackButton.setInactive();
     }
 
     setExitButtonPosition(app);

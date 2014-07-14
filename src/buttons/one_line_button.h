@@ -26,6 +26,16 @@ class OneLineButton : public AbstractButton {
          */
         sf::FloatRect getGlobalBounds() const;
 
+        /**
+         * Make the button active (we can click it etc.)
+         */
+        void setActive();
+
+        /**
+         * Make the button inactive (clicking on it will do nothing)
+         */
+        void setInactive();
+
     protected:
 
         /**
