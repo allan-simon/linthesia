@@ -15,6 +15,13 @@ TrackOptions::TrackOptions() {
 /**
  *
  */
+ void TrackOptions::setDefault(unsigned trackId) {
+    trackidStyle[trackId] = PlayStyle::AUTO_PLAY;
+ }
+
+/**
+ *
+ */
 const std::string TrackOptions::toPreviousStyle(unsigned trackId) {
 
     if (trackidStyle.find(trackId) == trackidStyle.end()) {
@@ -75,8 +82,8 @@ PlayStyle TrackOptions::getStyle(unsigned trackId) {
 /**
  *
  */
-bool TrackOptions::isPlayedByComputer(unsigned trackId) {
-    return trackidStyle[trackId] == PlayStyle::AUTO_PLAY;
+bool TrackOptions::isPlayedByComputer(unsigned trackId) const {
+    return trackidStyle.at(trackId) == PlayStyle::AUTO_PLAY;
 }
 
 

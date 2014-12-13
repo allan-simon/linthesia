@@ -26,6 +26,7 @@ bool Context::openMidiFile(const std::string& _filename) {
         // in case of multiple open, we delete the previous midi file
         delete midi;
         midi = new Midi(Midi::read_from_file(_filename));
+        setDefaultTrackOptions();
         filename = _filename;
     } catch (const MidiError& exception) {
         // make sure that we have a nullptr
@@ -103,6 +104,21 @@ void Context::resetSong() {
     // TODO: certainly we need better value
     // rather than 0, 0
     midi->reset(0, 0);
+}
+
+/**
+ *
+ */
+void Context::setDefaultTrackOptions() {
+    if (midi == nullptr) {
+        std::cerr
+            << "setDefaultTrackOptions called though midi is null"
+            << std::endl;
+    }
+
+    for (auto& track : midi->get_tracks()) {
+        tracksOptions.setDefault(track.get_track_id());
+    }
 }
 
 } // end namespace linthesia

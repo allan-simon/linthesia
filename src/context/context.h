@@ -51,6 +51,8 @@ class Context {
         Midi* midi;
         std::string filename;
 
+        void setDefaultTrackOptions();
+
 };
 
 

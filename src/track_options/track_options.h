@@ -25,6 +25,11 @@ class TrackOptions {
         TrackOptions();
 
         /**
+         *
+         */
+        void setDefault(unsigned trackId);
+
+        /**
          * Change the play style of given track to the "previous one"
          * (see PlayStyle enum) and return the Human name of this new
          * style
@@ -41,7 +46,7 @@ class TrackOptions {
         /**
          *
          */
-        bool isPlayedByComputer(unsigned trackId);
+        bool isPlayedByComputer(unsigned trackId) const;
 
         /**
          *
