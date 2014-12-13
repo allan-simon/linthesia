@@ -39,3 +39,10 @@ operation but as a header so no need to install anything
 ##Launching it
 
     cd src ; ./linthesia
+
+## In game control
+
+ * space to play/pause the song
+ * left/right to decrease/increase the song's speed
+
+(latter we will make it more obvious inside the game itself)
