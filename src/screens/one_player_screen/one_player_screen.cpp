@@ -54,6 +54,10 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    // we make sure the song is reset at the beginning
+    // (fix #54)
+    context.resetSong();
+
     const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
     noteGround.setSizeFromDurationAndKeyboard(
         context.getSongLength(),

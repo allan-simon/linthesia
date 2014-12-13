@@ -96,5 +96,14 @@ const MidiTrackList& Context::getTracks() const {
     return midi->get_tracks();
 }
 
+/**
+ *
+ */
+void Context::resetSong() {
+    // TODO: certainly we need better value
+    // rather than 0, 0
+    midi->reset(0, 0);
+}
+
 } // end namespace linthesia
 

@@ -34,6 +34,11 @@ class Context {
         unsigned getSongLength () const;
 
         /**
+         * reset song to beginning
+         */
+        void resetSong();
+
+        /**
          * Get the color used to represent a given channel
          * As we may want later to make it user configurable
          */
