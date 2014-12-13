@@ -49,13 +49,6 @@ public:
         return eventPulses;
     }
 
-    /**
-     *
-     */
-    MidiEventMsList &get_events_ms() {
-        return eventsMs;
-    }
-
     //TODO: my understanding of C++ is low but why do we have two versions
     //of these getters a const one and non-const one ?
 
@@ -71,14 +64,6 @@ public:
     const MidiEventPulsesList &get_events_pulses() const {
         return eventPulses;
     }
-
-    /**
-     *
-     */
-    const MidiEventMsList &get_events_ms() const {
-        return eventsMs;
-    }
-
 
     void set_events_ms(const MidiEventMsList &_eventsMs) {
         eventsMs = _eventsMs; 

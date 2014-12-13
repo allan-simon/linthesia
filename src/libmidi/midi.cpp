@@ -155,7 +155,8 @@ Midi Midi::read_from_stream(istream &stream) {
     // Translate each track's list of notes and list
     // of events into microseconds.
     for (auto& track : midi.tracks) {
-        track.reset(); midi.translate_notes( track.get_notes(), pulsesPerQuarterNote);
+        track.reset();
+        midi.translate_notes(track.get_notes(), pulsesPerQuarterNote);
 
         MidiEventMsList eventsMs;
         for (auto eventPulse: track.get_event_pulses()) {
@@ -292,7 +293,7 @@ uint32_t Midi::find_first_note_pulse() {
         if (pulses > firstNotePulse) {
             firstNotePulse = pulses;
         }
-    };
+    }
 
     // Now run through each event in each track looking for the very
     // first note_on event
