@@ -93,6 +93,16 @@ ScreenIndex OnePlayerScreen::run(
                     isPlaying = !isPlaying;
                 }
 
+                // pressing <left> increase song speed
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                    speedFactor *= 2.0f;
+                }
+
+                // pressing <right> decrease song speed
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+                    speedFactor /= 2.0f;
+                }
+
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                     context.midiOut.close();
                     context.midiIn.close();
@@ -114,13 +124,15 @@ ScreenIndex OnePlayerScreen::run(
         app.display();
 
         if (isPlaying) {
+            auto delta = currentElapsed - lastElapsed;
+            delta *= speedFactor;
             scrollNoteGround(
                 MICRO_SECOND_PER_PIXEL,
-                currentElapsed - lastElapsed
+                delta
             );
             playSong(
                 context,
-                currentElapsed - lastElapsed
+                delta
             );
         }
         inputNotes = context.midiIn.readAllNotes();

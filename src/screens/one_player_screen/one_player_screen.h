@@ -59,6 +59,14 @@ class OnePlayerScreen : public AbstractScreen {
         unsigned int nonScrolledMicroSec = 0;
 
         /**
+         * speed at which the song is played
+         * 1   : normal speed
+         * > 1 : faster than normal
+         * < 1 : slower than normal
+         */
+        float speedFactor = 1.0f;
+
+        /**
          * Set the dimension and position of the notes ground view
          * that will be latter scrolled down as we play the song
          */
