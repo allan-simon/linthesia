@@ -53,6 +53,12 @@ class OnePlayerScreen : public AbstractScreen {
         NoteGround noteGround;
 
         /**
+         * Used by scrollNoteGround to keep track of rounding 'error'
+         * (fix #55)
+         */
+        unsigned int nonScrolledMicroSec = 0;
+
+        /**
          * Set the dimension and position of the notes ground view
          * that will be latter scrolled down as we play the song
          */

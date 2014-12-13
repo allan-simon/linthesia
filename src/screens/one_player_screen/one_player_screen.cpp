@@ -58,6 +58,8 @@ ScreenIndex OnePlayerScreen::run(
     // (fix #54)
     context.resetSong();
 
+    nonScrolledMicroSec = 0;
+
     const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
     noteGround.setSizeFromDurationAndKeyboard(
         context.getSongLength(),
@@ -261,9 +263,20 @@ void OnePlayerScreen::scrollNoteGround(
     const unsigned microSecondPerPixel,
     const sf::Time& delta
 ) {
-    auto offsetY = delta.asMicroseconds() / microSecondPerPixel;
+    auto deltaMicroSec = delta.asMicroseconds();
+
+    // fix #55, as for each 'refresh' of the screen we move the note
+    // ground by an integer number of pixel, we need to keep track
+    // of the micro second non 'consumed' for the next refresh
+    // otherwise the ground will move "slower" than the actual song
+    deltaMicroSec += nonScrolledMicroSec;
+    nonScrolledMicroSec = deltaMicroSec % microSecondPerPixel;
+
+    auto offsetY = deltaMicroSec / microSecondPerPixel;
+
     // it's -offsetY because we're scrolling up
     noteGroundView.move(0, -offsetY);
+
 }
 
 } // end namespace linthesia
