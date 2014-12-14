@@ -8,6 +8,7 @@
 #include "keyboard/keyboard.h"
 #include "keyboard/trail.h"
 #include "note_ground.h"
+#include "notes_tracker.h"
 
 
 namespace linthesia {
@@ -111,12 +112,26 @@ class OnePlayerScreen : public AbstractScreen {
         );
 
         /**
+         * check if the input notes correspond to notes that should be
+         * played
+         */
+        void checkHitNotes(
+            const MidiEventList& inputNotes,
+            linthesia::Context &context
+        );
+
+        /**
          * Take the context (midi file/colors/ which tracks are played etc.)
          * to create the ground of notes
          */
         void initNoteGround(
             const Context &context
         );
+
+        /**
+         *
+         */
+        NotesTracker notesTracker;
 };
 
 

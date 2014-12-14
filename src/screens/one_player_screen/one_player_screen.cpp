@@ -67,7 +67,9 @@ ScreenIndex OnePlayerScreen::run(
     setKeyboardTrailPosition(app);
     setNoteGroundView(app);
 
+    notesTracker.fill(context);
     initNoteGround(context);
+
     noteGround.render();
 
     bool isPlaying = false;
@@ -141,6 +143,8 @@ ScreenIndex OnePlayerScreen::run(
         );
         playSong(context, events);
 
+        notesTracker.checkMissedNotes(context.getSongPosition());
+        checkHitNotes(inputNotes, context);
 
     }
 }
@@ -200,6 +204,35 @@ void OnePlayerScreen::playInputNotes(
     for (const auto& oneNote : inputNotes) {
         context.midiOut.write(oneNote);
     }
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::checkHitNotes(
+    const MidiEventList& inputNotes,
+    linthesia::Context &context
+) {
+    for (const auto& oneNote : inputNotes) {
+
+        const unsigned noteNumber = oneNote.get_note_number();
+        //note: on my keyboard at least, NoteOff are not sent
+        //instead we got NoteOn with a velocity of 0
+        const int velocity = oneNote.get_note_velocity();
+
+        if (oneNote.is_note_on() && velocity > 0) {
+            notesTracker.hitNote(
+                noteNumber,
+                context.getSongPosition()
+            );
+        }
+
+        if (oneNote.is_note_off() || velocity == 0) {
+            //TODO: handle released note
+        }
+
+    }
+
 }
 
 /**
