@@ -2,6 +2,7 @@ linthesia
 =========
 
 tentative to fix/rewrite linthesia , an open-source synthesia/ "piano-hero" like game
+(scroll down to see screenshot and "manual")
 
 ##Note:
 
@@ -49,3 +50,9 @@ operation but as a header so no need to install anything
  * escape to go back to previous screen (for example to leave a game)
 
 (latter we will make it more obvious inside the game itself)
+
+## Screenshots 
+
+![main page](https://raw.githubusercontent.com/allan-simon/linthesia/master/docs/screenshots/main.png)
+![game](https://raw.githubusercontent.com/allan-simon/linthesia/master/docs/screenshots/game.png)
+![choose song](https://raw.githubusercontent.com/allan-simon/linthesia/master/docs/screenshots/choose_song.png)
