@@ -124,22 +124,23 @@ ScreenIndex OnePlayerScreen::run(
         lastElapsed = currentElapsed;
         currentElapsed = clock.getElapsedTime();
 
+        inputNotes = context.midiIn.readAllNotes();
+        updateKeyboard(inputNotes, context);
+        playInputNotes(context, inputNotes);
+
         if (!isPlaying) {
             continue;
         }
 
         delta *= speedFactor;
         auto events = context.update(delta.asMicroseconds());
-        inputNotes = context.midiIn.readAllNotes();
 
         scrollNoteGround(
             MICRO_SECOND_PER_PIXEL,
             delta
         );
         playSong(context, events);
-        playInputNotes(context, inputNotes);
 
-        updateKeyboard(inputNotes, context);
 
     }
 }
