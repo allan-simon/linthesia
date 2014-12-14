@@ -31,11 +31,26 @@ void ScoreDisplay::init() {
     if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
         std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
     }
+    if (!star.loadFromFile("../graphics/star.png")) {
+        std::cerr << "Can't load star.png" << std::endl;
+    }
+    starSprite.setTexture(star);
 
-    unsigned SIZE_COUNTER = 100;
-    unsigned x = 1;
-    unsigned y = 1;
+    if (!thumbdown.loadFromFile("../graphics/thumb_down.png")) {
+        std::cerr << "Can't load thumb_down.png" << std::endl;
+    }
+    thumbdownSprite.setTexture(thumbdown);
+
+
+    const unsigned SIZE_COUNTER = 100;
+    const unsigned SIZE_COUNTER_ICON = 40;
+    const unsigned ICON_PADDING_TOP = 5;
+    unsigned x = 0;
+    unsigned y = 0;
+
     // ~yellow
+    starSprite.setPosition(x, ICON_PADDING_TOP);
+    x += SIZE_COUNTER_ICON;
     initLabel(
         perfectLabel,
         sf::Color(200, 200, 50),
@@ -69,6 +84,8 @@ void ScoreDisplay::init() {
     ); 
     // ~red
     x += SIZE_COUNTER;
+    thumbdownSprite.setPosition(x, ICON_PADDING_TOP);
+    x += SIZE_COUNTER_ICON;
     initLabel(
         missedLabel,
         sf::Color(200, 50, 50),
@@ -113,10 +130,12 @@ void ScoreDisplay::draw(
     sf::RenderStates states
 ) const {
     states.transform *= getTransform();
+    target.draw(thumbdownSprite, states);
     target.draw(missedLabel, states);
     target.draw(sosoLabel, states);
     target.draw(goodLabel, states);
     target.draw(excellentLabel, states);
+    target.draw(starSprite, states);
     target.draw(perfectLabel, states);
 
 }

@@ -53,6 +53,7 @@ ScreenIndex OnePlayerScreen::run(
 
     score.reset();
     scoreDisplay.init();
+    scoreDisplay.update(score);
 
     // we make sure the song is reset at the beginning
     // (fix #54)

@@ -68,6 +68,12 @@ class ScoreDisplay : public sf::Drawable, public sf::Transformable {
         sf::Text excellentLabel;
         sf::Text perfectLabel;
 
+        //TODO replace by one texture/sprite
+        sf::Texture star;
+        sf::Sprite starSprite;
+        sf::Texture thumbdown;
+        sf::Sprite thumbdownSprite;
+
         /**
          *
          */
