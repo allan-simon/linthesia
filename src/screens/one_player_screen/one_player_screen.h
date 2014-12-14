@@ -9,7 +9,7 @@
 #include "keyboard/trail.h"
 #include "note_ground.h"
 #include "notes_tracker.h"
-
+#include "score_display.h"
 
 namespace linthesia {
 
@@ -47,6 +47,16 @@ class OnePlayerScreen : public AbstractScreen {
             const sf::RenderWindow &app
         );
         KeyboardTrail keyboardTrail;
+
+        /**
+         * Set the label displaying the number of notes hit
+         * by category (good/excellent/missed etc.)
+         */
+        void setScoreDisplayPosition(
+            const sf::RenderWindow &app
+        );
+        ScoreDisplay scoreDisplay;
+        Score score;
 
         /**
          *

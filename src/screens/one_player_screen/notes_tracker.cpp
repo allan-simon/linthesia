@@ -7,6 +7,9 @@ namespace linthesia {
  *
  */
 void NotesTracker::fill(const Context &context) {
+
+    notesByNoteId.clear();
+
     for (auto note : context.getNotes()) {
         if (!context.tracksOptions.isPlayedByComputer(note.channel)) {
             notesByNoteId[note.noteId].push_back(note);

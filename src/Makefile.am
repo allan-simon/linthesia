@@ -27,6 +27,7 @@ linthesia_SOURCES = main.cpp \
 	screens/one_player_screen/one_player_screen.cpp \
 	screens/one_player_screen/note_ground.cpp \
 	screens/one_player_screen/notes_tracker.cpp \
+	screens/one_player_screen/score_display.cpp \
 	screens/one_player_screen/white_note_to_play.cpp \
 	screens/one_player_screen/black_note_to_play.cpp \
 	screens/file_select_screen/file_select_screen.cpp \

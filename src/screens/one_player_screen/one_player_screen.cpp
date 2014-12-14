@@ -51,6 +51,9 @@ ScreenIndex OnePlayerScreen::run(
     sf::Time currentElapsed = clock.getElapsedTime();
     sf::Time lastElapsed = clock.getElapsedTime();
 
+    score.reset();
+    scoreDisplay.init();
+
     // we make sure the song is reset at the beginning
     // (fix #54)
     context.resetSong();
@@ -63,6 +66,8 @@ ScreenIndex OnePlayerScreen::run(
         Keyboard::NBR_WHITE_KEYS,
         MICRO_SECOND_PER_PIXEL
     );
+
+    setScoreDisplayPosition(app);
     setKeyboardPosition(app);
     setKeyboardTrailPosition(app);
     setNoteGroundView(app);
@@ -114,6 +119,8 @@ ScreenIndex OnePlayerScreen::run(
         app.draw(keyboard);
         app.draw(keyboardTrail);
 
+        app.draw(scoreDisplay);
+
         // the note ground is displayed in the view
         // so that we can scroll it
         app.setView(noteGroundView);
@@ -143,8 +150,12 @@ ScreenIndex OnePlayerScreen::run(
         );
         playSong(context, events);
 
-        notesTracker.checkMissedNotes(context.getSongPosition());
+        auto missedNotes = notesTracker.checkMissedNotes(
+            context.getSongPosition()
+        );
+        score.missed += missedNotes.size();
         checkHitNotes(inputNotes, context);
+        scoreDisplay.update(score);
 
     }
 }
@@ -221,10 +232,11 @@ void OnePlayerScreen::checkHitNotes(
         const int velocity = oneNote.get_note_velocity();
 
         if (oneNote.is_note_on() && velocity > 0) {
-            notesTracker.hitNote(
+            auto delta = notesTracker.hitNote(
                 noteNumber,
                 context.getSongPosition()
             );
+            score.markNote(delta);
         }
 
         if (oneNote.is_note_off() || velocity == 0) {
@@ -245,6 +257,20 @@ void OnePlayerScreen::setKeyboardPosition(const sf::RenderWindow &app) {
         SPACE_BUTTONS;
 
     keyboard.setPosition(
+        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::setScoreDisplayPosition(const sf::RenderWindow &app) {
+
+    float yPosition = app.getSize().y -
+        SPACE_BUTTONS;
+
+    scoreDisplay.setPosition(
         (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
     );
