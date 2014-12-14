@@ -49,6 +49,13 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         /**
          *
          */
+        void setMicrosecondBeforeStart(
+            const unsigned _microsecondBeforeStart
+        );
+
+        /**
+         *
+         */
         void setSizeFromDurationAndKeyboard(
             const unsigned duration,
             const unsigned keyboardNbrKeys,
@@ -65,6 +72,8 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
 
     private:
         unsigned microSecondPerPixel;
+
+        unsigned microSecondBeforeStart = 0;
 
         sf::RectangleShape groundBackground;
         sf::RectangleShape noteSeparator;

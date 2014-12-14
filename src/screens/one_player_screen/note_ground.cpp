@@ -29,6 +29,15 @@ sf::FloatRect NoteGround::getGlobalBounds() const {
 /**
  *
  */
+void NoteGround::setMicrosecondBeforeStart(
+    const unsigned _microsecondBeforeStart
+) {
+    microSecondBeforeStart = _microsecondBeforeStart;
+}
+
+/**
+ *
+ */
 void NoteGround::setSizeFromDurationAndKeyboard(
     const unsigned duration,
     const unsigned keyboardNbrKeys,
@@ -38,7 +47,10 @@ void NoteGround::setSizeFromDurationAndKeyboard(
     microSecondPerPixel = _microSecondPerPixel;
 
     const unsigned width = keyboardNbrKeys * WhiteKey::WHITE_KEY_WIDTH;
-    const unsigned height = duration / microSecondPerPixel;
+    const unsigned height = (
+        (duration + microSecondBeforeStart)/
+        microSecondPerPixel
+    );
     groundBackground.setSize(sf::Vector2f(
         width,
         height
@@ -89,7 +101,10 @@ void NoteGround::addNote(
     const unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
 
     const unsigned noteHeight = (end - start) / microSecondPerPixel;
-    const unsigned noteYPosition = start / microSecondPerPixel;
+    const unsigned noteYPosition = (
+        (start + microSecondBeforeStart)/
+        microSecondPerPixel
+    );
 
     if (Keyboard::isBlackKey(noteNumber)) {
         //TODO: 140 because in getChannelColor , primary is set to 200

@@ -39,6 +39,11 @@ class Context {
         unsigned getSongPosition () const;
 
         /**
+         *
+         */
+        microseconds_t getMicroSecondBeforeStart() const;
+
+        /**
          * reset song to beginning
          */
         void resetSong();
@@ -55,6 +60,8 @@ class Context {
     private:
         Midi* midi;
         std::string filename;
+        // TODO replace by configurable value
+        microseconds_t beforeStart = 2000000;
 
         void setDefaultTrackOptions();
 

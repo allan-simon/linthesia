@@ -10,6 +10,11 @@ namespace linthesia {
 /**
  *
  */
+const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
+
+/**
+ *
+ */
 const ScreenIndex OnePlayerScreen::INDEX = "one_player_screen";
 
 /**
@@ -58,23 +63,19 @@ ScreenIndex OnePlayerScreen::run(
     // we make sure the song is reset at the beginning
     // (fix #54)
     context.resetSong();
+    auto microSecBeforeStart = context.getMicroSecondBeforeStart();
 
     nonScrolledMicroSec = 0;
 
-    const static unsigned MICRO_SECOND_PER_PIXEL = 8000;
-    noteGround.setSizeFromDurationAndKeyboard(
-        context.getSongLength(),
-        Keyboard::NBR_WHITE_KEYS,
-        MICRO_SECOND_PER_PIXEL
-    );
 
     setScoreDisplayPosition(app);
     setKeyboardPosition(app);
     setKeyboardTrailPosition(app);
+
+    initNoteGround(context);
     setNoteGroundView(app);
 
     notesTracker.fill(context);
-    initNoteGround(context);
 
     noteGround.render();
 
@@ -143,12 +144,22 @@ ScreenIndex OnePlayerScreen::run(
         }
 
         delta *= speedFactor;
-        auto events = context.update(delta.asMicroseconds());
 
         scrollNoteGround(
             MICRO_SECOND_PER_PIXEL,
             delta
         );
+
+        // we start the song only when the "time to get ready"
+        // is over
+        if (microSecBeforeStart > delta.asMicroseconds()) {
+            microSecBeforeStart -= delta.asMicroseconds();
+            continue;
+        }
+
+        auto events = context.update(delta.asMicroseconds());
+
+
         playSong(context, events);
 
         auto missedNotes = notesTracker.checkMissedNotes(
@@ -167,6 +178,14 @@ ScreenIndex OnePlayerScreen::run(
 void OnePlayerScreen::initNoteGround(
     const Context &context
 ) {
+    noteGround.setMicrosecondBeforeStart(
+        context.getMicroSecondBeforeStart()
+    );
+    noteGround.setSizeFromDurationAndKeyboard(
+        context.getSongLength(),
+        Keyboard::NBR_WHITE_KEYS,
+        MICRO_SECOND_PER_PIXEL
+    );
 
     const TranslatedNoteSet &notes = context.getNotes();
 

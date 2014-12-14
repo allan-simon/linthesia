@@ -81,6 +81,13 @@ unsigned Context::getSongPosition() const {
 /**
  *
  */
+microseconds_t Context::getMicroSecondBeforeStart() const {
+    return beforeStart;
+}
+
+/**
+ *
+ */
 sf::Color Context::getChannelColor(const unsigned channel) const {
 
     const sf::Uint8 primary = 200;
