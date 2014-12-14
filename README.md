@@ -5,8 +5,10 @@ tentative to fix/rewrite linthesia , an open-source synthesia/ "piano-hero" like
 
 ##Note:
 
-Current Master does not provide for the moment a usable game, if you want to compile it to play
-or to make a small modification, checkout the release 0.4.3 (see release section in github)
+Current Master can be used for casual gaming, and I strongly encourage people to use it
+to provide feedback
+
+if you want to find the old linthesia checkout the release 0.4.3 (see release section in github)
 
 I'm very open to suggestions/ideas, and should be quite responsive to issues which are posted here
 So if you get any problem to compile and/or you want to see some specific feaures, just add an issue
@@ -44,5 +46,6 @@ operation but as a header so no need to install anything
 
  * space to play/pause the song
  * left/right to decrease/increase the song's speed
+ * escape to go back to previous screen (for example to leave a game)
 
 (latter we will make it more obvious inside the game itself)
