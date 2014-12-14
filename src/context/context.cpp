@@ -71,6 +71,12 @@ unsigned Context::getSongLength() const {
     return midi->get_song_length_in_ms();
 }
 
+/**
+ *
+ */
+unsigned Context::getSongPosition() const {
+    return midi->get_song_position_in_ms();
+}
 
 /**
  *

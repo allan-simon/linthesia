@@ -18,15 +18,12 @@ const ScreenIndex OnePlayerScreen::INDEX = "one_player_screen";
 const static auto BACKGROUND_COLOR = sf::Color(64, 64, 64);
 
 /**
- * advance the song by the given delta time
- * and play/stop the notes according to the events
- * present in that delta time
+ *
  */
 void OnePlayerScreen::playSong(
-    linthesia::Context &context,
-    const sf::Time& delta
+    Context &context,
+    const MidiEventListWithTrackId &events
 ) {
-    auto events = context.update(delta.asMicroseconds());
     for (const auto& oneEvent : events) {
 
         if (!oneEvent.second.is_playable()) {
@@ -123,23 +120,27 @@ ScreenIndex OnePlayerScreen::run(
 
         app.display();
 
-        if (isPlaying) {
-            auto delta = currentElapsed - lastElapsed;
-            delta *= speedFactor;
-            scrollNoteGround(
-                MICRO_SECOND_PER_PIXEL,
-                delta
-            );
-            playSong(
-                context,
-                delta
-            );
-        }
-        inputNotes = context.midiIn.readAllNotes();
-        updateKeyboard(inputNotes, context);
-
+        auto delta = currentElapsed - lastElapsed;
         lastElapsed = currentElapsed;
         currentElapsed = clock.getElapsedTime();
+
+        if (!isPlaying) {
+            continue;
+        }
+
+        delta *= speedFactor;
+        auto events = context.update(delta.asMicroseconds());
+        inputNotes = context.midiIn.readAllNotes();
+
+        scrollNoteGround(
+            MICRO_SECOND_PER_PIXEL,
+            delta
+        );
+        playSong(context, events);
+        playInputNotes(context, inputNotes);
+
+        updateKeyboard(inputNotes, context);
+
     }
 }
 
@@ -177,7 +178,6 @@ void OnePlayerScreen::updateKeyboard(
         //instead we got NoteOn with a velocity of 0
         const int velocity = oneNote.get_note_velocity();
 
-        context.midiOut.write(oneNote);
         if (oneNote.is_note_on() && velocity > 0) {
             keyboard.keyPressed(noteNumber);
         }
@@ -186,6 +186,18 @@ void OnePlayerScreen::updateKeyboard(
             keyboard.keyReleased(noteNumber);
         }
 
+    }
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::playInputNotes(
+    linthesia::Context &context,
+    const MidiEventList& inputNotes
+) {
+    for (const auto& oneNote : inputNotes) {
+        context.midiOut.write(oneNote);
     }
 }
 

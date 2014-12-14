@@ -85,12 +85,21 @@ class OnePlayerScreen : public AbstractScreen {
         sf::View noteGroundView;
 
         /**
+         * TODO: should be moved in an other object
          * Play the part of the song that should be played during that
          * delta time
          */
         void playSong(
             linthesia::Context &context,
-            const sf::Time& delta
+            const MidiEventListWithTrackId &events
+        );
+
+        /**
+         * TODO should be moved in an other object
+         */
+        void playInputNotes(
+            linthesia::Context &context,
+            const MidiEventList& inputNotes
         );
 
         /**

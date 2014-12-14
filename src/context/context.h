@@ -34,6 +34,11 @@ class Context {
         unsigned getSongLength () const;
 
         /**
+         *
+         */
+        unsigned getSongPosition () const;
+
+        /**
          * reset song to beginning
          */
         void resetSong();
