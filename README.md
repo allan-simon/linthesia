@@ -4,6 +4,8 @@ linthesia
 tentative to fix/rewrite linthesia , an open-source synthesia/ "piano-hero" like game
 (scroll down to see screenshot and "manual")
 
+it should compile for at least Windows/Linux/MacOS X (I have tested only Linux though)
+
 ##Note:
 
 Current Master can be used for casual gaming, and I strongly encourage people to use it
