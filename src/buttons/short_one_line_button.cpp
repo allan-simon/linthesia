@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "short_one_line_button.h"
 
 
@@ -17,14 +18,22 @@ sf::Font ShortOneLineButton::font = sf::Font();
  *
  */
 void ShortOneLineButton::init() {
-    //TODO: replace hardcoded strings by something better
-    if (!texture.loadFromFile("../graphics/button.png")) {
-        std::cerr << "Can't load longbutton.png" << std::endl;
+    const std::string BUTTON = GRAPHICS_DIR "button.png";
+    if (!texture.loadFromFile(BUTTON)) {
+        std::cerr
+            << "Can't load "
+            << BUTTON
+            << std::endl
+        ;
     }
     texture.setSmooth(true);
 
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
     }
 
 }

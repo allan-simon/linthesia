@@ -9,6 +9,7 @@
 
 #include "libmidi/midi_util.h"
 
+#include "assets/path.h"
 #include "context/context.h"
 #include "select_midi_in.h"
 
@@ -45,9 +46,14 @@ SelectMidiIn::SelectMidiIn() :
         CHARACTER_SIZE +
         INTER_LINE_SPACE;
 
-    //TODO: replace hardcoded strings by something better
-    if (!backgroundTexture.loadFromFile("../graphics/button2line.png")) {
-        std::cerr << "Can't load button2line.png" << std::endl;
+
+    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    if (!backgroundTexture.loadFromFile(BUTTON)) {
+        std::cerr
+            << "Can't load "
+            << BUTTON
+            << std::endl
+        ;
     }
     backgroundTexture.setSmooth(true);
     background.setTexture(backgroundTexture);
@@ -70,9 +76,12 @@ SelectMidiIn::SelectMidiIn() :
         SECOND_LINE_Y
     );
 
-
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
     }
 
     titleLabel.setFont(font);

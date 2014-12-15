@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "score_display.h"
 
 namespace linthesia {
@@ -28,17 +29,33 @@ static std::string padZero(unsigned number) {
  */
 void ScoreDisplay::init() {
 
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
     }
-    if (!star.loadFromFile("../graphics/star.png")) {
-        std::cerr << "Can't load star.png" << std::endl;
+    const std::string STAR = GRAPHICS_DIR "star.png";
+    if (!star.loadFromFile(STAR)) {
+        std::cerr
+            << "Can't load "
+            << STAR
+            << std::endl
+        ;
     }
+    //star.setSmooth(true);
     starSprite.setTexture(star);
 
-    if (!thumbdown.loadFromFile("../graphics/thumb_down.png")) {
-        std::cerr << "Can't load thumb_down.png" << std::endl;
+    const std::string THUMB_DOWN = GRAPHICS_DIR "thumb_down.png";
+    if (!thumbdown.loadFromFile(THUMB_DOWN)) {
+        std::cerr
+            << "Can't load "
+            << THUMB_DOWN
+            << std::endl
+        ;
     }
+    //thumbdown.setSmooth(true);
     thumbdownSprite.setTexture(thumbdown);
 
 

@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "track_options/track_options.h"
 #include "track_box.h"
 
@@ -19,14 +20,22 @@ sf::Font TrackBox::font = sf::Font();
  *
  */
 void TrackBox::init() {
-    //TODO: replace hardcoded strings by something better
-    if (!backgroundTexture.loadFromFile("../graphics/trackbox.png")) {
-        std::cerr << "Can't load trackbutton.png" << std::endl;
+    const std::string TRACKBOX_FILE = GRAPHICS_DIR "trackbox.png";
+    if (!backgroundTexture.loadFromFile(TRACKBOX_FILE)) {
+        std::cerr
+            << "Can't load "
+            << TRACKBOX_FILE
+            << std::endl
+        ;
     }
     backgroundTexture.setSmooth(true);
 
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
     }
 
 }

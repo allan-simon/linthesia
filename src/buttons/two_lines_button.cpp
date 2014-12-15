@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "two_lines_button.h"
 
 
@@ -24,15 +25,23 @@ TwoLinesButton::TwoLinesButton(
     const unsigned INTER_LINE_SPACE = 15;
     currentState = ButtonStates::NORMAL;
 
-    //TODO: replace hardcoded strings by something better
-    if (!texture.loadFromFile("../graphics/button2line.png")) {
-        std::cerr << "Can't load button.png" << std::endl;
+    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    if (!texture.loadFromFile(BUTTON)) {
+        std::cerr
+            << "Can't load "
+            << BUTTON
+            << std::endl
+        ;
     }
     texture.setSmooth(true);
     sprite.setTexture(texture);
 
-    if (!font.loadFromFile("../fonts/FaunaOne-Regular.ttf")) {
-        std::cerr << "Can't load font FaunaOne-Regular" << std::endl;
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
     }
 
     titleLabel.setFont(font);

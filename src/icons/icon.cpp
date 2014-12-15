@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "icon.h"
 
 namespace linthesia {
@@ -16,8 +17,13 @@ sf::Texture Icon::iconsTexture = sf::Texture();
  *
  */
 void Icon::init() {
-    if (!iconsTexture.loadFromFile("../graphics/InterfaceButtons.tga")) {
-        std::cerr << "Can't load InterfaceButtons.tga" << std::endl;
+    const std::string INTERFACE_BUTTONS = GRAPHICS_DIR "InterfaceButtons.tga";
+    if (!iconsTexture.loadFromFile(INTERFACE_BUTTONS)) {
+        std::cerr
+            << "Can't load "
+            << INTERFACE_BUTTONS
+            << std::endl
+        ;
     }
     iconsTexture.setSmooth(true);
 }

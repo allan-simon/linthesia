@@ -5,6 +5,7 @@
 #include "screens/file_select_screen/file_select_screen.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
+#include "assets/path.h"
 #include "context/context.h"
 
 namespace linthesia {
@@ -33,9 +34,13 @@ MainScreen::MainScreen() :
     selectTrackButton("play"),
     chooseSongButton("song:", "no song selected yet")
 {
-    //TODO: replace hardcoded strings by something better
-    if (!logoTexture.loadFromFile("../graphics/title_Logo.png")) {
-        std::cerr << "Can't load title_Logo.png" << std::endl;
+    const std::string LOGO = GRAPHICS_DIR "title_Logo.png";
+    if (!logoTexture.loadFromFile(LOGO)) {
+        std::cerr
+            << "Can't load "
+            << LOGO
+            << std::endl
+        ;
     }
     logoTexture.setSmooth(true);
     logo.setTexture(logoTexture);

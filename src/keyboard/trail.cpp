@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "assets/path.h"
 #include "trail.h"
 
 namespace linthesia {
@@ -10,9 +11,16 @@ namespace linthesia {
  *
  */
 KeyboardTrail::KeyboardTrail() {
-    //TODO: replace hardcoded strings by something better
-    if (!texture.loadFromFile("../graphics/keyboard_top_separator.png")) {
-        std::cerr << "Can't load keyboard_top_separator.png" << std::endl;
+    const std::string TOP_SEPARATOR =
+        GRAPHICS_DIR
+        "keyboard_top_separator.png"
+    ;
+    if (!texture.loadFromFile(TOP_SEPARATOR)) {
+        std::cerr
+            << "Can't load "
+            << TOP_SEPARATOR
+            << std::endl
+        ;
     }
     texture.setSmooth(true);
     texture.setRepeated(true);
