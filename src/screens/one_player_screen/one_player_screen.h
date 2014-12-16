@@ -71,11 +71,12 @@ class OnePlayerScreen : public AbstractScreen {
 
         /**
          * speed at which the song is played
-         * 1   : normal speed
-         * > 1 : faster than normal
-         * < 1 : slower than normal
+         * speed is then 2^speedfactor
+         * 0   : normal speed
+         * > 0 : faster than normal (2,4,8,16)
+         * < 0 : slower than normal (1/2, 1/4, 1/8, 1/16)
          */
-        float speedFactor = 1.0f;
+        int speedFactor = 0;
 
         /**
          * Set the dimension and position of the notes ground view

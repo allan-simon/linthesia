@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <cmath>
+
 #include <SFML/Graphics/View.hpp>
 
 #include "libmidi/midi.h"
@@ -6,6 +9,11 @@
 #include "screens/select_track_screen/select_track_screen.h"
 
 namespace linthesia {
+
+/**
+ * we can't go over 2^4 = 16 time faster or slower
+ */
+const static int MAX_SPEED = 4;
 
 /**
  *
@@ -101,12 +109,12 @@ ScreenIndex OnePlayerScreen::run(
 
                 // pressing <left> increase song speed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                    speedFactor *= 2.0f;
+                    speedFactor =  std::min(MAX_SPEED, speedFactor+1);
                 }
 
                 // pressing <right> decrease song speed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                    speedFactor /= 2.0f;
+                    speedFactor =  std::max(-MAX_SPEED, speedFactor-1);
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -143,7 +151,7 @@ ScreenIndex OnePlayerScreen::run(
             continue;
         }
 
-        delta *= speedFactor;
+        delta *= std::pow(2.0f, static_cast<float>(speedFactor));
 
         scrollNoteGround(
             MICRO_SECOND_PER_PIXEL,
