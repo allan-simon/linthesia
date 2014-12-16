@@ -32,7 +32,7 @@ class OnePlayerScreen : public AbstractScreen {
          * Arbitrary height at the bottom that we will use latter to put score
          * play/pause buttons etc.
          */
-        const unsigned SPACE_BUTTONS = 60;
+        const unsigned SPACE_BUTTONS = 80;
 
         /**
          *
@@ -77,6 +77,32 @@ class OnePlayerScreen : public AbstractScreen {
          * < 0 : slower than normal (1/2, 1/4, 1/8, 1/16)
          */
         int speedFactor = 0;
+
+        /**
+         *
+         */
+        void increaseSpeed();
+
+        /**
+         *
+         */
+        void decreaseSpeed();
+
+        /**
+         *
+         */
+        void initSpeedLabel(
+            const sf::RenderWindow &app
+        );
+
+        /**
+         *
+         */
+        void updateSpeedLabel();
+
+        sf::Text speedLabel;
+        sf::Font font;
+
 
         /**
          * Set the dimension and position of the notes ground view

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/View.hpp>
 
+#include "assets/path.h"
 #include "libmidi/midi.h"
 #include "one_player_screen.h"
 #include "context/context.h"
@@ -58,6 +59,10 @@ ScreenIndex OnePlayerScreen::run(
     sf::RenderWindow &app,
     Context &context
 ) {
+    //TODO move all these "init*" in a function made for that
+    // and or see a better way to avoid that polluating this
+    // function
+    font.loadFromFile(DEFAULT_FONT);
     sf::Event event;
 
     sf::Clock clock;
@@ -67,6 +72,8 @@ ScreenIndex OnePlayerScreen::run(
     score.reset();
     scoreDisplay.init();
     scoreDisplay.update(score);
+
+    initSpeedLabel(app);
 
     // we make sure the song is reset at the beginning
     // (fix #54)
@@ -109,12 +116,12 @@ ScreenIndex OnePlayerScreen::run(
 
                 // pressing <left> increase song speed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-                    speedFactor =  std::min(MAX_SPEED, speedFactor+1);
+                    increaseSpeed();
                 }
 
                 // pressing <right> decrease song speed
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-                    speedFactor =  std::max(-MAX_SPEED, speedFactor-1);
+                    decreaseSpeed();
                 }
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
@@ -130,6 +137,7 @@ ScreenIndex OnePlayerScreen::run(
         app.draw(keyboardTrail);
 
         app.draw(scoreDisplay);
+        app.draw(speedLabel);
 
         // the note ground is displayed in the view
         // so that we can scroll it
@@ -389,6 +397,68 @@ void OnePlayerScreen::scrollNoteGround(
     // it's -offsetY because we're scrolling up
     noteGroundView.move(0, -offsetY);
 
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::initSpeedLabel(
+    const sf::RenderWindow &app
+) {
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
+    }
+    speedLabel.setFont(font);
+    speedLabel.setColor(sf::Color(200, 165, 0));
+    speedLabel.setString("speed: 1");
+
+    float yPosition = app.getSize().y -
+        SPACE_BUTTONS / 2;
+
+    speedLabel.setPosition(
+        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        yPosition
+    );
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::increaseSpeed() {
+    speedFactor =  std::min(MAX_SPEED, speedFactor+1);
+    updateSpeedLabel();
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::decreaseSpeed() {
+    speedFactor =  std::max(-MAX_SPEED, speedFactor-1);
+    updateSpeedLabel();
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::updateSpeedLabel() {
+
+    //TODO quick and dirty solution
+    std::string text;
+    if (speedFactor == -4) { text = " 1/16"; }
+    if (speedFactor == -3) { text = " 1/8"; }
+    if (speedFactor == -2) { text = " 1/4"; }
+    if (speedFactor == -1) { text = " 1/2"; }
+    if (speedFactor == 0) { text = " 1"; }
+    if (speedFactor == 1) { text = " 2"; }
+    if (speedFactor == 2) { text = " 4"; }
+    if (speedFactor == 3) { text = " 8"; }
+    if (speedFactor == 4) { text = "16"; }
+
+    speedLabel.setString("speed:" + text);
 }
 
 } // end namespace linthesia
