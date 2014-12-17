@@ -204,16 +204,7 @@ void OnePlayerScreen::initNoteGround(
     );
 
     const TranslatedNoteSet &notes = context.getNotes();
-
-    for (const auto& oneNote : notes) {
-
-        noteGround.addNote(
-            oneNote.noteId,
-            oneNote.start,
-            oneNote.end,
-            context.getChannelColor(oneNote.channel)
-        );
-    }
+    noteGround.addNotes(notes, context);
 }
 
 /**

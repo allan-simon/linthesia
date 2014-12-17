@@ -8,6 +8,9 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
+#include "libmidi/midi.h"
+#include "context/context.h"
+
 namespace linthesia {
 
 /**
@@ -27,19 +30,6 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
          */
         const static unsigned NOTE_SEPARATOR_WIDTH = 1;
 
-        /**
-         * add a note to the ground itself
-         * @param note number (do, re, mi etc. and octavte)
-         * @param note starting time
-         * @param note ending time
-         * @param color
-         */
-        void addNote(
-            const unsigned noteNumber,
-            const unsigned start,
-            const unsigned end,
-            const sf::Color &color
-        );
 
         /**
          *
@@ -63,6 +53,14 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         );
 
         /**
+         *
+         */
+        void addNotes(
+            const TranslatedNoteSet &notes,
+            const Context &context
+        );
+
+        /**
          * Dump the intermediate renderer into a sprite, that can be used
          * after to be drawn on the window, this function must be called
          * at least once, if you want to see something
@@ -79,6 +77,21 @@ class NoteGround : public sf::Drawable , public sf::Transformable {
         sf::RectangleShape noteSeparator;
         sf::RenderTexture ground;
         sf::Sprite sprite;
+
+        /**
+         * add a note to the ground itself
+         * @param note number (do, re, mi etc. and octavte)
+         * @param note starting time
+         * @param note ending time
+         * @param color
+         */
+        void addNote(
+            const unsigned noteNumber,
+            const unsigned start,
+            const unsigned end,
+            const sf::Color &color
+        );
+
 
         /**
          *

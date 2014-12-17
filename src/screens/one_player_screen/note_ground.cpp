@@ -89,6 +89,26 @@ void NoteGround::render() {
 /**
  *
  */
+void NoteGround::addNotes(
+    const TranslatedNoteSet &notes,
+    const Context &context
+) {
+    for (const auto& oneNote : notes) {
+
+        addNote(
+            oneNote.noteId,
+            oneNote.start,
+            oneNote.end,
+            context.getChannelColor(oneNote.channel)
+        );
+    }
+
+}
+
+
+/**
+ *
+ */
 void NoteGround::addNote(
     const unsigned noteNumber,
     const unsigned start,
