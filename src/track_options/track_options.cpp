@@ -83,6 +83,11 @@ PlayStyle TrackOptions::getStyle(unsigned trackId) {
  *
  */
 bool TrackOptions::isPlayedByComputer(unsigned trackId) const {
+    //TODO: quick and dirty fix for issue #73
+    if (trackidStyle.find(trackId) == trackidStyle.end()) {
+        return true;
+    }
+
     return trackidStyle.at(trackId) == PlayStyle::AUTO_PLAY;
 }
 
