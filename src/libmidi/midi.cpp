@@ -406,7 +406,7 @@ void Midi::reset(
     microseconds_t leadOutMicroseconds
 ) {
     leadOutInMs = leadOutMicroseconds;
-    songPositionInMs = deadStartAirInMS - leadInMicroseconds;
+    songPositionInMs = leadInMicroseconds;
     isFirstUpdateAfterReset = true;
 
     for (auto& track: tracks) {
