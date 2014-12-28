@@ -111,6 +111,11 @@ bool NoteGround::moveAndReRenderIfNecessary(
 
     std::cout << "currentScreen " << currentScreen << std::endl;
     drawBackground();
+    // fix #76: we make sure we will not go one screen too far
+    if (currentScreen + 1 >= notesByHalfScreens.size()) {
+        return false;
+    }
+
     for(const auto& oneNote : notesByHalfScreens[currentScreen]) {
         addNote(
             oneNote.noteId,
