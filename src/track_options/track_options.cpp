@@ -8,8 +8,9 @@ namespace linthesia {
  */
 TrackOptions::TrackOptions() {
     style2name[PlayStyle::AUTO_PLAY] = "played automatically";
-    style2name[PlayStyle::NOT_PLAYED] = "not played";
+    style2name[PlayStyle::NOT_PLAYED] = "not played but displayed";
     style2name[PlayStyle::PLAYED_BY_PLAYER] = "played manually";
+    style2name[PlayStyle::NOT_PLAYED_NOT_DISPLAYED] = "not played and not displayed";
 }
 
 /**
@@ -30,7 +31,7 @@ const std::string TrackOptions::toPreviousStyle(unsigned trackId) {
 
     switch (trackidStyle[trackId]) {
         case PlayStyle::AUTO_PLAY:
-            trackidStyle[trackId] = NOT_PLAYED;
+            trackidStyle[trackId] = NOT_PLAYED_NOT_DISPLAYED;
             break;
 
         case PlayStyle::PLAYED_BY_PLAYER:
@@ -39,6 +40,10 @@ const std::string TrackOptions::toPreviousStyle(unsigned trackId) {
 
         case PlayStyle::NOT_PLAYED:
             trackidStyle[trackId] = PLAYED_BY_PLAYER;
+            break;
+
+        case PlayStyle::NOT_PLAYED_NOT_DISPLAYED:
+            trackidStyle[trackId] = NOT_PLAYED;
             break;
     }
 
@@ -65,6 +70,10 @@ const std::string TrackOptions::toNextStyle(unsigned trackId) {
             break;
 
         case PlayStyle::NOT_PLAYED:
+            trackidStyle[trackId] = NOT_PLAYED_NOT_DISPLAYED;
+            break;
+
+        case PlayStyle::NOT_PLAYED_NOT_DISPLAYED:
             trackidStyle[trackId] = AUTO_PLAY;
             break;
     }
@@ -91,6 +100,19 @@ bool TrackOptions::isPlayedByComputer(unsigned trackId) const {
     return trackidStyle.at(trackId) == PlayStyle::AUTO_PLAY;
 }
 
+/**
+ *
+ */
+bool TrackOptions::isDisplayed(unsigned trackId) const {
+    //TODO: quick and dirty fix for issue #73
+    if (trackidStyle.find(trackId) == trackidStyle.end()) {
+        return false;
+    }
+
+        std::cout << trackId << style2name.at(trackidStyle.at(trackId)) <<  std::endl;
+
+    return trackidStyle.at(trackId) != PlayStyle::NOT_PLAYED_NOT_DISPLAYED;
+}
 
 }
 

@@ -117,6 +117,9 @@ bool NoteGround::moveAndReRenderIfNecessary(
     }
 
     for(const auto& oneNote : notesByHalfScreens[currentScreen]) {
+        if (!context.tracksOptions.isDisplayed(oneNote.trackId)) {
+            continue;
+        }
         addNote(
             oneNote.noteId,
             oneNote.start,
@@ -127,6 +130,9 @@ bool NoteGround::moveAndReRenderIfNecessary(
     }
 
     for(const auto& oneNote : notesByHalfScreens[currentScreen + 1]) {
+        if (!context.tracksOptions.isDisplayed(oneNote.trackId)) {
+            continue;
+        }
         addNote(
             oneNote.noteId,
             oneNote.start,

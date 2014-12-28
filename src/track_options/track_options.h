@@ -11,6 +11,7 @@ enum PlayStyle {
     AUTO_PLAY, // played by computer
     PLAYED_BY_PLAYER, // supposed to be played by human player
     NOT_PLAYED, // mute
+    NOT_PLAYED_NOT_DISPLAYED, // mute and invisible
 };
 
 
@@ -47,6 +48,11 @@ class TrackOptions {
          *
          */
         bool isPlayedByComputer(unsigned trackId) const;
+
+        /**
+         *
+         */
+        bool isDisplayed(unsigned trackId) const;
 
         /**
          *
