@@ -118,7 +118,10 @@ class OnePlayerScreen : public AbstractScreen {
          */
         void scrollNoteGround(
             const unsigned microSecondPerPixel,
-            const sf::Time& delta
+            const sf::Time& delta,
+            //TODO I'm not very happy we have to give the render window
+            const sf::RenderWindow &app,
+            const Context& context
         );
         sf::View noteGroundView;
 

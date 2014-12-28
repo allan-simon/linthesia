@@ -92,7 +92,7 @@ ScreenIndex OnePlayerScreen::run(
 
     notesTracker.fill(context);
 
-    noteGround.render();
+    noteGround.moveAndReRenderIfNecessary(0, context);
 
     bool isPlaying = false;
 
@@ -163,7 +163,9 @@ ScreenIndex OnePlayerScreen::run(
 
         scrollNoteGround(
             MICRO_SECOND_PER_PIXEL,
-            delta
+            delta,
+            app,
+            context
         );
 
         // we start the song only when the "time to get ready"
@@ -197,14 +199,12 @@ void OnePlayerScreen::initNoteGround(
     noteGround.setMicrosecondBeforeStart(
         context.getMicroSecondBeforeStart()
     );
-    noteGround.setSizeFromDurationAndKeyboard(
-        context.getSongLength(),
+    noteGround.init(
         Keyboard::NBR_WHITE_KEYS,
         MICRO_SECOND_PER_PIXEL
     );
 
-    const TranslatedNoteSet &notes = context.getNotes();
-    noteGround.addNotes(notes, context);
+    noteGround.addNotes(context.getNotes());
 }
 
 /**
@@ -372,7 +372,9 @@ void OnePlayerScreen::setNoteGroundView(
  */
 void OnePlayerScreen::scrollNoteGround(
     const unsigned microSecondPerPixel,
-    const sf::Time& delta
+    const sf::Time& delta,
+    const sf::RenderWindow &app,
+    const Context& context
 ) {
     auto deltaMicroSec = delta.asMicroseconds();
 
@@ -386,7 +388,14 @@ void OnePlayerScreen::scrollNoteGround(
     auto offsetY = deltaMicroSec / microSecondPerPixel;
 
     // it's -offsetY because we're scrolling up
+    bool needToSwitchScreen = noteGround.moveAndReRenderIfNecessary(
+        offsetY,
+        context
+    );
     noteGroundView.move(0, -offsetY);
+    if (needToSwitchScreen) {
+        setNoteGroundView(app);
+    }
 
 }
 

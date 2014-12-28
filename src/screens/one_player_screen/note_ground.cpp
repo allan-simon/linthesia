@@ -10,6 +10,10 @@
 
 namespace linthesia {
 
+//Note: in other places we divide the HEIGHT by two in order
+//to have the second half of Nth screen and first half of N+1th screen
+//overlapping so that we have a invisible transition between the two
+const unsigned HEIGHT = 2048;
 
 /**
  *
@@ -38,27 +42,31 @@ void NoteGround::setMicrosecondBeforeStart(
 /**
  *
  */
-void NoteGround::setSizeFromDurationAndKeyboard(
-    const unsigned duration,
-    const unsigned keyboardNbrKeys,
+void NoteGround::init(
+    const unsigned _keyboardNbrKeys,
     const unsigned _microSecondPerPixel
 ) {
 
+    keyboardNbrKeys = _keyboardNbrKeys;
     microSecondPerPixel = _microSecondPerPixel;
+    elaspedPixel = 0;
+    notesByHalfScreens.clear();
 
     const unsigned width = keyboardNbrKeys * WhiteKey::WHITE_KEY_WIDTH;
-    const unsigned height = (
-        (duration + microSecondBeforeStart)/
-        microSecondPerPixel
-    );
     groundBackground.setSize(sf::Vector2f(
         width,
-        height
+        HEIGHT
     ));
-    ground.create(width, height);
+    ground.create(width, HEIGHT);
+    noteSeparator.setSize(sf::Vector2f(1, HEIGHT));
+    drawBackground();
+}
 
-    noteSeparator.setSize(sf::Vector2f(1, height));
-
+/**
+ *
+ */
+void NoteGround::drawBackground() {
+    const unsigned width = keyboardNbrKeys * WhiteKey::WHITE_KEY_WIDTH;
     ground.draw(groundBackground);
     for (
         unsigned offset = WhiteKey::WHITE_KEY_WIDTH;
@@ -69,14 +77,9 @@ void NoteGround::setSizeFromDurationAndKeyboard(
             offset - NoteGround::NOTE_SEPARATOR_WIDTH,
             0
         );
-        //note: we need to draw in that intermediate renderer
-        //because we can't change the position of noteSepator
-        //in draw as it's a "const" function
-        //(or we need a vector of noteSeparator which I find inelegant
         ground.draw(noteSeparator);
 
     }
-
 }
 
 /**
@@ -89,19 +92,80 @@ void NoteGround::render() {
 /**
  *
  */
-void NoteGround::addNotes(
-    const TranslatedNoteSet &notes,
-    const Context &context
+bool NoteGround::moveAndReRenderIfNecessary(
+    const unsigned offset,
+    const Context& context
 ) {
-    for (const auto& oneNote : notes) {
+    //TODO: it's not that good as now NoteGround becomes statefull
+    // as we keep track internally of how many pixel has been scrolled
+    unsigned previousScreen = elaspedPixel / (HEIGHT/2);
+    elaspedPixel += offset;
+    unsigned currentScreen = elaspedPixel / (HEIGHT/2);
 
+    if (
+        elaspedPixel != offset &&
+        previousScreen == currentScreen
+    ) {
+        return false;
+    }
+
+    std::cout << "currentScreen " << currentScreen << std::endl;
+    drawBackground();
+    for(const auto& oneNote : notesByHalfScreens[currentScreen]) {
         addNote(
             oneNote.noteId,
             oneNote.start,
             oneNote.end,
-            context.getChannelColor(oneNote.channel)
+            context.getChannelColor(oneNote.channel),
+            currentScreen
         );
     }
+
+    for(const auto& oneNote : notesByHalfScreens[currentScreen + 1]) {
+        addNote(
+            oneNote.noteId,
+            oneNote.start,
+            oneNote.end,
+            context.getChannelColor(oneNote.channel),
+            currentScreen
+        );
+    }
+    render();
+    return true;
+}
+
+/**
+ *
+ */
+void NoteGround::addNotes(
+    const TranslatedNoteSet &notes
+) {
+    // how long last a screen
+    const unsigned durationHalfScreen = microSecondPerPixel * (HEIGHT/2);
+    for (const auto oneNote : notes) {
+
+
+        const unsigned screenStart =
+            (oneNote.start + microSecondBeforeStart) /
+            durationHalfScreen
+        ;
+        const unsigned screenEnd =
+            (oneNote.end + microSecondBeforeStart) /
+            durationHalfScreen
+        ;
+
+        for (unsigned i = screenStart; i <= screenEnd; i++) {
+            if (notesByHalfScreens.size() <= i) {
+                for (unsigned j = notesByHalfScreens.size(); j <= i; j++) {
+                    notesByHalfScreens.emplace_back();
+                }
+            }
+            notesByHalfScreens[i].push_back(oneNote);
+        }
+    }
+    // we had one more screen so that we can always do
+    // halfScreen[X] + halfScreen[X+1]
+    notesByHalfScreens.emplace_back();
 
 }
 
@@ -113,7 +177,8 @@ void NoteGround::addNote(
     const unsigned noteNumber,
     const unsigned start,
     const unsigned end,
-    const sf::Color &color
+    const sf::Color &color,
+    const unsigned currentScreen
 ) {
     if (Keyboard::isOutOfKeyboard(noteNumber)) {
         return;
@@ -121,9 +186,13 @@ void NoteGround::addNote(
     const unsigned index = Keyboard::noteToKeyboardIndex(noteNumber);
 
     const unsigned noteHeight = (end - start) / microSecondPerPixel;
-    const unsigned noteYPosition = (
-        (start + microSecondBeforeStart)/
+    const unsigned noteYAbsolutePosition = (
+        (start + microSecondBeforeStart )/
         microSecondPerPixel
+    );
+    const int noteYPosition = static_cast<int>(
+        noteYAbsolutePosition -
+        (currentScreen*(HEIGHT/2))
     );
 
     if (Keyboard::isBlackKey(noteNumber)) {
