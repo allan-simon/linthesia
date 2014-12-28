@@ -17,16 +17,14 @@ I'm very open to suggestions/ideas, and should be quite responsive to issues whi
 So if you get any problem to compile and/or you want to see some specific feaures, just add an issue
 here or send me an email  allan.simon |at| supinfo.com
 
-##Dependencies
+For version 0.5 and above (including current master) you simply need these package (on Ubuntu)
 
-For version 0.4.3 on ubuntu you will need to install the following packages
 
-     libgtkmm-2.4-dev
-     libgconfmm-2.6-dev
-     libgtkglextmm-x11-1.2-dev
-     libasound2-dev
-
-For version 0.5 and above (including current master) you simply need
+     clang (or g++)
+     libtool
+     autoconf
+     automake
+     make
 
      libsfml-dev
      librtmidi-dev
