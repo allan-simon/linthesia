@@ -32,6 +32,7 @@ For version 0.5 and above (including current master) you simply need these packa
 we also use [tinydir](https://github.com/cxong/tinydir), for cross-plateform file/directory
 operation but as a header so no need to install anything
 
+you may also need to install Timidiy on Linux in order to have something to play out the midi
 
 ##Compiling it (version 0.5 and above)
 
