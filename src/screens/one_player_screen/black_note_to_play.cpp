@@ -35,9 +35,14 @@ BlackNoteToPlay::BlackNoteToPlay(
         160
     ));
 
+    const unsigned bodyHeight = height > 2 ?
+        height - 2 :
+        0
+    ;
+
     body.setSize(sf::Vector2f(
         BlackKey::BLACK_KEY_WIDTH - NoteGround::NOTE_SEPARATOR_WIDTH,
-        height - 2
+        bodyHeight
     ));
     body.setPosition(
         0,
