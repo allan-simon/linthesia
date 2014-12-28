@@ -43,9 +43,9 @@ void OnePlayerScreen::playSong(
         if (!oneEvent.second.is_playable()) {
             continue;
         }
-        const unsigned char noteChannel = oneEvent.second.get_channel();
+        const unsigned trackId = oneEvent.first;
 
-        if (!context.tracksOptions.isPlayedByComputer(noteChannel)) {
+        if (!context.tracksOptions.isPlayedByComputer(trackId)) {
             continue;
         }
         context.midiOut.write(oneEvent.second);
