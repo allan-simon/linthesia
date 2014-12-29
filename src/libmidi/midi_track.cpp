@@ -164,7 +164,7 @@ void MidiTrack::build_note_set() {
         activeNotes[id] = info;
     }
 
-    if (activeNotes.size() > 0) {
+    if (!activeNotes.empty()) {
         // LOGTODO!
 
         // This is mostly non-critical.

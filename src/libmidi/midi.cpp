@@ -37,10 +37,10 @@ Midi Midi::read_from_file(const string &filename) {
 
     try {
         midi = read_from_stream(file);
-    } catch (const MidiError &e) {
+    } catch (const MidiError &) {
         // Close our file resource before handing the error up
         file.close();
-        throw e;
+        throw;
     }
     return midi;
 }

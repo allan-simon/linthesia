@@ -105,7 +105,7 @@ public:
      * (vs. just being an information track with a title or copyright)
      */
     bool has_notes() const {
-        return noteSet.size() > 0;
+        return (!noteSet.empty());
     
     }
 
