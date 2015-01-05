@@ -42,5 +42,4 @@ linthesia_LDADD = $(linthesia_DEPENDENCIES) $(RTMIDI_LIBS) $(SFML_LIBS)
 
 linthesia_CXXFLAGS = -Wall -std=c++11 -iquote $(top_srcdir)/libmidi
 
-linthesia_CPPFLAGS = -DGRAPHDIR="\"$(GRAPHDIR)\""
-linthesia_CPPFLAGS += $(RTMIDI_CFLAGS)
+linthesia_CPPFLAGS = -DGRAPHDIR="\"$(GRAPHDIR)\"" $(RTMIDI_CFLAGS)

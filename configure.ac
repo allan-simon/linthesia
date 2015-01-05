@@ -14,7 +14,11 @@ AC_PROG_INSTALL
 AC_PROG_MKDIR_P
 # Checks for libraries.
 
-PKG_CHECK_MODULES(RTMIDI, rtmidi)
+PKG_CHECK_MODULES(RTMIDI, rtmidi, HAVE_RTMIDI=1, HAVE_RTMIDI=0)
+if test $HAVE_RTMIDI = 0
+then
+   PKG_CHECK_MODULES(RTMIDI, librtmidi)
+fi
 
 # Checks for header files.
 AC_CHECK_HEADERS([string string.h iostream algorithm locale vector sstream queue functional map iomanip set exception sys/time.h])
