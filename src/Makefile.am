@@ -38,8 +38,7 @@ linthesia_DEPENDENCIES = libmidi.la
 
 linthesia_LDFLAGS = -lrtmidi
 
-linthesia_LDADD = $(linthesia_DEPENDENCIES) $(RTMIDI_LIBS)
-linthesia_LDADD += -lsfml-graphics -lsfml-window -lsfml-system
+linthesia_LDADD = $(linthesia_DEPENDENCIES) $(RTMIDI_LIBS) $(SFML_LIBS)
 
 linthesia_CXXFLAGS = -Wall -std=c++11 -iquote $(top_srcdir)/libmidi
 
