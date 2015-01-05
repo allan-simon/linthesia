@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "track_options.h"
 
 namespace linthesia {

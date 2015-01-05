@@ -1,5 +1,3 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.69])
 AC_INIT([linthesia], [0.5.0], [victor.lavaud@gmail.com])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
@@ -16,18 +14,16 @@ AC_PROG_INSTALL
 AC_PROG_MKDIR_P
 # Checks for libraries.
 
-PKG_CHECK_MODULES(RTMIDI, rtmidi)
+PKG_CHECK_MODULES(RTMIDI, rtmidi, HAVE_RTMIDI=1, HAVE_RTMIDI=0)
+if test $HAVE_RTMIDI = 0
+then
+   PKG_CHECK_MODULES(RTMIDI, librtmidi)
+fi
 
 # Checks for header files.
 AC_CHECK_HEADERS([string string.h iostream algorithm locale vector sstream queue functional map iomanip set exception sys/time.h])
 
-AC_LANG_PUSH([C++])
-AC_CHECK_HEADER(
-    [SFML/Config.hpp],
-    [],
-    [AC_MSG_ERROR([SFML headers not found.])]
-)
-AC_LANG_POP([C++])
+PKG_CHECK_MODULES(SFML, sfml-graphics)
 
 CXXFLAGS="$CXXFLAGS -std=c++11"
 

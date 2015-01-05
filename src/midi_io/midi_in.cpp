@@ -56,7 +56,12 @@ MidiEventList MidiIn::readAllNotes() {
  *
  */
 void MidiIn::open() {
-    rtMidiIn.openPort(chosenPort);
+    try {
+        rtMidiIn.openPort(chosenPort);
+    }
+    catch (RtMidiError &error) {
+        error.printMessage();
+    }
 }
 
 /**
