@@ -59,7 +59,7 @@ void MidiIn::open() {
     try {
         rtMidiIn.openPort(chosenPort);
     }
-    catch (RtMidiError &error) {
+    catch (RtError &error) {
         error.printMessage();
     }
 }
