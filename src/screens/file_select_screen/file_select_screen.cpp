@@ -3,7 +3,7 @@
 
 #include "utilities/tinydir.h"
 #include "file_select_screen.h"
-
+#include "assets/path.h"
 #include "context/context.h"
 
 namespace linthesia {
@@ -12,11 +12,6 @@ namespace linthesia {
  *
  */
 const ScreenIndex FileSelectScreen::INDEX = "file_select_screen";
-
-/**
- *
- */
-const static std::string MIDI_DIR_PATH("../songs/");
 
 /**
  *
@@ -87,7 +82,7 @@ ScreenIndex FileSelectScreen::run(
     sf::Event event;
 
     // we initalize the file selector list
-    midiFileNames = get_midi_files(MIDI_DIR_PATH);
+    midiFileNames = get_midi_files(gblMidiDir);
     fileButtons.clear();
     for (auto fileName : midiFileNames) {
         fileButtons.push_back(LongOneLineButton(fileName));
@@ -204,7 +199,7 @@ bool FileSelectScreen::actionTriggeredFileButtons(
                 return;
             }
             std::string filename = midiFileNames[currentButton + fileIndex];
-            if (!context.openMidiFile(MIDI_DIR_PATH + filename)) {
+            if (!context.openMidiFile(gblMidiDir + filename)) {
                 return;
             }
             oneFileChosen = true;

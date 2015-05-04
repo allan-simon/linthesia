@@ -5,6 +5,8 @@
 #include "screens/screens.h"
 #include "context/context.h"
 
+#include "assets/path.h"
+
 //TODO should not be needed
 #include "buttons/short_one_line_button.h"
 #include "buttons/long_one_line_button.h"
@@ -13,8 +15,26 @@
 
 using namespace std;
 
+/* Set some sensible defaults for the global paths. */
+string gblExecutableDir = "";
+string gblGraphicsDir = "";
+string gblFontsDir = "";
+string gblDefaultFont = "";
+string gblMidiDir = "";
 
-int main() {
+static void setPaths(const string &exeDir)
+{
+    size_t idx = exeDir.find_last_of("/\\");
+    gblExecutableDir = exeDir.substr(0, idx);
+    gblGraphicsDir = gblExecutableDir + "/" + GRAPHICS_DIR;
+    gblFontsDir = gblExecutableDir + "/" + FONTS_DIR;
+    gblMidiDir = gblExecutableDir + "/" + MIDI_DIR;
+    gblDefaultFont = gblFontsDir + DEFAULT_FONT;
+}
+
+int main(int argc, char *argv[]) {
+
+    setPaths(argv[0]);
 
     sf::RenderWindow application(
         sf::VideoMode(800, 600),

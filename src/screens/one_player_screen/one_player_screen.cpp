@@ -62,7 +62,7 @@ ScreenIndex OnePlayerScreen::run(
     //TODO move all these "init*" in a function made for that
     // and or see a better way to avoid that polluating this
     // function
-    font.loadFromFile(DEFAULT_FONT);
+    font.loadFromFile(gblDefaultFont);
     sf::Event event;
 
     sf::Clock clock;
@@ -405,10 +405,10 @@ void OnePlayerScreen::scrollNoteGround(
 void OnePlayerScreen::initSpeedLabel(
     const sf::RenderWindow &app
 ) {
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }

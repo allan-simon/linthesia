@@ -20,7 +20,7 @@ sf::Font TrackBox::font = sf::Font();
  *
  */
 void TrackBox::init() {
-    const std::string TRACKBOX_FILE = GRAPHICS_DIR "trackbox.png";
+    const std::string TRACKBOX_FILE = gblGraphicsDir + "trackbox.png";
     if (!backgroundTexture.loadFromFile(TRACKBOX_FILE)) {
         std::cerr
             << "Can't load "
@@ -30,10 +30,10 @@ void TrackBox::init() {
     }
     backgroundTexture.setSmooth(true);
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }

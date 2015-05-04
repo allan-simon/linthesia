@@ -17,7 +17,7 @@ sf::Texture Icon::iconsTexture = sf::Texture();
  *
  */
 void Icon::init() {
-    const std::string INTERFACE_BUTTONS = GRAPHICS_DIR "InterfaceButtons.tga";
+    const std::string INTERFACE_BUTTONS = gblGraphicsDir + "InterfaceButtons.tga";
     if (!iconsTexture.loadFromFile(INTERFACE_BUTTONS)) {
         std::cerr
             << "Can't load "

@@ -25,7 +25,7 @@ TwoLinesButton::TwoLinesButton(
     const unsigned INTER_LINE_SPACE = 15;
     currentState = ButtonStates::NORMAL;
 
-    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    const std::string BUTTON = gblGraphicsDir + "button2line.png";
     if (!texture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -36,10 +36,10 @@ TwoLinesButton::TwoLinesButton(
     texture.setSmooth(true);
     sprite.setTexture(texture);
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }
