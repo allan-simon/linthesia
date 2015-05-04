@@ -47,7 +47,7 @@ SelectMidiIn::SelectMidiIn() :
         INTER_LINE_SPACE;
 
 
-    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    const std::string BUTTON = gblGraphicsDir + "button2line.png";
     if (!backgroundTexture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -76,10 +76,10 @@ SelectMidiIn::SelectMidiIn() :
         SECOND_LINE_Y
     );
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }

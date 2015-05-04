@@ -20,7 +20,7 @@ static std::string padZero(unsigned number) {
 
     std::ostringstream ss;
     ss << std::setw(4) << std::setfill('0') << number;
-    return ss.str(); 
+    return ss.str();
 }
 
 
@@ -29,14 +29,14 @@ static std::string padZero(unsigned number) {
  */
 void ScoreDisplay::init() {
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }
-    const std::string STAR = GRAPHICS_DIR "star.png";
+    const std::string STAR = gblGraphicsDir + "star.png";
     if (!star.loadFromFile(STAR)) {
         std::cerr
             << "Can't load "
@@ -47,7 +47,7 @@ void ScoreDisplay::init() {
     //star.setSmooth(true);
     starSprite.setTexture(star);
 
-    const std::string THUMB_DOWN = GRAPHICS_DIR "thumb_down.png";
+    const std::string THUMB_DOWN = gblGraphicsDir + "thumb_down.png";
     if (!thumbdown.loadFromFile(THUMB_DOWN)) {
         std::cerr
             << "Can't load "
@@ -73,7 +73,7 @@ void ScoreDisplay::init() {
         sf::Color(200, 200, 50),
         x,
         y
-    ); 
+    );
     // ~ green
     x += SIZE_COUNTER;
     initLabel(
@@ -98,7 +98,7 @@ void ScoreDisplay::init() {
         sf::Color(50, 200, 50),
         x,
         y
-    ); 
+    );
     // ~red
     x += SIZE_COUNTER;
     thumbdownSprite.setPosition(x, ICON_PADDING_TOP);

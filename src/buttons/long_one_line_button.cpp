@@ -19,7 +19,7 @@ sf::Font LongOneLineButton::font = sf::Font();
  */
 void LongOneLineButton::init() {
 
-    const std::string BUTTON = GRAPHICS_DIR "longbutton.png";
+    const std::string BUTTON = gblGraphicsDir + "longbutton.png";
     if (!texture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -29,10 +29,10 @@ void LongOneLineButton::init() {
     }
     texture.setSmooth(true);
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (!font.loadFromFile(gblDefaultFont)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << gblDefaultFont
             << std::endl
         ;
     }

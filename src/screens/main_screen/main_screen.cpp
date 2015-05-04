@@ -34,7 +34,7 @@ MainScreen::MainScreen() :
     selectTrackButton("play"),
     chooseSongButton("song:", "no song selected yet")
 {
-    const std::string LOGO = GRAPHICS_DIR "title_Logo.png";
+    const std::string LOGO = gblGraphicsDir + "title_Logo.png";
     if (!logoTexture.loadFromFile(LOGO)) {
         std::cerr
             << "Can't load "

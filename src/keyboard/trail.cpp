@@ -12,7 +12,7 @@ namespace linthesia {
  */
 KeyboardTrail::KeyboardTrail() {
     const std::string TOP_SEPARATOR =
-        GRAPHICS_DIR
+        gblGraphicsDir +
         "keyboard_top_separator.png"
     ;
     if (!texture.loadFromFile(TOP_SEPARATOR)) {
