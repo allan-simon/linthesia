@@ -89,10 +89,14 @@ class OnePlayerScreen : public AbstractScreen {
         void decreaseSpeed();
 
         /**
+         * @brief loads the speed indicator surface
          *
+         * @param window SFML render window to use
+         * @param font SFML font to use for writting
          */
         void initSpeedLabel(
-            const sf::RenderWindow &app
+            const sf::RenderWindow& window,
+            const sf::Font& font
         );
 
         /**
@@ -101,6 +105,8 @@ class OnePlayerScreen : public AbstractScreen {
         void updateSpeedLabel();
 
         sf::Text speedLabel;
+        sf::Text info;
+
         sf::Font font;
 
 

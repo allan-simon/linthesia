@@ -59,10 +59,6 @@ ScreenIndex OnePlayerScreen::run(
     sf::RenderWindow &app,
     Context &context
 ) {
-    //TODO move all these "init*" in a function made for that
-    // and or see a better way to avoid that polluating this
-    // function
-    font.loadFromFile(DEFAULT_FONT);
     sf::Event event;
 
     sf::Clock clock;
@@ -73,7 +69,29 @@ ScreenIndex OnePlayerScreen::run(
     scoreDisplay.init();
     scoreDisplay.update(score);
 
-    initSpeedLabel(app);
+    if (!font.loadFromFile(DEFAULT_FONT))
+    {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
+    }
+    info.setFont(font);
+    info.setColor(sf::Color(200, 165, 0));
+    info.setString("press space to start");
+
+    sf::Vector2<unsigned int> windowSize = app.getSize();
+
+    info.setPosition(
+        (windowSize.x - keyboard.getGlobalBounds().width) / 2.f + 200.f,
+        (windowSize.y - SPACE_BUTTONS / 2)
+    );
+
+    initSpeedLabel(
+        app,
+        font
+    );
 
     // we make sure the song is reset at the beginning
     // (fix #54)
@@ -138,6 +156,7 @@ ScreenIndex OnePlayerScreen::run(
 
         app.draw(scoreDisplay);
         app.draw(speedLabel);
+        app.draw(info);
 
         // the note ground is displayed in the view
         // so that we can scroll it
@@ -403,24 +422,18 @@ void OnePlayerScreen::scrollNoteGround(
  *
  */
 void OnePlayerScreen::initSpeedLabel(
-    const sf::RenderWindow &app
+    const sf::RenderWindow& window,
+    const sf::Font& font
 ) {
-    if (!font.loadFromFile(DEFAULT_FONT)) {
-        std::cerr
-            << "Can't load "
-            << DEFAULT_FONT
-            << std::endl
-        ;
-    }
     speedLabel.setFont(font);
     speedLabel.setColor(sf::Color(200, 165, 0));
     speedLabel.setString("speed: 1");
 
-    float yPosition = app.getSize().y -
+    float yPosition = window.getSize().y -
         SPACE_BUTTONS / 2;
 
     speedLabel.setPosition(
-        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        (window.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
     );
 }
