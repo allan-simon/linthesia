@@ -73,29 +73,8 @@ ScreenIndex OnePlayerScreen::run(
     scoreDisplay.init();
     scoreDisplay.update(score);
 
-    if (!font.loadFromFile(DEFAULT_FONT))
-    {
-        std::cerr
-            << "Can't load "
-            << DEFAULT_FONT
-            << std::endl
-        ;
-    }
-    info.setFont(font);
-    info.setColor(sf::Color(200, 165, 0));
-    info.setString("press space to start");
-
-    sf::Vector2<unsigned int> windowSize = app.getSize();
-
-    info.setPosition(
-        (windowSize.x - keyboard.getGlobalBounds().width) / 2.f + 200.f,
-        (windowSize.y - SPACE_BUTTONS / 2)
-    );
-
-    initSpeedLabel(
-        app,
-        font
-    );
+    initSpeedLabel(app);
+    initInfosLabel(app);
 
     // we make sure the song is reset at the beginning
     // (fix #54)
@@ -426,9 +405,16 @@ void OnePlayerScreen::scrollNoteGround(
  *
  */
 void OnePlayerScreen::initSpeedLabel(
-    const sf::RenderWindow& window,
-    const sf::Font& font
+    const sf::RenderWindow& window
 ) {
+    if (!font.loadFromFile(DEFAULT_FONT))
+    {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
+    }
     speedLabel.setFont(font);
     speedLabel.setColor(sf::Color(200, 165, 0));
     speedLabel.setString("speed: 1");
@@ -439,6 +425,33 @@ void OnePlayerScreen::initSpeedLabel(
     speedLabel.setPosition(
         (window.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
+    );
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::initInfosLabel(
+    const sf::RenderWindow &app
+)
+{
+    if (!font.loadFromFile(DEFAULT_FONT))
+    {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
+    }
+    info.setFont(font);
+    info.setColor(sf::Color(200, 165, 0));
+    info.setString("press space to start");
+
+    sf::Vector2<unsigned int> windowSize = app.getSize();
+
+    info.setPosition(
+        (windowSize.x - keyboard.getGlobalBounds().width) / 2.0f + 200.0f,
+        (windowSize.y - SPACE_BUTTONS / 2)
     );
 }
 
