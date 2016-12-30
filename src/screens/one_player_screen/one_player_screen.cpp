@@ -59,6 +59,10 @@ ScreenIndex OnePlayerScreen::run(
     sf::RenderWindow &app,
     Context &context
 ) {
+    //TODO move all these "init*" in a function made for that
+    // and or see a better way to avoid that polluating this
+    // function
+    font.loadFromFile(DEFAULT_FONT);
     sf::Event event;
 
     sf::Clock clock;
