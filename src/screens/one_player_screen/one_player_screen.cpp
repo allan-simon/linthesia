@@ -74,6 +74,7 @@ ScreenIndex OnePlayerScreen::run(
     scoreDisplay.update(score);
 
     initSpeedLabel(app);
+    initInfoLabel(app);
 
     // we make sure the song is reset at the beginning
     // (fix #54)
@@ -138,6 +139,7 @@ ScreenIndex OnePlayerScreen::run(
 
         app.draw(scoreDisplay);
         app.draw(speedLabel);
+        app.draw(info);
 
         // the note ground is displayed in the view
         // so that we can scroll it
@@ -402,9 +404,8 @@ void OnePlayerScreen::scrollNoteGround(
 /**
  *
  */
-void OnePlayerScreen::initSpeedLabel(
-    const sf::RenderWindow &app
-) {
+void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
+
     if (!font.loadFromFile(DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
@@ -416,12 +417,37 @@ void OnePlayerScreen::initSpeedLabel(
     speedLabel.setColor(sf::Color(200, 165, 0));
     speedLabel.setString("speed: 1");
 
-    float yPosition = app.getSize().y -
-        SPACE_BUTTONS / 2;
+    float yPosition = app.getSize().y - SPACE_BUTTONS / 2;
 
     speedLabel.setPosition(
         (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
+    );
+}
+
+/**
+ *
+ */
+void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app) {
+
+    if (!font.loadFromFile(DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << DEFAULT_FONT
+            << std::endl
+        ;
+    }
+    info.setFont(font);
+    info.setColor(sf::Color(200, 165, 0));
+    info.setString("press space to start");
+
+    sf::Vector2<unsigned int> windowSize = app.getSize();
+
+    auto keyboardWidth = keyboard.getGlobalBounds().width;
+
+    info.setPosition(
+        (windowSize.x - keyboardWidth) / 2.0f + INFO_LABEL_X_OFFSET,
+        (windowSize.y - SPACE_BUTTONS / 2)
     );
 }
 

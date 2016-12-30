@@ -19,6 +19,8 @@ namespace linthesia {
  */
 class OnePlayerScreen : public AbstractScreen {
 
+    static constexpr float INFO_LABEL_X_OFFSET {200.0f};
+
     public:
         const static ScreenIndex INDEX;
         ScreenIndex run(
@@ -92,6 +94,13 @@ class OnePlayerScreen : public AbstractScreen {
          *
          */
         void initSpeedLabel(
+            const sf::RenderWindow& app
+        );
+
+        /**
+         *
+         */
+        void initInfoLabel(
             const sf::RenderWindow &app
         );
 
@@ -101,6 +110,8 @@ class OnePlayerScreen : public AbstractScreen {
         void updateSpeedLabel();
 
         sf::Text speedLabel;
+        sf::Text info;
+
         sf::Font font;
 
 
