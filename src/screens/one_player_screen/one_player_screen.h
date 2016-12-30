@@ -98,7 +98,7 @@ class OnePlayerScreen : public AbstractScreen {
         /**
          *
          */
-        void initInfosLabel(
+        void initInfoLabel(
             const sf::RenderWindow &app
         );
 

@@ -74,7 +74,7 @@ ScreenIndex OnePlayerScreen::run(
     scoreDisplay.update(score);
 
     initSpeedLabel(app);
-    initInfosLabel(app);
+    initInfoLabel(app);
 
     // we make sure the song is reset at the beginning
     // (fix #54)
@@ -431,9 +431,7 @@ void OnePlayerScreen::initSpeedLabel(
 /**
  *
  */
-void OnePlayerScreen::initInfosLabel(
-    const sf::RenderWindow &app
-)
+void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app)
 {
     if (!font.loadFromFile(DEFAULT_FONT))
     {
