@@ -404,10 +404,9 @@ void OnePlayerScreen::scrollNoteGround(
 /**
  *
  */
-void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app)
-{
-    if (!font.loadFromFile(DEFAULT_FONT))
-    {
+void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
+
+    if (!font.loadFromFile(DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
             << DEFAULT_FONT
@@ -429,10 +428,9 @@ void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app)
 /**
  *
  */
-void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app)
-{
-    if (!font.loadFromFile(DEFAULT_FONT))
-    {
+void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app) {
+
+    if (!font.loadFromFile(DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
             << DEFAULT_FONT
