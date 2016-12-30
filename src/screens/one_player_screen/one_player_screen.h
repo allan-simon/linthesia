@@ -19,6 +19,8 @@ namespace linthesia {
  */
 class OnePlayerScreen : public AbstractScreen {
 
+    static constexpr float INFO_LABEL_X_OFFSET {200.0f};
+
     public:
         const static ScreenIndex INDEX;
         ScreenIndex run(

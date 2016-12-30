@@ -404,9 +404,8 @@ void OnePlayerScreen::scrollNoteGround(
 /**
  *
  */
-void OnePlayerScreen::initSpeedLabel(
-    const sf::RenderWindow& window
-) {
+void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app)
+{
     if (!font.loadFromFile(DEFAULT_FONT))
     {
         std::cerr
@@ -419,11 +418,10 @@ void OnePlayerScreen::initSpeedLabel(
     speedLabel.setColor(sf::Color(200, 165, 0));
     speedLabel.setString("speed: 1");
 
-    float yPosition = window.getSize().y -
-        SPACE_BUTTONS / 2;
+    float yPosition = app.getSize().y - SPACE_BUTTONS / 2;
 
     speedLabel.setPosition(
-        (window.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
+        (app.getSize().x - keyboard.getGlobalBounds().width) / 2.0f,
         yPosition
     );
 }
@@ -447,8 +445,10 @@ void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app)
 
     sf::Vector2<unsigned int> windowSize = app.getSize();
 
+    auto keyboardWidth = keyboard.getGlobalBounds().width;
+
     info.setPosition(
-        (windowSize.x - keyboard.getGlobalBounds().width) / 2.0f + 200.0f,
+        (windowSize.x - keyboardWidth) / 2.0f + INFO_LABEL_X_OFFSET,
         (windowSize.y - SPACE_BUTTONS / 2)
     );
 }
