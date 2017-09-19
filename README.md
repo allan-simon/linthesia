@@ -28,6 +28,10 @@ For version 0.5 and above (including current master) you simply need these packa
 
      libsfml-dev
      librtmidi-dev
+     
+So for example (with build-dependencies):
+     
+     sudo aptitude install clang libtool autoconf automake make libsfml-dev librtmidi-dev libgtkmm-2.4-dev libgconfmm-2.6-dev libgtkglextmm-x11-1.2-dev libasound2-dev
 
 we also use [tinydir](https://github.com/cxong/tinydir), for cross-plateform file/directory
 operation but as a header so no need to install anything
