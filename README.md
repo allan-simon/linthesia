@@ -6,6 +6,9 @@ tentative to fix/rewrite linthesia , an open-source synthesia/ "piano-hero" like
 
 it should compile for at least Windows/Linux/MacOS X (I have tested only Linux though)
 
+![game](https://raw.githubusercontent.com/allan-simon/linthesia/master/docs/screenshots/game.png)
+
+
 ## Note:
 
 Current Master can be used for casual gaming, and I strongly encourage people to use it
