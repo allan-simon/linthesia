@@ -6,6 +6,15 @@ tentative to fix/rewrite linthesia , an open-source synthesia/ "piano-hero" like
 
 it should compile for at least Windows/Linux/MacOS X (I have tested only Linux though)
 
+## Contributing 
+
+Even though this project hasn't moved a lot for a while, I'm still around to merge things :)
+
+I'm very open to suggestions/ideas, and should be quite responsive to issues which are posted here
+So if you get any problem to compile and/or you want to see some specific feaures, just add an issue
+here or send me an email  allan.simon |at| supinfo.com
+
+
 ![game](https://raw.githubusercontent.com/allan-simon/linthesia/master/docs/screenshots/game.png)
 
 
@@ -16,13 +25,6 @@ to provide feedback
 
 if you want to find the old linthesia checkout the release 0.4.3 (see release section in github)
 
-## Contributing 
-
-Even though this project hasn't moved a lot for a while, I'm still around to merge things :)
-
-I'm very open to suggestions/ideas, and should be quite responsive to issues which are posted here
-So if you get any problem to compile and/or you want to see some specific feaures, just add an issue
-here or send me an email  allan.simon |at| supinfo.com
 
 
 ## Dependencies
