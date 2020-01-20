@@ -48,6 +48,10 @@ class TrackBox : public sf::Drawable , public sf::Transformable {
             linthesia::TrackOptions &TrackOptions
         );
 
+        void updatePlayChoiceLabel(
+            linthesia::TrackOptions &TrackOptions)
+        ;
+
     private:
         /**
          *

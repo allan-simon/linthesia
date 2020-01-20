@@ -89,8 +89,9 @@ ScreenIndex SelectTrackScreen::run(
         app.clear(BACKGROUND_COLOR);
         app.draw(backButton);
         app.draw(startGameButton);
-        for (const auto &trackBox : allTrackBoxes) {
+        for (auto &trackBox : allTrackBoxes) {
             app.draw(trackBox);
+            trackBox.updatePlayChoiceLabel(context.tracksOptions);
         }
         app.display();
 

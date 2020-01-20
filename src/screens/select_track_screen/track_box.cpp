@@ -62,7 +62,6 @@ TrackBox::TrackBox(
 
     const std::string instrument("Instrument:");
     const std::string notes("Notes:");
-    const std::string playChoice("Played automatically");
     const unsigned BUTTON_PADDING = 15;
     const unsigned CHARACTER_SIZE = 15;
     const unsigned INTER_LINE_SPACE = 10;
@@ -141,16 +140,21 @@ TrackBox::TrackBox(
 
 
 
-
-    // init the part displaying the midi output used
     playChoiceLabel.setFont(font);
     playChoiceLabel.setCharacterSize(CHARACTER_SIZE);
-    playChoiceLabel.setString(playChoice);
+    // "playChoiceLabel.setString()" will be called when the track will have been chosen
     playChoiceLabel.setPosition(
         BUTTON_PADDING + ICON_WIDTH,
         // we center text in the middle of the icon
         CHOICE_LINE_Y + (ICON_WIDTH - CHARACTER_SIZE) / 2.0f
     );
+}
+
+void TrackBox::updatePlayChoiceLabel(
+    linthesia::TrackOptions  &trackOptions
+) {
+        const std::string style = trackOptions.getStrStyle(trackId);
+        playChoiceLabel.setString(style);
 }
 
 /**

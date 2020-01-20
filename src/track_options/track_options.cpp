@@ -89,6 +89,10 @@ PlayStyle TrackOptions::getStyle(unsigned trackId) {
     return trackidStyle[trackId];
 }
 
+const std::string TrackOptions::getStrStyle(unsigned trackId) {
+    return style2name[trackidStyle[trackId]];
+}
+
 /**
  *
  */

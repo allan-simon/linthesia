@@ -59,6 +59,8 @@ class TrackOptions {
          */
         PlayStyle getStyle(unsigned trackId);
 
+        const std::string getStrStyle(unsigned trackId);
+
     private:
         /**
          * store the track style by trackId
