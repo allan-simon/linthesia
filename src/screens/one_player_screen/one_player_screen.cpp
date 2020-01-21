@@ -415,7 +415,7 @@ void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
     }
     speedLabel.setFont(font);
     speedLabel.setColor(sf::Color(200, 165, 0));
-    speedLabel.setString("speed: 1");
+    updateSpeedLabel();
 
     float yPosition = app.getSize().y - SPACE_BUTTONS / 2;
 
