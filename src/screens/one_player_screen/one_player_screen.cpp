@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics/View.hpp>
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "libmidi/midi.h"
 #include "one_player_screen.h"
@@ -62,8 +63,24 @@ ScreenIndex OnePlayerScreen::run(
     //TODO move all these "init*" in a function made for that
     // and or see a better way to avoid that polluating this
     // function
-    font.loadFromFile(DEFAULT_FONT);
-    sf::Event event;
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
+        std::cerr
+            << "Can't load "
+            << actual_fonts_dir_path + DEFAULT_FONT
+            << std::endl
+        ;
+    }
+        sf::Event event;
 
     sf::Clock clock;
     sf::Time currentElapsed = clock.getElapsedTime();
@@ -406,10 +423,20 @@ void OnePlayerScreen::scrollNoteGround(
  */
 void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }
@@ -430,10 +457,20 @@ void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
  */
 void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app) {
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }

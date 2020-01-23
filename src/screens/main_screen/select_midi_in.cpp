@@ -9,6 +9,7 @@
 
 #include "libmidi/midi_util.h"
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "context/context.h"
 #include "select_midi_in.h"
@@ -47,7 +48,18 @@ SelectMidiIn::SelectMidiIn() :
         INTER_LINE_SPACE;
 
 
-    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    std::string actual_graphics_dir_path;
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string BUTTON = actual_graphics_dir_path + "button2line.png";
     if (!backgroundTexture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -76,10 +88,18 @@ SelectMidiIn::SelectMidiIn() :
         SECOND_LINE_Y
     );
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }

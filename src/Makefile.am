@@ -32,7 +32,8 @@ linthesia_SOURCES = main.cpp \
 	screens/one_player_screen/black_note_to_play.cpp \
 	screens/file_select_screen/file_select_screen.cpp \
 	screens/select_track_screen/track_box.cpp \
-	screens/select_track_screen/select_track_screen.cpp
+	screens/select_track_screen/select_track_screen.cpp \
+	utilities/util.c
 
 linthesia_DEPENDENCIES = libmidi.la
 
