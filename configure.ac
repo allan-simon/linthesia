@@ -25,7 +25,12 @@ AC_CHECK_HEADERS([string string.h iostream algorithm locale vector sstream queue
 
 PKG_CHECK_MODULES(SFML, sfml-graphics)
 
+# Flags
+datdir=$datadir/$PACKAGE
+AC_SUBST(datdir)
+
 CXXFLAGS="$CXXFLAGS -std=c++11"
+CXXFLAGS="$CXXFLAGS -DDATADIR=\\\"$datdir\\\""
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_CHECK_HEADER_STDBOOL
@@ -36,5 +41,10 @@ AC_TYPE_UINT32_T
 # Checks for library functions.
 AC_CHECK_FUNCS([gettimeofday])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([
+		 Makefile
+		 src/Makefile
+		 graphics/Makefile
+		 fonts/Makefile
+		 songs/Makefile])
 AC_OUTPUT

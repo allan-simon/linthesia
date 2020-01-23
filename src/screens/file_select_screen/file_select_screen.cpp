@@ -2,6 +2,7 @@
 #include <algorithm>
 
 #include "utilities/tinydir.h"
+#include "utilities/util.h"
 #include "file_select_screen.h"
 
 #include "context/context.h"
@@ -16,7 +17,9 @@ const ScreenIndex FileSelectScreen::INDEX = "file_select_screen";
 /**
  *
  */
-const static std::string MIDI_DIR_PATH("../songs/");
+const static std::string MIDI_DIR_PATH(DATADIR"/songs/");
+const static std::string LOCAL_MIDI_DIR_PATH("../songs/");
+
 
 /**
  *
@@ -87,9 +90,20 @@ ScreenIndex FileSelectScreen::run(
     sf::Event event;
 
     // we initalize the file selector list
-    midiFileNames = get_midi_files(MIDI_DIR_PATH);
+    std::string actual_midi_dir_path;
+    if (dirExists(MIDI_DIR_PATH.c_str()))
+    {
+        actual_midi_dir_path = MIDI_DIR_PATH;
+    }
+    else
+    {
+        actual_midi_dir_path = LOCAL_MIDI_DIR_PATH;
+    }
+
+    midiFileNames = get_midi_files(actual_midi_dir_path);
     fileButtons.clear();
     for (auto fileName : midiFileNames) {
+        std::replace( fileName.begin(), fileName.end(), '_', ' '); // replace all '_' to ' '
         fileButtons.push_back(LongOneLineButton(fileName));
     }
     updateIterators(app);

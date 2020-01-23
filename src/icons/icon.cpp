@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "icon.h"
 
@@ -17,7 +18,18 @@ sf::Texture Icon::iconsTexture = sf::Texture();
  *
  */
 void Icon::init() {
-    const std::string INTERFACE_BUTTONS = GRAPHICS_DIR "InterfaceButtons.tga";
+    std::string actual_graphics_dir_path;
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string INTERFACE_BUTTONS = actual_graphics_dir_path + "InterfaceButtons.tga";
     if (!iconsTexture.loadFromFile(INTERFACE_BUTTONS)) {
         std::cerr
             << "Can't load "

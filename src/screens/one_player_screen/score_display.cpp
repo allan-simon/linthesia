@@ -8,6 +8,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "score_display.h"
 
@@ -28,15 +29,34 @@ static std::string padZero(unsigned number) {
  *
  */
 void ScoreDisplay::init() {
+    std::string actual_graphics_dir_path;
+    std::string actual_fonts_dir_path;
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }
-    const std::string STAR = GRAPHICS_DIR "star.png";
+
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string STAR = actual_graphics_dir_path + "star.png";
     if (!star.loadFromFile(STAR)) {
         std::cerr
             << "Can't load "
@@ -44,10 +64,11 @@ void ScoreDisplay::init() {
             << std::endl
         ;
     }
+
     //star.setSmooth(true);
     starSprite.setTexture(star);
 
-    const std::string THUMB_DOWN = GRAPHICS_DIR "thumb_down.png";
+    const std::string THUMB_DOWN = actual_graphics_dir_path + "thumb_down.png";
     if (!thumbdown.loadFromFile(THUMB_DOWN)) {
         std::cerr
             << "Can't load "

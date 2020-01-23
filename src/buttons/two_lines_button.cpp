@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "two_lines_button.h"
 
@@ -25,7 +26,18 @@ TwoLinesButton::TwoLinesButton(
     const unsigned INTER_LINE_SPACE = 15;
     currentState = ButtonStates::NORMAL;
 
-    const std::string BUTTON = GRAPHICS_DIR "button2line.png";
+    std::string actual_graphics_dir_path;
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string BUTTON = actual_graphics_dir_path + "button2line.png";
     if (!texture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -33,13 +45,22 @@ TwoLinesButton::TwoLinesButton(
             << std::endl
         ;
     }
+
     texture.setSmooth(true);
     sprite.setTexture(texture);
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }

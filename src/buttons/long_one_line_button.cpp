@@ -1,10 +1,12 @@
 #include <iostream>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "long_one_line_button.h"
 
@@ -19,7 +21,18 @@ sf::Font LongOneLineButton::font = sf::Font();
  */
 void LongOneLineButton::init() {
 
-    const std::string BUTTON = GRAPHICS_DIR "longbutton.png";
+    std::string actual_graphics_dir_path;
+    std::string actual_fonts_dir_path;
+
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string BUTTON = actual_graphics_dir_path + "longbutton.png";
     if (!texture.loadFromFile(BUTTON)) {
         std::cerr
             << "Can't load "
@@ -29,10 +42,18 @@ void LongOneLineButton::init() {
     }
     texture.setSmooth(true);
 
-    if (!font.loadFromFile(DEFAULT_FONT)) {
+    if (dirExists(FONTS_DIR))
+    {
+        actual_fonts_dir_path = FONTS_DIR;
+    }
+    else
+    {
+        actual_fonts_dir_path = LOCAL_FONTS_DIR;
+    }
+    if (!font.loadFromFile(actual_fonts_dir_path + DEFAULT_FONT)) {
         std::cerr
             << "Can't load "
-            << DEFAULT_FONT
+            << actual_fonts_dir_path + DEFAULT_FONT
             << std::endl
         ;
     }

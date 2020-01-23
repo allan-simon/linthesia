@@ -5,6 +5,7 @@
 #include "screens/file_select_screen/file_select_screen.h"
 #include "screens/select_track_screen/select_track_screen.h"
 
+#include "utilities/util.h"
 #include "assets/path.h"
 #include "context/context.h"
 
@@ -34,7 +35,16 @@ MainScreen::MainScreen() :
     selectTrackButton("play"),
     chooseSongButton("song:", "no song selected yet")
 {
-    const std::string LOGO = GRAPHICS_DIR "title_Logo.png";
+    std::string actual_graphics_dir_path;
+    if (dirExists(GRAPHICS_DIR))
+    {
+        actual_graphics_dir_path = GRAPHICS_DIR;
+    }
+    else
+    {
+        actual_graphics_dir_path = LOCAL_GRAPHICS_DIR;
+    }
+    const std::string LOGO = actual_graphics_dir_path + "title_Logo.png";
     if (!logoTexture.loadFromFile(LOGO)) {
         std::cerr
             << "Can't load "
