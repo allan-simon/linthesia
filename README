@@ -3,6 +3,11 @@ Linthesia is a fork of the Windows/Mac game called Synthesia. It is a game
 of playing music using a MIDI keyboard (or your PC keyboard), following
 a .mid file.
 
+Linthesia is a game. A game of playing music! You only need a MIDI file
+to play. It's a fork ofSynthesia, which only runs on Windows and OS X. 
+Linthesia is for GNU/Linux.
+
+
 Synthesia up to version 0.6.1a is Open Source. This project uses the
 latest source from sourceforge.
 
