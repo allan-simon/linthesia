@@ -143,7 +143,7 @@ void ScoreDisplay::initLabel(
     unsigned y
 ) {
 
-    label.setColor(color);
+    label.setFillColor(color);
     label.setFont(font);
     label.setPosition(x, y);
 

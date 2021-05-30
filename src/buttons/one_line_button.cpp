@@ -36,7 +36,7 @@ void OneLineButton::setHovered() {
     }
     currentState = ButtonStates::HOVERED;
     sprite.setColor(sf::Color(200,200,200));
-    label.setColor(sf::Color(200,200,200));
+    label.setFillColor(sf::Color(200,200,200));
 }
 
 /**
@@ -48,7 +48,7 @@ void OneLineButton::setUnhovered() {
     }
     currentState = ButtonStates::NORMAL;
     sprite.setColor(sf::Color::White);
-    label.setColor(sf::Color::White);
+    label.setFillColor(sf::Color::White);
 }
 
 /**
@@ -69,7 +69,7 @@ void OneLineButton::draw(
 void OneLineButton::setActive() {
     currentState = ButtonStates::NORMAL;
     sprite.setColor(sf::Color::White);
-    label.setColor(sf::Color::White);
+    label.setFillColor(sf::Color::White);
 }
 
 /**
@@ -78,7 +78,7 @@ void OneLineButton::setActive() {
 void OneLineButton::setInactive () {
     currentState = ButtonStates::DISABLED;
     sprite.setColor(sf::Color(100,100,100));
-    label.setColor(sf::Color(100,100,100));
+    label.setFillColor(sf::Color(100,100,100));
 
 }
 

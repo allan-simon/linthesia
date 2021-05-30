@@ -101,8 +101,8 @@ void TwoLinesButton::setHovered() {
     }
     currentState = ButtonStates::HOVERED;
     sprite.setColor(HOVERED_COLOR);
-    titleLabel.setColor(HOVERED_COLOR);
-    textLabel.setColor(HOVERED_COLOR);
+    titleLabel.setFillColor(HOVERED_COLOR);
+    textLabel.setFillColor(HOVERED_COLOR);
 }
 
 /**
@@ -114,7 +114,7 @@ void TwoLinesButton::setUnhovered() {
     }
     currentState = ButtonStates::NORMAL;
     sprite.setColor(sf::Color::White);
-    titleLabel.setColor(sf::Color::White);
+    titleLabel.setFillColor(sf::Color::White);
 }
 
 /**

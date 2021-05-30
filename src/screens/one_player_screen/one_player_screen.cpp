@@ -441,7 +441,7 @@ void OnePlayerScreen::initSpeedLabel(const sf::RenderWindow &app) {
         ;
     }
     speedLabel.setFont(font);
-    speedLabel.setColor(sf::Color(200, 165, 0));
+    speedLabel.setFillColor(sf::Color(200, 165, 0));
     updateSpeedLabel();
 
     float yPosition = app.getSize().y - SPACE_BUTTONS / 2;
@@ -475,7 +475,7 @@ void OnePlayerScreen::initInfoLabel(const sf::RenderWindow &app) {
         ;
     }
     info.setFont(font);
-    info.setColor(sf::Color(200, 165, 0));
+    info.setFillColor(sf::Color(200, 165, 0));
     info.setString("press space to start");
 
     sf::Vector2<unsigned int> windowSize = app.getSize();
