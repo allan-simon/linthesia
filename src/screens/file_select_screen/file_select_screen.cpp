@@ -203,6 +203,16 @@ bool FileSelectScreen::actionTriggeredFileButtons(
     const sf::Event &event,
     Context &context
 ) {
+    // we initalize the file selector list
+    std::string actual_midi_dir_path;
+    if (dirExists(MIDI_DIR_PATH.c_str()))
+    {
+        actual_midi_dir_path = MIDI_DIR_PATH;
+    }
+    else
+    {
+        actual_midi_dir_path = LOCAL_MIDI_DIR_PATH;
+    }
 
     unsigned buttonNumber = 0;
     bool oneFileChosen = false;
@@ -218,7 +228,7 @@ bool FileSelectScreen::actionTriggeredFileButtons(
                 return;
             }
             std::string filename = midiFileNames[currentButton + fileIndex];
-            if (!context.openMidiFile(MIDI_DIR_PATH + filename)) {
+            if (!context.openMidiFile(actual_midi_dir_path + filename)) {
                 return;
             }
             oneFileChosen = true;
